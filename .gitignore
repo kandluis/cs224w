@@ -364,4 +364,4 @@ TSWLatexianTemp*
 *.zip
 
 # Do not ignore these pdfs!
-!hw0/hw0.pdf
+!hw[0-9]/hw[0-9].pdf
