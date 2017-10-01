@@ -1,0 +1,234 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage[colorlinks=true,urlcolor=blue]{hyperref}
+
+% No page numbers
+%\pagenumbering{gobble}
+
+% INFORMATION SHEET (DO NOT EDIT THIS PART) ---------------------------------------------
+\newcommand{\addinformationsheet}{
+\clearpage
+\thispagestyle{empty}
+\begin{center}
+\LARGE{\bf \textsf{Information sheet\\CS224W: Analysis of Networks}} \\*[4ex]
+\end{center}
+\vfill
+\textbf{Assignment Submission } Fill in and include this information sheet with each of your assignments.  This page should be the last page of your submission.  Assignments are due at 11:59pm and are always due on a Thursday.  All students (SCPD and non-SCPD) must submit their homeworks via GradeScope (\url{http://www.gradescope.com}). Students can typeset or scan their homeworks. Make sure that you answer each (sub-)question on a separate page. That is, one answer per page regardless of the answer length. Students also need to upload their code at \url{http://snap.stanford.edu/submit}. Put all the code for a single question into a single file and upload it. Please do not put any code in your GradeScope submissions. 
+\\
+\\
+\textbf{Late Homework Policy } Each student will have a total of {\em two} free late periods. {\em Homeworks are due on Thursdays at 11:59pm PDT and one late period expires on the following Monday at 11:59pm PDT}.  Only one late period may be used for an assignment.  Any homework received after 11:59pm PDT on the Monday following the homework due date will receive no credit.  Once these late periods are exhausted, any assignments turned in late will receive no credit.
+\\
+\\
+\textbf{Honor Code } We strongly encourage students to form study groups. Students may discuss and work on homework problems in groups. However, each student must write down their solutions independently i.e., each student must understand the solution well enough in order to reconstruct it by him/herself.  Students should clearly mention the names of all the other students who were part of their discussion group. Using code or solutions obtained from the web (github/google/previous year solutions etc.) is considered an honor code violation. We check all the submissions for plagiarism. We take the honor code very seriously and expect students to do the same. 
+\vfill
+\vfill
+}
+% ------------------------------------------------------------------------------
+
+% MARGINS (DO NOT EDIT) ---------------------------------------------
+\oddsidemargin  0in \evensidemargin 0in \topmargin -0.5in
+\headheight 0.25in \headsep 0.25in
+\textwidth   6.5in \textheight 9in
+\parskip 1.5ex  \parindent 0ex \footskip 20pt
+% ---------------------------------------------------------------------------------
+
+% HEADER (DO NOT EDIT) -----------------------------------------------
+\newcommand{\problemnumber}{0}
+\newcommand{\myname}{name}
+\newfont{\myfont}{cmssbx10 scaled 1200}
+\pagestyle{fancy}
+\fancyhead{}
+\fancyhead[L]{\myfont Question \problemnumber, Problem Set 0, CS224W}
+%\fancyhead[R]{\bssnine \myname}
+\newcommand{\newquestion}[1]{
+\clearpage % page break and flush floats
+\renewcommand{\problemnumber}{#1} % set problem number for header
+\phantom{}  % Put something on the page so it shows
+}
+% ---------------------------------------------------------------------------------
+
+
+
+
+% BEGIN HOMEWORK HERE
+\begin{document}
+
+% Question 1.1
+\newquestion{1.1}
+The number of nodes in the network is 7115.
+
+% Question 1.2
+\newquestion{1.2}
+The number of nodes with a self-edge is 0.
+
+% Question 1.3
+\newquestion{1.3}
+The number of directed edges 103689.
+
+% Question 1.4
+\newquestion{1.4}
+The number of undirected edges is 100762.
+
+% Question 1.5
+\newquestion{1.5}
+The number of reciprocated edges is 2927.
+
+% Question 1.6
+\newquestion{1.6}
+The number of nodes of zero out-degree is 1005.
+
+% Question 1.7
+\newquestion{1.7}
+The number of nodes of zero in-degree is 4734.
+
+% Question 1.8
+\newquestion{1.8}
+The number of nodes with more than 10 outgoing edges is 1612.
+
+% Question 1.9
+\newquestion{1.9}
+The number of nodes with less than 10 incoming edges is 5424.
+
+% Question 2.1
+\graphicspath{ {../../code/output/} }
+\newquestion{2.1}
+The log-log plot of the out-degree distribution, done manually, is:
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.5\textwidth]{WikiGraphOutDegreeDistribution}
+\caption{Log-Log Plot of Out-Degree Distribution for Wikipedia Network}
+\end{figure}
+
+The log-log plot of out-degree distribution can also be obtained directly by using SNAP.PY.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.5\textwidth]{outDeg_WikiGraph}
+\caption{Log-Log Plot of Out-Degree Distribution for Wikipedia Network using SNAP.PY}
+\end{figure}
+
+
+% Question 2.2
+\newquestion{2.2}
+The best fit line is given by equation 
+$$
+\log(y) = -1.28106470567 * log(x) + 3.1324547045
+$$
+We plot.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.5\textwidth]{WikiGraphOutDegreeDistributionFit}
+\caption{Log-Log Plot of Out-Degree Distribution for Wikipedia Network with Best Line of Fit}
+\end{figure}
+
+We can also use SNAP.PY directly to calculate the best line of fit, in which case this is given by the equations:
+$$
+\log(y) = -1.411 \log(x) + 3.3583
+$$
+
+We plot.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.5\textwidth]{outDeg_WikiGraphFit}
+\caption{Log-Log Plot of Out-Degree Distribution for Wikipedia Network with Best Line of Fit}
+\end{figure}
+
+% Question 3.1
+\newquestion{3.1}
+The number of weakly connected components in the SO networkis 10143.
+
+% Question 3.2
+\newquestion{3.2}
+The largest weakly connected component in the SO networkhas 131188 nodes and 322486 edges.
+
+% Question 3.3
+\newquestion{3.3}
+The node IDs of the top 3 most central nodes in the network by PageRank scores are presented in the table below:
+
+	
+\begin{table}[h!]
+	\centering
+  \begin{tabular}{||c | c ||} 
+		\hline
+		Node ID & PageRank Score  \\ 
+		\hline\hline
+		992484 & 0.013980540412209575  \\ 
+		\hline
+		135152 & 0.010005538895741885  \\
+		\hline
+		22656 & 545 0.007103532693128619  \\
+		\hline
+	\end{tabular}
+	\caption{Most Central Nodes by PageRank Scores}
+\end{table}
+
+% Question 3.4
+\newquestion{3.4}
+The node IDs of the top 3 hubs in the network by HITS scores are presented in the table below:
+
+\begin{table}[h!]
+	\centering
+  \begin{tabular}{||c | c ||} 
+		\hline
+		Node ID & HITS Score  \\ 
+		\hline\hline
+		892029 & 0.07336377271443813  \\ 
+		\hline
+		1194415 & 0.05955072063221353  \\
+		\hline
+		359862 & 545 0.05687562555041567  \\
+		\hline
+	\end{tabular}
+	\caption{Most Central Nodes by PageRank Scores}
+\end{table}
+
+The node IDs of the top 3 authorities in the network by HITS scores are  presented in the table below:
+
+\begin{table}[h!]
+	\centering
+  \begin{tabular}{||c | c ||} 
+		\hline
+		Node ID & HITS Score  \\ 
+		\hline\hline
+		22656 & 0.604724804154674  \\ 
+		\hline
+		157882 & 0.2986988928290645  \\
+		\hline
+		571407 & 545 0.28390684916352593  \\
+		\hline
+	\end{tabular}
+	\caption{Most Central Nodes by PageRank Scores}
+\end{table}
+
+% Information sheet
+% Fill out the information below (this should be the last page of your assignment)
+\addinformationsheet
+{\Large
+\textbf{Your name:} Luis Perez
+\\
+\textbf{Email: } luis0@stanford.edu \hspace*{7cm} % Put your e-mail here
+\textbf{SUID:} 05794739 \hrulefill  % Put your student ID here
+\\*[2ex] 
+}
+Discussion Group: None 
+\\
+\vfill\vfill
+I acknowledge and accept the Honor Code.\\*[3ex]
+\bigskip
+\textit{(Signed)} 
+LP
+\vfill
+
+
+
+
+
+\end{document}
