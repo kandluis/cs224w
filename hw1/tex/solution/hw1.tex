@@ -58,18 +58,103 @@
 % BEGIN HOMEWORK HERE
 \begin{document}
 
+\graphicspath{ {../../code/output/} }
 % Question 1.1
 \newquestion{1.1}
+The collaboration network has a higher proportion of both low-degree and high-degree nodes as compared to both of the random network models (see Figure \ref{fig:random_network_distribution}). Neither the Erdos-Renyi models nor the Small World model have any nodes with degrees larger than ~15, and while the Erdo-Renyi models has some low-degree nodes (<5), the proportion is still an order of magnitude different from the collaboration network.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.5\textwidth]{erdo_small_collab_log_logdegree_distribution.png}
+\caption{Log-Log Plot of Degree Distribution}
+\label{fig:random_network_distribution}
+\end{figure}
 
 % Question 1.2
 \newquestion{1.2}
 
 \subsubsection*{(a)}
+We show how to compute the excess degree distribution $\{q_k\}$ given only the degree distribution $\{p_k\}$. The key is in understanding how the degree distribution is calculated. We have:
+$$
+p_k = \frac{p_k'}{\sum_i p_i'} = \frac{p_k'}{N}
+$$
+where
+$$
+p_k' = \sum_{i \in V} I_{N(i) = k}
+$$
+and $N(i)$ is the number of neighbors of node $i$ and $N$ the total number of nodes. We can therefore express $q_k'$ as:
+\begin{align}
+q_k' &= \sum_{i \in V} \sum_{(i,j) \in E} I_{N(j) = k + 1} \\
+&= \sum_{i \in V} \sum_{(i,j) \in E} I_{N(i) = k+1} \tag{graph in undirected, $(u,v) \equiv (v,u)$} \\
+&= \sum_{i \in V} I_{N(i) = k + 1} \sum_{(i, j) \in E} 1 \tag{I does not depend on inner sum over $j$}\\
+&= \sum_{i \in V} I_{N(i) = k + 1} N(i) \tag{Sum over $j$ just counts the neighbors of $i$} \\
+&= (k+1) \sum_{i\in V} I_{N(i) = k + 1} \tag{Non-zero only if $N(i) = k+1$} \\
+&= (k+1)p_{k+1}'
+\end{align}
+The key in the above argument is to notice that the definition of $q_k'$ is to look at every edge in the graph once and count the number of "endpoints" with degree $k+1$. Since in an undirected graph the existence of $(u,v)$ with endpoint $v$ implies the existence of $(v,u)$ with endpoint $u$, the computation is equivalent to counting the "startpoints" with degree $k+1$ (since every endpoint is also a startpoint for the reverse edge).
 
+The above implies the following:
+\begin{align}
+q_k &= \frac{q_k'}{\sum_i q_i'} \\
+&= \frac{(k+1)p_{k+1}'}{\sum_i q_i'} \\
+&= \frac{(k+1)p_{k+1}\sum_i p_i'}{\sum_i q_i;} \\
+&= \frac{(k+1)Np_{k+1}}{\sum_i q_i'}
+\end{align}
 \subsubsection*{(b)}
+We plot the excess degree distribution for all our models:
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.5\textwidth]{erdo_small_collab_log_log_excess_degree_distribution.png}
+\caption{Log-Log Plot of Degree Distribution}
+\label{fig:random_network_distribution}
+\end{figure}
+
+The key difference between the excess degree and the degree distribution of the collaboration network is that the excess degree distribution is more flat, in the sense that the probability of a low excess degree is lower than the probability of a low degree and the probability of a high excess degree is higher than the probability of a high degree. Intuitively, this means that if we choose a random collaboration, the endpoints have a higher likelihood to have a large degree than we would expect from just the degree distribution.
+
+The interesting thing is that the generated networks do not show this effect to the same magnitude, as we can see from the expected degree and expected excess degree:
+
+\begin{table}[h!]
+	\centering
+  \begin{tabular}{||c | c | c ||} 
+		\hline
+		Network & Expected Degree & Expected Excess Degree  \\ 
+		\hline\hline
+		Erdos-Renyi & 5.526135 & 5.542323 \\ 
+		\hline
+		Small World & 5.526135 & 4.800400 \\
+		\hline
+		Collaboration & 5.526135 &  15.870409 \\
+		\hline
+	\end{tabular}
+	\caption{Expected Degree and Expceted Excess Degree}
+\end{table}
+
 
 % Question 1.3
 \newquestion{1.3}
+We calculate the clustering coefficients, which are:
+
+\begin{table}[h!]
+	\centering
+  \begin{tabular}{||c | c ||} 
+		\hline
+		Network & Clustering Coefficient  \\ 
+		\hline\hline
+		Erdos-Renyi & 0.001102 \\ 
+		\hline
+		Small World & 0.284075 \\
+		\hline
+		Collaboration & 0.529636 \\
+		\hline
+	\end{tabular}
+	\caption{Clustering Coefficient for Different Models}
+\end{table}
+
+The largest clustering coefficient belongs to the Collaboration Network.
+
+If we consider the fact that many papers often time have a large number of authors, and that, in isolation, the clustering coefficient of all of these nodes would be 1 (since every edge exists between all authors that are listed on the same paper), the 0.529636 coefficient does not seem unreasonable. It is likely that authors continue to collaborate with a similar set of people and, at some point, some paper is published which includes the majority of the collaborators as authors, thereby increasing the clustering coefficient of that group.
+
 
 % Question 2.1
 \newquestion{2.1}

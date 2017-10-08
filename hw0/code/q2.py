@@ -1,6 +1,6 @@
 # coding: utf-8
 '''
-2. Further Analyzing the Wikiepedia voters networ
+2. Further Analyzing the Wikiepedia voters network
 '''
 
 import snap
