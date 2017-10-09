@@ -107,7 +107,6 @@ We plot the excess degree distribution for all our models:
 \centering
 \includegraphics[width=0.5\textwidth]{erdo_small_collab_log_log_excess_degree_distribution.png}
 \caption{Log-Log Plot of Degree Distribution}
-\label{fig:random_network_distribution}
 \end{figure}
 
 The key difference between the excess degree and the degree distribution of the collaboration network is that the excess degree distribution is more flat, in the sense that the probability of a low excess degree is lower than the probability of a low degree and the probability of a high excess degree is higher than the probability of a high degree. Intuitively, this means that if we choose a random collaboration, the endpoints have a higher likelihood to have a large degree than we would expect from just the degree distribution.
@@ -158,15 +157,90 @@ If we consider the fact that many papers often time have a large number of autho
 
 % Question 2.1
 \newquestion{2.1}
+For this question, let us consider the behavior for a node that belongs to each of SCC, IN, or OUT.
+\begin{itemize}
+\item SCC: A node in the SCC would reach all nodes in SCC + OUT in a forward pass, and all nodes in SCC + IN in a backwards pass. Since we expect a good portion of the nodes to belong to the SCC, each of these values should be relatively ``good'' ($> 15\%$) chunck of the graph.
+\item IN: A node in the IN would reach all nodes in SCC + OUT + $\epsilon_1$ in a forward pass, and $\epsilon_2$ nodes in the backward pass for some small $\epsilon_i$.
+\item OUT: A node int he OUT would reach $\epsilon_1$ nodes in the forward pass, and SCC + IN + $\epsilon_2$ in the backwards pass for some small $\epsilon_i$.
+\end{itemize}
+
+Our conlusions are therefore (see code for more exact numbers) as well as percentage of nodes in largest SCC:
+\begin{itemize}
+\item Node 1952 in the epinions graph belongs to the IN region. A forward pass (SCC + OUT + $\epsilon$) hits $~62.83\%$ of nodes and backward pass only hits $~0.001\%$ of nodes.
+\item Node 9809 in the epinions graph belongs to the OUT region. A forward pass only hits $~0.001\%$ of nodes and a backward pass (SCC + IN + $\epsilon$) hits $~74.41\%$ of nodes. This is further corraborated when we sample a node in the SCC for which the forward pass (SCC + OUT) hits $~62.83\%$ and the backward pass (SCC + IN) hits $~74.41\%$ of nodes.
+\item Node 189587 in the email graph belongs to the SCC. A forward pass (SCC + OUT) hits $~19.65\%$ of nodes and backward pass (SCC + IN) hits $~69.84\%$ of nodes. 
+\item Node 675 in the email graph belongs to the OUT region. A forward pass only hits only $~0.0003\%$ of nodes and a backward pass (SCC + IN + $\epsilon$) hits $~69.85\%$, as expected. Furthermore, we located a node $0$ which we classify as belonging to IN, since a forward pass (SCC + OUT + $\epsilon$) hits $~19.65\%$ of nodes and a backward pass only $~0.0003\%$. This matches are previous proposals. 
+\end{itemize}
 
 % Question 2.2
 \newquestion{2.2}
+For details on further analysis, see the provided code.
+
+We present the cdf for our random start bfs for the Email network:
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.5\textwidth]{bfs_cdf_forward_email_graph.png}
+\caption{CDF of Forward BFS on randomly selected nodes from Email Network}
+\end{figure}
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.5\textwidth]{bfs_cdf_backward_email_graph.png}
+\caption{CDF of Backward BFS on randomly selected nodes from Email Network}
+\end{figure}
+
+The BFS traversal behavior appears to imply that we have a bowtie structure, because a very large percentage of the randomly chosen nodes ``exploded'' when following forward links (51\%), 19\% ``exploded'' when following both forward and back links, and a small minority (7\%) when following backward links. The above also implies that we have a very large IN region (half of nodes), a relatively large SCC (1/5 of nodes), a small OUT region, with a somewhat large number of nodes completely disconnected from the graph (~23\%) or forming very small tendrils.
+
+\newpage
+We present the cfg for our random start bfs for the Epinions network:
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.5\textwidth]{bfs_cdf_forward_epinions_graph.png}
+\caption{CDF of Forward BFS on randomly selected nodes from Epinions Network}
+\end{figure}
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.5\textwidth]{bfs_cdf_backward_epinions_graph.png}
+\caption{CDF of Backward BFS on randomly selected nodes from Epinions Network}
+\end{figure}
+
+The BFS traversal here also appears to imply a bowtie structure, though somewhat more complicated IN/OUT regions since it appears that it can take up to 10 steps to go from IN $\to$ SCC and up to 3 to go from OUT $\to$ SCC, so these regions appear more elongated. We still have, however, a large (39\%) SCC, a large (20\%) OUT region, a large (36\%) IN region, and a small percentage of short tendrils or possibly disconnected regions (5\%).
 
 % Question 2.3
 \newquestion{2.3}
+We present the sizes of each region.
+
+\begin{table}[h!]
+	\centering
+  \begin{tabular}{||c | c | c | c | c | c | c ||} 
+		\hline
+		Network & Total & SCC & IN & OUT & TENDRILS & DISCONNECTED  \\ 
+		\hline\hline
+		Email & 265214 & 34203 & 151023 & 17900 & 21706 & 40382 \\ 
+		\hline
+		Epinions & 75879 & 32223 & 24236 & 15453 & 3965 & 2 \\
+		\hline
+	\end{tabular}
+	\caption{Size of Regions in Network}
+\end{table}
+
+The sizes were computed in a straigh-forward manner. We can compute the largest WCC using `snap.GetMxWcc' and obtain $N_{Wcc}$ and we can also compute the larges SCC using `snap.GetMxScc' and obtain $N_{Scc}$. Let $N_{forward}$ be the number of nodes found in a forward bfs starting at an SCC and similarly calculate $N_{backward}$. Then we have:
+\begin{align*}
+N_{In} &= N_{backward} - N_{Scc} \\
+N_{Out} &= _{forward} - N_{Scc} \\
+N_{Disconnected} &= N - N_{Wcc} \\
+N_{Tendrils} &= N_{Wcc} - (N_{In} + N_{Out} + N_{Scc})
+\end{align*}
 
 % Question 2.3
 \newquestion{2.4}
+The result from one of 3 trials using 1000 pairs.
+
+Probability of path for entire Epinions is 45.8\%.
+Probability of path in largest WCC of Epinions is 46.1\%.
+Probability of path for entire Email is 13.0\%.
+Probability of path in largest WCC of Email is 19.9\%.
+
+We see that the probability of a path from Epinions is 2.5x higher that for the Email network, which aligns with our previous findings since the Epinions network has a much larger SCC and despite having a large IN, the email network has many disconnected components and the IN is large number of randonly chosen nodes to be both in IN or the endpoint in IN. Furthermore, we see that when we focus just on the WCC, the effect is larger in the Email network, very likely due to the fact that the disconnected region of the Epinions network is relatively small while it is relatively large in the Email network.
 
 % Question 3.1
 \newquestion{3.1}

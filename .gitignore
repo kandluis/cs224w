@@ -355,7 +355,9 @@ TSWLatexianTemp*
 *-tags.tex
 
 # Ignore anything in an output directory
-**/output/**
+**/*output*/**
+# Ignore .pgn
+*.png
 
 ## Ignore txt files in data directories
 **/data/**/*.txt

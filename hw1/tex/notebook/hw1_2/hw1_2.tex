@@ -1,0 +1,829 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{hw1\_2}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}151}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          \PY{c+c1}{\PYZsh{} CS 224W (Fall 2017) \PYZhy{} HW1}
+          \PY{c+c1}{\PYZsh{} Code for Problem 1}
+          \PY{c+c1}{\PYZsh{} Author: luis0@stanford.edu}
+          \PY{c+c1}{\PYZsh{} Last Updated: Oct 8, 2017}
+          \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          
+          \PY{k+kn}{import} \PY{n+nn}{snap}
+          \PY{k+kn}{import} \PY{n+nn}{matplotlib.pyplot} \PY{k+kn}{as} \PY{n+nn}{plt}
+          \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k+kn}{as} \PY{n+nn}{np}
+          \PY{k+kn}{from} \PY{n+nn}{enum} \PY{k+kn}{import} \PY{n}{Enum}
+\end{Verbatim}
+
+
+    \section{2.1: Node Positions}\label{node-positions}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}39}]:} \PY{c+c1}{\PYZsh{} Load networks.}
+         \PY{k}{def} \PY{n+nf}{loadNetworks}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+             \PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}}
+         \PY{l+s+sd}{    Loads the epinions and email networks.}
+         \PY{l+s+sd}{    returns: (epinions, email)}
+         \PY{l+s+sd}{    \PYZsq{}\PYZsq{}\PYZsq{}}
+             \PY{n}{epinions} \PY{o}{=} \PY{n}{snap}\PY{o}{.}\PY{n}{LoadEdgeList}\PY{p}{(}
+                 \PY{n}{snap}\PY{o}{.}\PY{n}{PNGraph}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{data/soc\PYZhy{}Epinions1.txt}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+se}{\PYZbs{}t}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+             \PY{k}{assert} \PY{n}{epinions}\PY{o}{.}\PY{n}{GetNodes}\PY{p}{(}\PY{p}{)} \PY{o}{==} \PY{l+m+mi}{75879}
+             \PY{k}{assert} \PY{n}{epinions}\PY{o}{.}\PY{n}{GetEdges}\PY{p}{(}\PY{p}{)} \PY{o}{==} \PY{l+m+mi}{508837}
+             \PY{n}{email} \PY{o}{=} \PY{n}{snap}\PY{o}{.}\PY{n}{LoadEdgeList}\PY{p}{(}
+                 \PY{n}{snap}\PY{o}{.}\PY{n}{PNGraph}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{data/email\PYZhy{}EuAll.txt}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+se}{\PYZbs{}t}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+             \PY{k}{assert} \PY{n}{email}\PY{o}{.}\PY{n}{GetNodes}\PY{p}{(}\PY{p}{)} \PY{o}{==} \PY{l+m+mi}{265214}
+             \PY{k}{assert} \PY{n}{email}\PY{o}{.}\PY{n}{GetEdges}\PY{p}{(}\PY{p}{)} \PY{o}{==} \PY{l+m+mi}{420045}
+             \PY{k}{return} \PY{p}{(}\PY{n}{epinions}\PY{p}{,} \PY{n}{email}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}53}]:} \PY{k}{class} \PY{n+nc}{Location}\PY{p}{(}\PY{n}{Enum}\PY{p}{)}\PY{p}{:}
+             \PY{n}{IN} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{In Component}\PY{l+s+s2}{\PYZdq{}}
+             \PY{n}{OUT} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Out Component}\PY{l+s+s2}{\PYZdq{}}
+             \PY{n}{SCC} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Strongly Connected Component}\PY{l+s+s2}{\PYZdq{}}
+             \PY{n}{AMBIGUOUS} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Ambiguous Component}\PY{l+s+s2}{\PYZdq{}}
+             
+         \PY{k}{def} \PY{n+nf}{determineLocation}\PY{p}{(}\PY{n}{Graph}\PY{p}{,} \PY{n}{nodeID}\PY{p}{)}\PY{p}{:}
+             \PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}}
+         \PY{l+s+sd}{    Given a nodeID, determines if it belongs to the SCC, IN, or OUT}
+         \PY{l+s+sd}{    components of the Graph using heuristics and assuming the Graph}
+         \PY{l+s+sd}{    has a BowTie structure.}
+         \PY{l+s+sd}{    }
+         \PY{l+s+sd}{    Assumptions based on Experiments:}
+         \PY{l+s+sd}{        IN nodes have \PYZlt{} 1e\PYZhy{}4\PYZpc{} backwards trees, \PYZgt{} 15\PYZpc{} forward.}
+         \PY{l+s+sd}{        OUT nodes have \PYZlt{} 1e\PYZhy{}4\PYZpc{} forward trees, \PYZgt{} 15\PYZpc{} forward.}
+         \PY{l+s+sd}{        SCC nodes have \PYZgt{} 15\PYZpc{} in both directions.}
+         \PY{l+s+sd}{        All else is considered \PYZdq{}AMBIGUOUS\PYZdq{}}
+         \PY{l+s+sd}{        }
+         \PY{l+s+sd}{    returns: Location}
+         \PY{l+s+sd}{    \PYZsq{}\PYZsq{}\PYZsq{}}
+             \PY{n}{forwardTree} \PY{o}{=} \PY{n}{snap}\PY{o}{.}\PY{n}{GetBfsTree}\PY{p}{(}\PY{n}{Graph}\PY{p}{,} \PY{n}{nodeID}\PY{p}{,} \PY{n+nb+bp}{True}\PY{p}{,} \PY{n+nb+bp}{False}\PY{p}{)}
+             \PY{n}{backwardTree} \PY{o}{=} \PY{n}{snap}\PY{o}{.}\PY{n}{GetBfsTree}\PY{p}{(}\PY{n}{Graph}\PY{p}{,} \PY{n}{nodeID}\PY{p}{,} \PY{n+nb+bp}{False}\PY{p}{,} \PY{n+nb+bp}{True}\PY{p}{)}
+             \PY{n}{N} \PY{o}{=} \PY{n+nb}{float}\PY{p}{(}\PY{n}{Graph}\PY{o}{.}\PY{n}{GetNodes}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+             \PY{n}{forward\PYZus{}p} \PY{o}{=} \PY{n}{forwardTree}\PY{o}{.}\PY{n}{GetNodes}\PY{p}{(}\PY{p}{)} \PY{o}{/} \PY{n}{N}
+             \PY{n}{backward\PYZus{}p} \PY{o}{=} \PY{n}{backwardTree}\PY{o}{.}\PY{n}{GetNodes}\PY{p}{(}\PY{p}{)} \PY{o}{/} \PY{n}{N}
+             \PY{k}{if} \PY{n}{forward\PYZus{}p} \PY{o}{\PYZgt{}} \PY{l+m+mf}{0.15} \PY{o+ow}{and} \PY{n}{backward\PYZus{}p} \PY{o}{\PYZlt{}} \PY{l+m+mf}{1e\PYZhy{}4}\PY{p}{:} \PY{k}{return} \PY{n}{Location}\PY{o}{.}\PY{n}{IN}
+             \PY{k}{if} \PY{n}{forward\PYZus{}p} \PY{o}{\PYZlt{}} \PY{l+m+mf}{1e\PYZhy{}4} \PY{o+ow}{and} \PY{n}{backward\PYZus{}p} \PY{o}{\PYZgt{}} \PY{l+m+mf}{0.15}\PY{p}{:} \PY{k}{return} \PY{n}{Location}\PY{o}{.}\PY{n}{OUT}
+             \PY{k}{if} \PY{n}{forward\PYZus{}p} \PY{o}{\PYZgt{}} \PY{l+m+mf}{0.15} \PY{o+ow}{and} \PY{n}{backward\PYZus{}p} \PY{o}{\PYZgt{}} \PY{l+m+mf}{0.15}\PY{p}{:} \PY{k}{return} \PY{n}{Location}\PY{o}{.}\PY{n}{SCC}
+             \PY{k}{return} \PY{n}{Location}\PY{o}{.}\PY{n}{AMBIGUOUS}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}56}]:} \PY{k}{def} \PY{n+nf}{Q2\PYZus{}1}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+             \PY{n}{epinions}\PY{p}{,} \PY{n}{email} \PY{o}{=} \PY{n}{loadNetworks}\PY{p}{(}\PY{p}{)}
+             
+             \PY{n}{idToNetwork} \PY{o}{=} \PY{p}{\PYZob{}}\PY{l+m+mi}{9809}\PY{p}{:} \PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{epinions}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{epinions}\PY{p}{)}\PY{p}{,}
+                            \PY{l+m+mi}{1952}\PY{p}{:} \PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{epinions}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{epinions}\PY{p}{)}\PY{p}{,}
+                            \PY{l+m+mi}{189587}\PY{p}{:} \PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{email}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{email}\PY{p}{)}\PY{p}{,}
+                            \PY{l+m+mi}{675}\PY{p}{:} \PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{email}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{email}\PY{p}{)}\PY{p}{\PYZcb{}}
+             \PY{k}{for} \PY{p}{(}\PY{n}{nodeID}\PY{p}{,} \PY{p}{(}\PY{n}{name}\PY{p}{,} \PY{n}{Graph}\PY{p}{)}\PY{p}{)} \PY{o+ow}{in} \PY{n}{idToNetwork}\PY{o}{.}\PY{n}{iteritems}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+                 \PY{k}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Node }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{ in the }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{ graph belongs to the }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{.}\PY{l+s+s2}{\PYZdq{}} \PY{o}{\PYZpc{}} \PY{p}{(}
+                         \PY{n}{nodeID}\PY{p}{,} \PY{n}{name}\PY{p}{,} \PY{n}{determineLocation}\PY{p}{(}\PY{n}{Graph}\PY{p}{,} \PY{n}{nodeID}\PY{p}{)}\PY{o}{.}\PY{n}{value}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}57}]:} \PY{c+c1}{\PYZsh{} Run Question 2.1 rough approximations.}
+         \PY{n}{Q2\PYZus{}1}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Node 1952 in the epinions graph belongs to the In Component.
+Node 9809 in the epinions graph belongs to the Out Component.
+Node 189587 in the email graph belongs to the Strongly Connected Component.
+Node 675 in the email graph belongs to the Out Component.
+
+    \end{Verbatim}
+
+    \subsection{2.1: Experiments.}\label{experiments.}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}103}]:} \PY{k}{def} \PY{n+nf}{GetForwardBackwardProp}\PY{p}{(}\PY{n}{Graph}\PY{p}{,} \PY{n}{nodeID}\PY{p}{)}\PY{p}{:}
+              \PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}}
+          \PY{l+s+sd}{    Returns the proportion of nodes visited during a forward/backward}
+          \PY{l+s+sd}{    bfs starting at nodeID}
+          \PY{l+s+sd}{    \PYZsq{}\PYZsq{}\PYZsq{}}
+              
+              \PY{n}{forwardTree} \PY{o}{=} \PY{n}{snap}\PY{o}{.}\PY{n}{GetBfsTree}\PY{p}{(}\PY{n}{Graph}\PY{p}{,} \PY{n}{nodeID}\PY{p}{,} \PY{n+nb+bp}{True}\PY{p}{,} \PY{n+nb+bp}{False}\PY{p}{)}
+              \PY{n}{backwardTree} \PY{o}{=} \PY{n}{snap}\PY{o}{.}\PY{n}{GetBfsTree}\PY{p}{(}\PY{n}{Graph}\PY{p}{,} \PY{n}{nodeID}\PY{p}{,} \PY{n+nb+bp}{False}\PY{p}{,} \PY{n+nb+bp}{True}\PY{p}{)}
+              \PY{k}{return} \PY{p}{(}\PY{n+nb}{float}\PY{p}{(}\PY{n}{forwardTree}\PY{o}{.}\PY{n}{GetNodes}\PY{p}{(}\PY{p}{)}\PY{p}{)} \PY{o}{/} \PY{n}{Graph}\PY{o}{.}\PY{n}{GetNodes}\PY{p}{(}\PY{p}{)}\PY{p}{,}
+                      \PY{n+nb}{float}\PY{p}{(}\PY{n}{backwardTree}\PY{o}{.}\PY{n}{GetNodes}\PY{p}{(}\PY{p}{)}\PY{p}{)} \PY{o}{/} \PY{n}{Graph}\PY{o}{.}\PY{n}{GetNodes}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}104}]:} \PY{c+c1}{\PYZsh{} Load graphs.}
+          \PY{n}{epinions}\PY{p}{,} \PY{n}{email} \PY{o}{=} \PY{n}{loadNetworks}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \subsubsection{Email Model}\label{email-model}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}119}]:} \PY{c+c1}{\PYZsh{} Let\PYZsq{}s find the size of the largest SCC.}
+          \PY{n}{emailSCC} \PY{o}{=} \PY{n}{snap}\PY{o}{.}\PY{n}{GetMxScc}\PY{p}{(}\PY{n}{email}\PY{p}{)}
+          \PY{k}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Email SCC: }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{.}\PY{l+s+s2}{\PYZdq{}} \PY{o}{\PYZpc{}} \PY{p}{(}
+              \PY{l+m+mi}{100}\PY{o}{*}\PY{n+nb}{float}\PY{p}{(}\PY{n}{emailSCC}\PY{o}{.}\PY{n}{GetNodes}\PY{p}{(}\PY{p}{)}\PY{p}{)} \PY{o}{/} \PY{n}{email}\PY{o}{.}\PY{n}{GetNodes}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Email SCC: 12.8963780193.
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}120}]:} \PY{c+c1}{\PYZsh{} The proposal is that 189587 is in SCC, so we have:}
+          \PY{c+c1}{\PYZsh{} SCC + OUT = 19.6456446492\PYZpc{}}
+          \PY{c+c1}{\PYZsh{} OUT = 6.7492666299\PYZpc{}}
+          \PY{c+c1}{\PYZsh{} SCC + IN =  69.8402045141\PYZpc{}}
+          \PY{c+c1}{\PYZsh{} IN = 56.9438264948\PYZpc{}}
+          \PY{c+c1}{\PYZsh{} OTHER: 23.410528856\PYZpc{}}
+          \PY{n}{fp}\PY{p}{,} \PY{n}{bp} \PY{o}{=}  \PY{n}{GetForwardBackwardProp}\PY{p}{(}\PY{n}{email}\PY{p}{,} \PY{l+m+mi}{189587}\PY{p}{)}
+          \PY{k}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Forward }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{ and Backward }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{ for ID: }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{.}\PY{l+s+s2}{\PYZdq{}} \PY{o}{\PYZpc{}} \PY{p}{(}\PY{n}{fp}\PY{p}{,} \PY{n}{bp}\PY{p}{,} \PY{l+m+mi}{189587}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Forward 0.196456446492 and Backward 0.698402045141 for ID: 189587.
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}121}]:} \PY{c+c1}{\PYZsh{} The proposal is that 675 is in OUT, so we have:}
+          \PY{c+c1}{\PYZsh{} SCC + IN + \PYZbs{}epsilon =  69.8454832701\PYZpc{}}
+          \PY{n}{fp}\PY{p}{,} \PY{n}{bp} \PY{o}{=}  \PY{n}{GetForwardBackwardProp}\PY{p}{(}\PY{n}{email}\PY{p}{,} \PY{l+m+mi}{675}\PY{p}{)}
+          \PY{k}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Forward }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{ and Backward }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{ for ID: }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{.}\PY{l+s+s2}{\PYZdq{}} \PY{o}{\PYZpc{}} \PY{p}{(}\PY{n}{fp}\PY{p}{,} \PY{n}{bp}\PY{p}{,} \PY{l+m+mi}{675}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Forward 3.77054001674e-06 and Backward 0.698454832701 for ID: 675.
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}122}]:} \PY{c+c1}{\PYZsh{} We try one more random node to get a better picture.}
+          \PY{c+c1}{\PYZsh{} The proposal is that 0 is in IN, so we have:}
+          \PY{c+c1}{\PYZsh{} SCC + OUT + \PYZbs{}epsilon =  19.6460217032\PYZpc{}}
+          \PY{n}{fp}\PY{p}{,} \PY{n}{bp} \PY{o}{=}  \PY{n}{GetForwardBackwardProp}\PY{p}{(}\PY{n}{email}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{)}
+          \PY{k}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Forward }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{ and Backward }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{ for ID: }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{.}\PY{l+s+s2}{\PYZdq{}} \PY{o}{\PYZpc{}} \PY{p}{(}\PY{n}{fp}\PY{p}{,} \PY{n}{bp}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Forward 0.196460217032 and Backward 3.77054001674e-06 for ID: 0.
+
+    \end{Verbatim}
+
+    \subsubsection{Epinions Model}\label{epinions-model}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}124}]:} \PY{c+c1}{\PYZsh{} Let\PYZsq{}s find the size of the largest SCC.}
+          \PY{n}{epinionsSCC} \PY{o}{=} \PY{n}{snap}\PY{o}{.}\PY{n}{GetMxScc}\PY{p}{(}\PY{n}{epinions}\PY{p}{)}
+          \PY{k}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Epinions SCC: }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{.}\PY{l+s+s2}{\PYZdq{}} \PY{o}{\PYZpc{}} \PY{p}{(}
+              \PY{l+m+mi}{100}\PY{o}{*}\PY{n+nb}{float}\PY{p}{(}\PY{n}{epinionsSCC}\PY{o}{.}\PY{n}{GetNodes}\PY{p}{(}\PY{p}{)}\PY{p}{)} \PY{o}{/} \PY{n}{epinions}\PY{o}{.}\PY{n}{GetNodes}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Epinions SCC: 42.4662950223.
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}109}]:} \PY{c+c1}{\PYZsh{} Proposal: 1952 is in IN region.}
+          \PY{c+c1}{\PYZsh{} SCC + OUT + \PYZbs{}epsilon = 62.8329313776\PYZpc{}}
+          \PY{n}{fp}\PY{p}{,} \PY{n}{bp} \PY{o}{=}  \PY{n}{GetForwardBackwardProp}\PY{p}{(}\PY{n}{epinions}\PY{p}{,} \PY{l+m+mi}{1952}\PY{p}{)}
+          \PY{k}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Forward }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{ and Backward }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{ for ID: }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{.}\PY{l+s+s2}{\PYZdq{}} \PY{o}{\PYZpc{}} \PY{p}{(}\PY{n}{fp}\PY{p}{,} \PY{n}{bp}\PY{p}{,} \PY{l+m+mi}{1952}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Forward 0.628329313776 and Backward 1.31788768961e-05 for ID: 1952.
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}108}]:} \PY{c+c1}{\PYZsh{} Proposal: 9809 is in OUT region.}
+          \PY{c+c1}{\PYZsh{} SCC + IN + \PYZbs{}epsilon = 74.4079389554\PYZpc{}}
+          \PY{n}{fp}\PY{p}{,} \PY{n}{bp} \PY{o}{=}  \PY{n}{GetForwardBackwardProp}\PY{p}{(}\PY{n}{epinions}\PY{p}{,} \PY{l+m+mi}{9809}\PY{p}{)}
+          \PY{k}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Forward }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{ and Backward }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{ for ID: }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{.}\PY{l+s+s2}{\PYZdq{}} \PY{o}{\PYZpc{}} \PY{p}{(}\PY{n}{fp}\PY{p}{,} \PY{n}{bp}\PY{p}{,} \PY{l+m+mi}{9809}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Forward 1.31788768961e-05 and Backward 0.744079389554 for ID: 9809.
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}128}]:} \PY{c+c1}{\PYZsh{} Proposal: 193 is in SCC region.}
+          \PY{c+c1}{\PYZsh{} SCC + OUT = 62.8316134899\PYZpc{}}
+          \PY{c+c1}{\PYZsh{} OUT = 20.365318467599997\PYZpc{}}
+          \PY{c+c1}{\PYZsh{} SCC + IN = 74.4066210678\PYZpc{}}
+          \PY{c+c1}{\PYZsh{} IN = 31.940326045500006\PYZpc{}}
+          \PY{c+c1}{\PYZsh{} REST = 5.2280604645999915\PYZpc{}}
+          \PY{n}{fp}\PY{p}{,} \PY{n}{bp} \PY{o}{=}  \PY{n}{GetForwardBackwardProp}\PY{p}{(}\PY{n}{epinions}\PY{p}{,} \PY{l+m+mi}{193}\PY{p}{)}
+          \PY{k}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Forward }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{ and Backward }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{ for ID: }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{.}\PY{l+s+s2}{\PYZdq{}} \PY{o}{\PYZpc{}} \PY{p}{(}\PY{n}{fp}\PY{p}{,} \PY{n}{bp}\PY{p}{,} \PY{l+m+mi}{193}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Forward 0.628316134899 and Backward 0.744066210678 for ID: 193.
+
+    \end{Verbatim}
+
+    \section{2.2: Random-start BFS}\label{random-start-bfs}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}129}]:} \PY{n}{NUM\PYZus{}NODES} \PY{o}{=} \PY{l+m+mi}{100}
+          \PY{n}{Rnd} \PY{o}{=} \PY{n}{snap}\PY{o}{.}\PY{n}{TRnd}\PY{p}{(}\PY{l+m+mi}{42}\PY{p}{)}
+          \PY{n}{Rnd}\PY{o}{.}\PY{n}{Randomize}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}131}]:} \PY{k}{def} \PY{n+nf}{randomStartTraversalDistribution}\PY{p}{(}\PY{n}{Graph}\PY{p}{)}\PY{p}{:}
+              \PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}}
+          \PY{l+s+sd}{    returns: X, Y where X[i], Y[i] are the number of reached nodes during}
+          \PY{l+s+sd}{    the forward and backward passes respectively for the i\PYZhy{}th randomly}
+          \PY{l+s+sd}{    chosen node.}
+          \PY{l+s+sd}{    \PYZsq{}\PYZsq{}\PYZsq{}}
+              \PY{n}{X}\PY{p}{,} \PY{n}{Y} \PY{o}{=} \PY{p}{[}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{p}{]}
+              \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{xrange}\PY{p}{(}\PY{n}{NUM\PYZus{}NODES}\PY{p}{)}\PY{p}{:}
+                  \PY{n}{srcID} \PY{o}{=} \PY{n}{Graph}\PY{o}{.}\PY{n}{GetRndNId}\PY{p}{(}\PY{n}{Rnd}\PY{p}{)}
+                  \PY{n}{X}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{snap}\PY{o}{.}\PY{n}{GetBfsTree}\PY{p}{(}\PY{n}{Graph}\PY{p}{,} \PY{n}{srcID}\PY{p}{,} \PY{n+nb+bp}{True}\PY{p}{,} \PY{n+nb+bp}{False}\PY{p}{)}\PY{o}{.}\PY{n}{GetNodes}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+                  \PY{n}{Y}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{snap}\PY{o}{.}\PY{n}{GetBfsTree}\PY{p}{(}\PY{n}{Graph}\PY{p}{,} \PY{n}{srcID}\PY{p}{,} \PY{n+nb+bp}{False}\PY{p}{,} \PY{n+nb+bp}{True}\PY{p}{)}\PY{o}{.}\PY{n}{GetNodes}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+              \PY{k}{return} \PY{n}{X}\PY{p}{,}\PY{n}{Y}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}192}]:} \PY{k}{def} \PY{n+nf}{getXYAxesFromBFSDistribution}\PY{p}{(}\PY{n}{dist}\PY{p}{)}\PY{p}{:}
+              \PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}}
+          \PY{l+s+sd}{    dist is an array of \PYZsh{} of nodes visited on multiple bfs nodes and}
+          \PY{l+s+sd}{    contains no 0 nodes.}
+          \PY{l+s+sd}{    return: X,Y where (X[i],Y[i]) is the point to be plotted for the cdf}
+          \PY{l+s+sd}{    of this this distribution.}
+          \PY{l+s+sd}{    \PYZsq{}\PYZsq{}\PYZsq{}}
+              \PY{n}{filtered} \PY{o}{=} \PY{n+nb}{filter}\PY{p}{(}\PY{k}{lambda} \PY{n}{x}\PY{p}{:} \PY{n}{x} \PY{o}{\PYZgt{}} \PY{l+m+mi}{0}\PY{p}{,} \PY{n}{dist}\PY{p}{)}
+              \PY{k}{return} \PY{p}{(}\PY{p}{[}\PY{n+nb}{float}\PY{p}{(}\PY{n}{i}\PY{p}{)} \PY{o}{/} \PY{n+nb}{len}\PY{p}{(}\PY{n}{filtered}\PY{p}{)} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{xrange}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{filtered}\PY{p}{)}\PY{p}{)}\PY{p}{]}\PY{p}{,}
+                      \PY{n+nb}{sorted}\PY{p}{(}\PY{n}{filtered}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}193}]:} \PY{k}{def} \PY{n+nf}{Q2\PYZus{}2}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+              \PY{n}{epinions}\PY{p}{,} \PY{n}{email} \PY{o}{=} \PY{n}{loadNetworks}\PY{p}{(}\PY{p}{)}
+              \PY{k}{for} \PY{n}{name}\PY{p}{,} \PY{n}{graph} \PY{o+ow}{in} \PY{p}{[}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{email}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{email}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{epinions}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{epinions}\PY{p}{)}\PY{p}{]}\PY{p}{:}
+                  \PY{n}{forward}\PY{p}{,} \PY{n}{backward} \PY{o}{=} \PY{n}{randomStartTraversalDistribution}\PY{p}{(}\PY{n}{graph}\PY{p}{)}
+                  \PY{k}{for} \PY{n}{direction}\PY{p}{,} \PY{n}{dist} \PY{o+ow}{in} \PY{p}{[}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{forward}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{forward}\PY{p}{)}\PY{p}{,}
+                                          \PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{backward}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{backward}\PY{p}{)}\PY{p}{]}\PY{p}{:}
+                      \PY{n}{X}\PY{p}{,} \PY{n}{Y} \PY{o}{=} \PY{n}{getXYAxesFromBFSDistribution}\PY{p}{(}\PY{n}{dist}\PY{p}{)}
+                      \PY{n}{plt}\PY{o}{.}\PY{n}{close}\PY{p}{(}\PY{p}{)}
+                      \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{Y}\PY{p}{)}
+                      \PY{n}{plt}\PY{o}{.}\PY{n}{yscale}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{log}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{base}\PY{o}{=}\PY{l+m+mi}{10}\PY{p}{)}
+                      \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{frac. of starting nodes}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+                      \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{number of nodes reached}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+                      \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Reachability using }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{\PYZhy{}links}\PY{l+s+s2}{\PYZdq{}} \PY{o}{\PYZpc{}} \PY{p}{(}
+                                \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{out}\PY{l+s+s2}{\PYZdq{}} \PY{k}{if} \PY{n}{direction} \PY{o}{==} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{forward}\PY{l+s+s2}{\PYZdq{}} \PY{k}{else} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{in}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{)}
+                      \PY{n}{plt}\PY{o}{.}\PY{n}{savefig}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{output/bfs\PYZus{}cdf\PYZus{}}\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{\PYZus{}}\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{\PYZus{}graph}\PY{l+s+s2}{\PYZdq{}} \PY{o}{\PYZpc{}} \PY{p}{(}\PY{n}{direction}\PY{p}{,} \PY{n}{name}\PY{p}{)}\PY{p}{,}
+                                  \PY{n}{dpi}\PY{o}{=}\PY{l+m+mi}{600}\PY{p}{)}
+                      \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}194}]:} \PY{n}{Q2\PYZus{}2}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_24_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_24_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_24_2.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_24_3.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \subsubsection{2.2 Experiments}\label{experiments}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}223}]:} \PY{k+kn}{from} \PY{n+nn}{collections} \PY{k+kn}{import} \PY{n}{Counter}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}224}]:} \PY{c+c1}{\PYZsh{} Count of unique results for random start bfs for email.}
+          \PY{n}{Counter}\PY{p}{(}\PY{n+nb}{zip}\PY{p}{(}\PY{o}{*}\PY{n}{randomStartTraversalDistribution}\PY{p}{(}\PY{n}{email}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}224}]:} Counter(\{(1, 2): 6,
+                   (1, 3): 1,
+                   (1, 185227): 7,
+                   (2, 1): 15,
+                   (8, 1): 1,
+                   (52103, 185226): 19,
+                   (52104, 1): 51\})
+\end{Verbatim}
+            
+    The BFS traversal behavior appears to imply that we have a bowtie
+structure since a very large percentage of the randomly chosen nodes
+"exploded" when following forward links (51\%), 19\% "exploded" when
+following both forward and back links, and a small minority (7\%) when
+following backward links. The above also implies that we have a very
+large IN region (half of nodes), a relatively large SCC (1/5 of nodes),
+a small OUT region, with a somewhat large number of nodes completely
+disconnected from the graph (\textasciitilde{}23\%) or forming very
+small tendrils.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}225}]:} \PY{c+c1}{\PYZsh{} Count of unique results for random start bfs for epinions.}
+          \PY{n}{Counter}\PY{p}{(}\PY{n+nb}{zip}\PY{p}{(}\PY{o}{*}\PY{n}{randomStartTraversalDistribution}\PY{p}{(}\PY{n}{epinions}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}225}]:} Counter(\{(1, 2): 2,
+                   (1, 3): 1,
+                   (1, 56460): 17,
+                   (1, 56461): 1,
+                   (1, 56463): 1,
+                   (2, 1): 1,
+                   (2, 56461): 1,
+                   (3, 4): 1,
+                   (47676, 56459): 39,
+                   (47677, 1): 26,
+                   (47677, 2): 2,
+                   (47677, 3): 1,
+                   (47678, 1): 3,
+                   (47678, 2): 1,
+                   (47678, 3): 1,
+                   (47679, 1): 1,
+                   (47685, 12): 1\})
+\end{Verbatim}
+            
+    The BFS traversal here also appears to imply a bowtie structure, though
+somewhat more complicated IN/OUT regions since it appears that it can
+take up to 10 steps to go from IN -\textgreater{} SCC and up to 3 to go
+from OUT -\textgreater{} SCC, so these regions appear more elongated. We
+still have, however, a large (39\%) SCC, a large (20\%) OUT region, a
+large (36\%) IN region, and a small percentage of short tendrils or
+possibly disconnected regions (5\%).
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}206}]:} \PY{k}{def} \PY{n+nf}{SizeOfBowtieRegions}\PY{p}{(}\PY{n}{Graph}\PY{p}{,} \PY{n}{sccNodeID}\PY{p}{)}\PY{p}{:}
+              \PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}}
+          \PY{l+s+sd}{    Given a Graph with a BowTie structure as described in}
+          \PY{l+s+sd}{    http://snap.stanford.edu/class/cs224w\PYZhy{}readings/broder00bowtie.pdf}
+          \PY{l+s+sd}{    and an sccNodeID of a node known to belong to the central SCC,}
+          \PY{l+s+sd}{    determines the size of each component.}
+          \PY{l+s+sd}{    }
+          \PY{l+s+sd}{    returns: tuple of sizes (SCC, IN, OUT, TENDRILS, DISCONNECTED)}
+          \PY{l+s+sd}{    \PYZsq{}\PYZsq{}\PYZsq{}}
+              \PY{n}{totalNodes} \PY{o}{=} \PY{n}{Graph}\PY{o}{.}\PY{n}{GetNodes}\PY{p}{(}\PY{p}{)}
+              \PY{n}{wcc} \PY{o}{=} \PY{n}{snap}\PY{o}{.}\PY{n}{GetMxWcc}\PY{p}{(}\PY{n}{Graph}\PY{p}{)}
+              \PY{k}{assert} \PY{n}{wcc}\PY{o}{.}\PY{n}{IsNode}\PY{p}{(}\PY{n}{sccNodeID}\PY{p}{)}
+              \PY{n}{wccNodes} \PY{o}{=} \PY{n}{wcc}\PY{o}{.}\PY{n}{GetNodes}\PY{p}{(}\PY{p}{)}
+              \PY{n}{disconnectedNodes} \PY{o}{=} \PY{n}{totalNodes} \PY{o}{\PYZhy{}} \PY{n}{wccNodes}
+              
+              \PY{n}{scc} \PY{o}{=} \PY{n}{snap}\PY{o}{.}\PY{n}{GetMxScc}\PY{p}{(}\PY{n}{Graph}\PY{p}{)}
+              \PY{c+c1}{\PYZsh{} Sanity check the input.}
+              \PY{k}{assert} \PY{n}{scc}\PY{o}{.}\PY{n}{IsNode}\PY{p}{(}\PY{n}{sccNodeID}\PY{p}{)}
+              \PY{n}{sccNodes} \PY{o}{=} \PY{n}{scc}\PY{o}{.}\PY{n}{GetNodes}\PY{p}{(}\PY{p}{)}
+              
+              \PY{n}{sccAndOutNodes} \PY{o}{=} \PY{n}{snap}\PY{o}{.}\PY{n}{GetBfsTree}\PY{p}{(}
+                  \PY{n}{Graph}\PY{p}{,} \PY{n}{sccNodeID}\PY{p}{,} \PY{n+nb+bp}{True}\PY{p}{,} \PY{n+nb+bp}{False}\PY{p}{)}\PY{o}{.}\PY{n}{GetNodes}\PY{p}{(}\PY{p}{)}
+              \PY{n}{sccAndInNodes} \PY{o}{=} \PY{n}{snap}\PY{o}{.}\PY{n}{GetBfsTree}\PY{p}{(}
+                  \PY{n}{Graph}\PY{p}{,} \PY{n}{sccNodeID}\PY{p}{,} \PY{n+nb+bp}{False}\PY{p}{,} \PY{n+nb+bp}{True}\PY{p}{)}\PY{o}{.}\PY{n}{GetNodes}\PY{p}{(}\PY{p}{)}
+              
+              \PY{n}{inNodes} \PY{o}{=} \PY{n}{sccAndInNodes} \PY{o}{\PYZhy{}} \PY{n}{sccNodes}
+              \PY{n}{outNodes} \PY{o}{=} \PY{n}{sccAndOutNodes} \PY{o}{\PYZhy{}} \PY{n}{sccNodes}
+              \PY{n}{tendrilNodes} \PY{o}{=} \PY{n}{wccNodes} \PY{o}{\PYZhy{}} \PY{p}{(}\PY{n}{inNodes} \PY{o}{+} \PY{n}{outNodes} \PY{o}{+} \PY{n}{sccNodes}\PY{p}{)}
+              
+              \PY{n}{nodes} \PY{o}{=} \PY{p}{(}\PY{n}{sccNodes}\PY{p}{,} \PY{n}{inNodes}\PY{p}{,} \PY{n}{outNodes}\PY{p}{,} \PY{n}{tendrilNodes}\PY{p}{,} \PY{n}{disconnectedNodes}\PY{p}{)}
+              \PY{k}{assert} \PY{n+nb}{sum}\PY{p}{(}\PY{n}{nodes}\PY{p}{)} \PY{o}{==} \PY{n}{Graph}\PY{o}{.}\PY{n}{GetNodes}\PY{p}{(}\PY{p}{)}
+              \PY{k}{return} \PY{n}{nodes}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}218}]:} \PY{k}{def} \PY{n+nf}{Q2\PYZus{}3}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+              \PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}}
+          \PY{l+s+sd}{    The SCC knows are based on previous BFS experiments.}
+          \PY{l+s+sd}{    \PYZsq{}\PYZsq{}\PYZsq{}}
+              \PY{n}{epinions}\PY{p}{,} \PY{n}{email} \PY{o}{=} \PY{n}{loadNetworks}\PY{p}{(}\PY{p}{)}
+              \PY{n}{emailKnownSCCNode} \PY{o}{=} \PY{l+m+mi}{189587}
+              \PY{k}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Size of regions in email network: }\PY{l+s+s2}{\PYZdq{}}
+                    \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{SCC: }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{, IN: }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{, OUT: }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{, TENDRILS: }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{, }\PY{l+s+s2}{\PYZdq{}}
+                    \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{DISCONNECTED: }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{\PYZdq{}} \PY{o}{\PYZpc{}} \PY{n}{SizeOfBowtieRegions}\PY{p}{(}\PY{n}{email}\PY{p}{,}
+                                                           \PY{n}{emailKnownSCCNode}\PY{p}{)}\PY{p}{)}
+              \PY{n}{epinionsKnownSCCNode} \PY{o}{=} \PY{l+m+mi}{193}
+              \PY{k}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Size of regions in epinions network: }\PY{l+s+s2}{\PYZdq{}}
+                    \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{SCC: }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{, IN: }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{, OUT: }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{, TENDRILS: }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{, }\PY{l+s+s2}{\PYZdq{}}
+                    \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{DISCONNECTED: }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{\PYZdq{}} \PY{o}{\PYZpc{}} \PY{n}{SizeOfBowtieRegions}\PY{p}{(}\PY{n}{epinions}\PY{p}{,}
+                                                            \PY{n}{epinionsKnownSCCNode}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}219}]:} \PY{n}{Q2\PYZus{}3}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Size of regions in email network: SCC: 34203, IN: 151023, OUT: 17900, TENDRILS: 21706, DISCONNECTED: 40382
+Size of regions in epinions network: SCC: 32223, IN: 24236, OUT: 15453, TENDRILS: 3965, DISCONNECTED: 2
+
+    \end{Verbatim}
+
+    \section{2.4: Probability of a Path Existing Between Two Randomly Chosen
+Nodes}\label{probability-of-a-path-existing-between-two-randomly-chosen-nodes}
+
+    \subsection{Uniformly Randomly Chosen}\label{uniformly-randomly-chosen}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}231}]:} \PY{n}{Rnd} \PY{o}{=} \PY{n}{snap}\PY{o}{.}\PY{n}{TRnd}\PY{p}{(}\PY{l+m+mi}{42}\PY{p}{)}
+          \PY{n}{Rnd}\PY{o}{.}\PY{n}{Randomize}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}247}]:} \PY{n}{NO\PYZus{}PATH} \PY{o}{=} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1}
+          \PY{k}{def} \PY{n+nf}{ProbabilityOfPath}\PY{p}{(}\PY{n}{Graph}\PY{p}{,} \PY{n}{nSamples}\PY{o}{=}\PY{l+m+mi}{1000}\PY{p}{)}\PY{p}{:}
+              \PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}}
+          \PY{l+s+sd}{    Given a graph, returns the sampled probability of two nodes being}
+          \PY{l+s+sd}{    connected. Takes nSamples of (u,v) pairs to check for path}
+          \PY{l+s+sd}{    connectedness.}
+          \PY{l+s+sd}{    \PYZsq{}\PYZsq{}\PYZsq{}}
+              \PY{n}{paths} \PY{o}{=} \PY{l+m+mf}{0.0}
+              \PY{k}{for} \PY{n}{\PYZus{}} \PY{o+ow}{in} \PY{n+nb}{xrange}\PY{p}{(}\PY{n}{nSamples}\PY{p}{)}\PY{p}{:}
+                  \PY{n}{u}\PY{p}{,} \PY{n}{v} \PY{o}{=} \PY{n}{Graph}\PY{o}{.}\PY{n}{GetRndNId}\PY{p}{(}\PY{n}{Rnd}\PY{p}{)}\PY{p}{,} \PY{n}{Graph}\PY{o}{.}\PY{n}{GetRndNId}\PY{p}{(}\PY{n}{Rnd}\PY{p}{)}
+                  \PY{k}{if} \PY{n}{snap}\PY{o}{.}\PY{n}{GetShortPath}\PY{p}{(}\PY{n}{Graph}\PY{p}{,} \PY{n}{u}\PY{p}{,} \PY{n}{v}\PY{p}{,} \PY{n+nb+bp}{True}\PY{p}{)} \PY{o}{!=} \PY{n}{NO\PYZus{}PATH}\PY{p}{:} \PY{n}{paths} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+              \PY{k}{return} \PY{l+m+mi}{100} \PY{o}{*} \PY{n}{paths} \PY{o}{/} \PY{n}{nSamples}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}248}]:} \PY{n}{TRIALS} \PY{o}{=} \PY{l+m+mi}{3}
+          \PY{k}{def} \PY{n+nf}{Q2\PYZus{}4}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+              \PY{n}{epinions}\PY{p}{,} \PY{n}{email} \PY{o}{=} \PY{n}{loadNetworks}\PY{p}{(}\PY{p}{)}
+              \PY{k}{for} \PY{n}{trial} \PY{o+ow}{in} \PY{n+nb}{xrange}\PY{p}{(}\PY{n}{TRIALS}\PY{p}{)}\PY{p}{:}
+                  \PY{k}{for} \PY{p}{(}\PY{n}{name}\PY{p}{,} \PY{n}{network}\PY{p}{)} \PY{o+ow}{in} \PY{p}{[}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Epinions}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{epinions}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Email}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{email}\PY{p}{)}\PY{p}{]}\PY{p}{:}
+                      \PY{k}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Probability of path for entire }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{ is }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{.}\PY{l+s+s2}{\PYZdq{}} \PY{o}{\PYZpc{}} \PY{p}{(}
+                          \PY{n}{name}\PY{p}{,} \PY{n}{ProbabilityOfPath}\PY{p}{(}\PY{n}{network}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+                      \PY{k}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Probability of path in largest WCC of }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{ is }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{.}\PY{l+s+s2}{\PYZdq{}} \PY{o}{\PYZpc{}} \PY{p}{(}
+                          \PY{n}{name}\PY{p}{,} \PY{n}{ProbabilityOfPath}\PY{p}{(}\PY{n}{snap}\PY{o}{.}\PY{n}{GetMxWcc}\PY{p}{(}\PY{n}{network}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}242}]:} \PY{n}{Q2\PYZus{}4}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Probability of path for entire epinions is 0.458.
+Probability of path in largest WCC of epinions is 0.482.
+Probability of path for entire email is 0.164.
+Probability of path in largest WCC of email is 0.194.
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}249}]:} \PY{n}{Q2\PYZus{}4}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Probability of path for entire Epinions is 45.8.
+Probability of path in largest WCC of Epinions is 46.1.
+Probability of path for entire Email is 13.0.
+Probability of path in largest WCC of Email is 19.8.
+Probability of path for entire Epinions is 48.6.
+Probability of path in largest WCC of Epinions is 48.4.
+Probability of path for entire Email is 14.0.
+Probability of path in largest WCC of Email is 19.7.
+Probability of path for entire Epinions is 45.7.
+Probability of path in largest WCC of Epinions is 44.5.
+Probability of path for entire Email is 13.0.
+Probability of path in largest WCC of Email is 19.9.
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}244}]:} \PY{n}{Q2\PYZus{}4}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Probability of path for entire epinions is 0.489.
+Probability of path in largest WCC of epinions is 0.45.
+Probability of path for entire email is 0.131.
+Probability of path in largest WCC of email is 0.187.
+
+    \end{Verbatim}
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
