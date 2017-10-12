@@ -246,17 +246,84 @@ We see that the probability of a path from Epinions is 2.5x higher that for the 
 \newquestion{3.1}
 
 \subsubsection*{(a)}
+We show that given a value $d$ and a network node $v$, there are $b^d - b^{d-1}$ network nodes satisfying $h(u,w) = d$.
+
+We wish to count all $w$ that satisfy $h(u,w) = d$. By definition, this is all leaves of $T$ such that the height of the subtree $T'$ rooted at the least common ancestor of $u$ and $w$ is $d$. Given that $T'$ is also a complete, perfectly balanced $b$-ary tree (by property of subtrees), we have the $h(T') = d = \log_b N_{T'} \implies N_{T'} = b^d$. Therefore $T'$ has exactly $b^d$ network nodes. However, one branch of $T'$ must contain $u$, and the LCA of the network nodes in this branch is not the root of $T'$, since at the very least, the child which forms the root of the subtree ($T''$) containing $u$ is a closer ancestor. Note that $T''$ is again a complete, perfectly balanced $b$-ary tree of height $d-1$, therefore it contains $b^{d-1}$ network nodes whose distance from $u < d$.
+
+Finally, consider any network nodes outside this subtree $T'$, which implies the shared ancestor between them and $u$ is a parent of $T'$. Therefore, the distance from $u > d$.
+
+By the above, we have that there are exactly $b^d - b^{d-1}$ network nodes satisfying $h(u,w) = d$.
 
 \subsubsection*{(b)}
+W show that $Z \leq \log_b N$.
+
+We recall that for a node $v$, $Z = \sum_{w \neq v} b^{-h(v,w)}$. Note that by summetry, $Z$ is the same for all nodes $v$. Then rather than sum over the network nodes $w$, we sum over the distances $h(v,w)$ and use the results from part (a). We have:
+\begin{align*}
+Z &= \sum_{w \neq v} b^{-h(v,w)} \\
+&= \sum_{d=1}^{\log_b N} (\text{\# nodes with distance d from v}) * b^{-d} \\
+&= \sum_{d=1}^{\log_b N} (b^d - b^{d-1})b^{-d} \tag{results from (a)} \\
+&= \sum_{d=1}^{\log_b N} (1 - b^{-1}) \\
+&= (\log_b N)(1 - b^{-1}) \\
+&\leq \log_b N
+\end{align*}
 
 \subsubsection*{(c)}
 
+For two leaf nodes $v$ and $t$, let $T'$ be the subtree of $$L(v, t)$$ satisfying:
+\begin{itemize}
+\item $T'$ is of height $h(v, t) − 1$
+\item $T'$ contains $t$
+\item $T'$ does not contain $v$.
+\end{itemize}
+
+Consider an edge $e$ from $v$ to a random node $u$ sampled from $p_v$. We say that $e$ points to $T'$ if $u$ is a leaf node of $T'$ We show that the probability of e pointing to $T'$ is at least $\frac{1}{b \log_b N}$.
+
+Let $p_v(T')$ be the probability we're interested in. Then note the following:
+\begin{align*}
+p_v(T') &= \sum_{w \in T'} p_v(w) \tag{events are independent} \\
+&= \frac{1}{Z}\sum_{w \in T'} b^{-h(v,w)} \tag{definition of $p_v(w)$} \\
+&\geq \frac{1}{\log_b N} \sum_{w \in T'} b^{-h(v,w)} \tag{results from (b)} \\
+&\geq \frac{1}{\log_b N} \sum_{w \in T'} b^{-h(v,t)} \tag{all $w$ belong to $T'$ so they share a common ancestor at $h(v,t)$ height, at least} \\
+&= \frac{1}{\log_b N} b^{h(v,t) - 1} b^{-h(v,t)} \tag{$T'$ has height $h(v,t) - 1$} \\
+&= \frac{1}{b \log_b N}
+\end{align*}
+
 \subsubsection*{(d)}
+Let the out-degree $k$ for each node be $c(\log_b N)^2$ for some constant $c$. We show that the probability that $v$ has no edge pointing to $T'$ ($p_v(\bar{T'})$) is at most $N^{−\Theta}$ where $\Theta = \frac{c}{b}$. Consider the below:
+
+\begin{align*}
+p_v(\bar{T'}) &= \left(1 - p_v(T')\right)^k \tag{all $k$ out edges must fail to reach $T'$} \\
+&\leq e^{-kp_v(T')} \tag{$1 + x \leq e^x, \forall x \in \mathbb{R}$}\\
+&\leq e^{-\frac{c}{b}\log_b N} \tag{results from (c) and using $k = c(\log_b N)^2$} \\
+&= N^{-\frac{c}{b}} \tag{properties of exponents}
+\end{align*}
+
+Note that the result above implies that given two nodes $v,t$ in a tree, the probability that $v$ has an edge to $T'$ is at least $1 - N^{-\frac{c}{b}}$, which for large enough $N$ is $1$. In other words, for any node $v$, with high-probability, there exists an edge $e$ from $v$ to $u$ such that $h(u,t) < h(v, t)$ 
 
 \subsubsection*{(e)}
+We show that starting from any (leaf) node $s$, we can reach any (leaf) node $t$ within $O(\log_b N)$ steps.
+
+As we have argued in (d), with high probability ($1 - N^{-\frac{c}{b}}$), for any (leaf) node $v$ we can get to a (leaf) node $u$ satisfying $h(u,t) < h(v,t)$. Note the strict inequality. Then let us start with $v=s=s_0$, and by applying the argument, we can find some $s_1$ such that $h(s_1, t) < h(s_0,t)$. Continuing as such iteratively, we can find $\{s_i\}$ such that $0 < h(s_T, t) \cdots < h(s_i, t) < \cdots < h(s_1, t) < h(s_0, t)$ where each step is taken with high probability $(1 - N^{-\frac{c}{b}})$. Furthermore, note that $T = O(\log_b N)$ since $h(v, t) \leq \log_b N$ ($=$ in the case that $v$ and $t$ only share the root node of the tree), and each step of the process must decrease the distance by at least $1$ (due to strict inequality). 
+
+Lastly, we note that $\lim_{N \to \infty} \left(1 - N^{-\frac{c}{b}} \right)^{\log_{b} N} = 1$.
 
 % Question 3.2
 \newquestion{3.2}
+We run experiments of the above and show plots.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.5\textwidth]{average_path_length_vs_alpha.png}
+\caption{Experiment Results: Average Path Lengh of Successful Search vs Alpha Value}
+\label{fig:path_length}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.5\textwidth]{average_success_vs_alpha.png}
+\caption{Experiment Results: Success Rate of Search vs Alpha Value}
+\label{fig:success_rate}
+\end{figure}
 
 
 % Information sheet
