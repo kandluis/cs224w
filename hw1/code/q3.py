@@ -1,14 +1,9 @@
-
 # coding: utf-8
-
-# In[1]:
-
-
 ################################################################################
 # CS 224W (Fall 2017) - HW1
-# Starter code for Problem 3.3
-# Author: anunay@stanford.edu, tonyekim@stanford.edu
-# Last Updated: Oct 7, 2017
+# Solution code for Problem 3.3
+# Author: luis0@stanford.edu
+# Last Updated: Oct 12, 2017
 ################################################################################
 
 import snap
@@ -17,17 +12,10 @@ import math
 import random
 import matplotlib.pyplot as plt
 
-
-# In[2]:
-
-
 # Setup
 hT = 10
 b = 2
 k = 5
-
-
-# In[3]:
 
 
 def sampleNodes():
@@ -48,9 +36,6 @@ def sampleNodes():
   return ret
 
 
-# In[4]:
-
-
 def h(v, w):
   """
   :param - v: node id
@@ -65,9 +50,6 @@ def h(v, w):
     xor = bin(v ^ w)[2:]
     xor = ("0" * (hT - len(xor))) + xor
     return hT - xor.find('1')
-
-
-# In[33]:
 
 
 def search(Graph, s, t):
@@ -101,9 +83,6 @@ def search(Graph, s, t):
   return False, -1
 
 
-# In[34]:
-
-
 def edgeProbability(alpha, v, w):
   """
   :param - alpha: given parameter [refer to 3.3]
@@ -114,9 +93,6 @@ def edgeProbability(alpha, v, w):
   return: p_v(w) [refer to 3.2]
   """
   return (b ** (-(alpha * h(v, w))))
-
-
-# In[35]:
 
 
 def Z(alpha):
@@ -131,15 +107,8 @@ def Z(alpha):
     z += (pow(b, i) - pow(b, i-1)) * pow(b, -i * alpha)
   return z
 
-
-# In[36]:
-
-
 from collections import defaultdict
 import numpy as np
-
-
-# In[44]:
 
 
 def createEdges(Graph, alpha):
@@ -179,9 +148,6 @@ def createEdges(Graph, alpha):
   ############################################################################
 
   return Graph
-
-
-# In[45]:
 
 
 def runExperiment(alpha):
@@ -227,16 +193,18 @@ def main():
     print ' '.join(map(str, results[-1]))
 
   plt.figure(1)
-  plt.plot([data[0] for data in results], [data[1]
-                                           for data in results], marker='o', markersize=3)
+  plt.plot([data[0] for data in results],
+           [data[1] for data in results],
+           marker='o', markersize=3)
   plt.xlabel('Parameter alpha')
   plt.ylabel('Average Path Length')
   plt.title('Average Path Length vs alpha')
   plt.savefig("output/average_path_length_vs_alpha", dpi=600)
 
   plt.figure(2)
-  plt.plot([data[0] for data in results], [data[2]
-                                           for data in results], marker='o', markersize=3)
+  plt.plot([data[0] for data in results],
+           [data[2] for data in results],
+           marker='o', markersize=3)
   plt.xlabel('Parameter alpha')
   plt.ylabel('Success Rate')
   plt.title('Success Rate vs alpha')
