@@ -74,7 +74,7 @@ print("The number of nodes with more than %s outgoing edges is %s." % (
 
 # 1.9
 inDegreeCount = snap.TIntPrV()
-snap.GetOutDegCnt(wikiGraph, inDegreeCount)
+snap.GetInDegCnt(wikiGraph, inDegreeCount)
 numNodesSmallInDegree = sum([item.GetVal2()
                              for item in inDegreeCount
                              if item.GetVal1() < DEGREE_BOUNDARY])
