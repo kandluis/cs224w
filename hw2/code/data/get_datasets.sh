@@ -1,0 +1,1 @@
+curl  http://web.stanford.edu/class/cs224w/homeworks/hw2/data_sets/USpowergrid_n4941.txt -o USpowergrid_n4941.txt -s
