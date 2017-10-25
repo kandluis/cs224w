@@ -57,18 +57,52 @@
 
 % BEGIN HOMEWORK HERE
 \begin{document}
+\graphicspath{ {../../code/output/} }
 
 % Question 1.1
 \newquestion{1.1}
 
 \subsubsection*{(a)}
+We draw 100 random (simple) network samples using the stub-matching algorithm described in the assignment using the degree sequence of the power grid network. 
+
+The mean of the average clustering coefficient for 100 random networks with the same degree distribution as the power grid network is 0.000427366228043.
 
 \subsubsection*{(b)}
+We now consider node $i$ with degree $k_i$, and node $j$ with degree $k_j$. Under a random matching on the half-edges, the probability that node $i$ and node $j$ are connected is given by:
+$$
+p_{i,j} = \frac{k_ik_j}{\sum_{l} k_l - 1} =  \frac{k_ik_j}{2|E| - 1}
+$$
+The above can be derived as follows. Allowing self-loops and multi-edges, for each of the $k_i$ stubs of node $i$, the probability that a specific one matches to one of the $k_j$ stubs of node $j$ is $\frac{k_j}{2|E| - 1}$ since there are $k_j$ matches and $2|E| - 1$ candidates, and the selection is random. Since we do allow multi-edges and self-loops, each event is independent, therefore the probability of any such event occurring is simple the sum of all $k_i$ events, which by symmetry, occur with the same probability, giving us the above formula.
+
+The above immediately implies that the higher the degrees of $i$ and $j$, the more likely they are to be connected under the configuration model.
 
 \subsubsection*{(c)}
+We show that artificially rejecting self-loops when building the graph is not a problem for large graphs. We consider a graph with a very large number of edges m, and calculate the number of expected self-loops, $X$, as follows:
+
+\begin{align*}
+E[X] &= \sum_{i=1}^n E[X_i] \tag{where $X_i$ is the number of self-loops for node $i$} \\
+&= \sum_{i=1}^n {k_i \choose 2} \frac{1}{2m - 1} \tag{we chose two of $k_i$ stubs and calculate the probability that one connects to the other} \\
+&= \sum_{i=1}^n \frac{k_i(k_i - 1)}{4m} \\
+&= \frac{1}{2}\frac{1}{2m} \left(\sum_{i=1}^n k_i^2 - \sum_{i=1}^n k_i\right) \tag{rewriting} \\
+&= \frac{1}{2}\frac{n}{2m} \left(\frac{1}{n}\sum_{i=1}^n k_i^2 - \frac{1}{n}\sum_{i=1}^n k_i\right) \tag{multiply by $\frac{n}{n}$} \\
+&= \frac{1}{2}\frac{n}{\sum_{i=1}^n k_i } \left(\frac{1}{n}\sum_{i=1}^n k_i^2 - \frac{1}{n}\sum_{i=1}^n k_i\right) \tag{using the fact that $\sum_{i=1}^n k_i = 2m$} \\
+&= \frac{\langle k^2 \rangle - \langle k \rangle}{2\langle k \rangle} \tag{using $\langle k^m \rangle = \frac{1}{n}\sum_{i=1}^n k_i^m$}
+\end{align*}
+The above result implies that the expected number of self-loops is vanishingly small $O(\frac{1}{n})$ fraction of all edges in the large $n$ limit as long as $\langle k^2 \rangle$ is finite. This means we expect to see no self-loops in the limit.
 
 % Question 1.2
 \newquestion{1.2}
+We plot the average clustering coefficient as a function of the iteration number for
+the rewiring algorithm.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.7\textwidth]{1_2_plot}
+\caption{Plot of average clustering coefficient as we transform the power grid network into a random network with the same degree distribution.}
+\label{fig:power_grid_to_configuration}
+\end{figure}
+
+We note from the above graph that the average clustering coefficient for the power grid network is ``high'' (by a factor of 200) with respect to what we would expect from just a random network. We can see this as we rewire the edges to approach a random network, since the average clustering coefficient decreases from 0.08010361108159704 to 0.00041768990958905632 (average of the last 5 values), approximately the same clustering coefficient as the random network we generated in in (a) above. 
 
 % Question 2.1
 \newquestion{2.1}
