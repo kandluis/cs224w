@@ -5,6 +5,10 @@
 \usepackage{fancyhdr}
 \usepackage{enumerate}
 \usepackage{titlesec}
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage{tikz}
+\usetikzlibrary{arrows,automata}
 \usepackage[colorlinks=true,urlcolor=blue]{hyperref}
 
 \titlespacing{\subsubsection}{0pt}{0pt}{0pt}
@@ -108,33 +112,179 @@ We note from the above graph that the average clustering coefficient for the pow
 \newquestion{2.1}
 
 \subsubsection*{(a)}
+Count of Triad t0: 58732
+
+Count of Triad t1: 396548
+
+Count of Triad t2: 451711
+
+Count of Triad t3: 4003085
+
+Fraction of Triad t0: 0.0120
+
+Fraction of Triad t1: 0.0808
+
+Fraction of Triad t2: 0.0920
+
+Fraction of Triad t3: 0.8153
 
 \subsubsection*{(b)}
+Fraction of Positive Edges: 0.8324
+
+Fraction of Negative Edges: 0.1676
+
+Probability of Triad t0: 0.0047
+
+Probability of Triad t1: 0.0701
+
+Probability of Triad t2: 0.3484
+
+Probability of Triad t3: 0.5768
 
 \subsubsection*{(c)}
+Comparing (a) and (b), we see more t0 and t3 and fewer t2 triads (approximately expected t1, though slightly more) in the Epinions network then we would expect based on chance given the proportion of positive and negative edges.
+
+One possible explanation is that the Epinions network is quite social, so many of the t2 triads are quite unstable (I trust two people that do not trust each other), and often change into a fully trusting triad (t3), explaining the decrease in t2 and dramatic increase in t3 triads compared to random.
+
+As for the slight increase in t0, it might be due to the radical nature of individuals. Any level of untrustworthiness poisons the relationships. It also implies that the corollary ``I will trust someone who doesn't trust someone I don't trust'' does not hold in this network. This makes some sense for ``trust''since an untrustworthy person not trusting someone else could imply the person is more untrustworthy than the first.
 
 % Question 2.2
 \newquestion{2.2}
 
 \subsubsection*{(a)}
+Let $T$ be a maximum set of disjoint-edge triangles in $G$, a complete graph. We give a simple lower bound for $|T|$.
+
+$$
+\left\lfloor \frac{n - 1}{2} \right\rfloor \leq |T|
+$$
+We proof the above by induction on $n$, the number of nodes in the graph. Consider $n=1$ and $n=2$ as our base cases and note that:
+\begin{align*}
+\left\lfloor \frac{1 - 1}{2} \right\rfloor = 0 \leq |\{\}| \\
+\left\lfloor \frac{2 - 1}{2} \right\rfloor = 0 \leq |\{\}| \\
+\end{align*}
+
+Now assume the above holds for some $G_i$ with $i$ nodes. Let $T_i$ be the maximum set of disjoin-edge triangles in $G_i$. We prove that it holds for $k = i + 2$. Consider $G_k$ with two distinct nodes (and corresponding edges) removed, and note this graph is isomorphic to $G_i$. Let the two nodes be $u,v$. Consider a third node $w \neq u \neq v$. Note that $(u,v,w)$ form a disjoint-edge triangle with $|T_i|$ since no edge is contained in $G_i$. Therefore:
+
+\begin{align*}
+\left\lfloor \frac{k - 1}{2} \right\rfloor = \left\lfloor \frac{i + 1}{2} \right\rfloor = \left\lfloor \frac{i - 1}{2} + 1 \right\rfloor &= \left\lfloor \frac{i - 1}{2}\right\rfloor + 1 \\
+&\leq |T_i| + 1 \tag{by induction} \\
+&= |T_i \cup \{(u,v,w\}| \tag{disjoin sets}\\
+&\leq |T_{i+1}| = |T_k| \tag{the maximum could only be larger than one example}
+\end{align*}
+
+
+Note that the above together with $n=0$ proves our claim for even $n$, and with $n=1$ proves our claim for odd $n$. 
 
 \subsubsection*{(b)}
+A triangle in $G$ is balanced if all its edges are positive or only one edge is positive. Therefore the probability that a triangle, $t$, is balanced is given by:
+$$
+P(t_B) = p^3 + 3p(1-p)^2
+$$
+and with $p = \frac{1}{2}$ we have the probability as $P(t_B) = \frac{1}{2}$.
 
 \subsubsection*{(c)}
+We give an upper bound on the probability that all of the triangles in $T$ are balanced and show that this probability approaches $0$ as $n \to \infty$. Let $T_B$ be the event that all the triangles in $T$ are balanced. Then we have:
+
+\begin{align*}
+P(T_B) &= \bigwedge_{t \in T} P(t_B) \tag{triangles are disjoint, therefore events independent} \\
+&= \left[p^3 + 3p(1-p)^2\right]^{|T|} \tag{results from (b)} \\
+&= \left[p^3 + 3p(1-p)^2\right]^{\left\lfloor \frac{n - 1}{2} \right\rfloor} \tag{results from (a), noting that probabilities are $\leq 1$} \\
+&\leq \left(\frac{1}{2}\right)^{\left\lfloor \frac{n - 1}{2} \right\rfloor} \tag{assuming $p = \frac{1}{2}$} \\
+&= O\left(\frac{1}{2^n}\right)
+\end{align*}
+
+From the above, we can immediately see that $n \to \infty$, $P(T_B) \to 0$. Note that this further holds in the general case, since for all $0 \leq p < 1$ we have that $p^3 + 3p(1-p)^2 < 1$ which is sufficient for $O(p^n) \to 0$. Note that for $p = 1$ our results do not hold. Intuitively, when $p = 1$, we always have a balanced network since all edges are positive.
 
 \subsubsection*{(d)}
+Part (c) further implies that $P(G_B) \to 0$ as $n \to \infty$ since $T$ forms a subgraph of $G$, and in order for $G_B$ to occur, every subgraph of $G_B$ must be balanced.
 
 % Question 2.3
 \newquestion{2.3}
+In the process described, it is not true that the number of balanced triads cannot decrease. Consider the following counter example on a complete graph $G$ with $5$ nodes. Let us consider the subgraph $G'$ of $G$ shown below:
+
+\begin{centering}
+\begin{tikzpicture}[-,shorten >=3pt,auto,node distance=5.5cm,
+        scale = 1,transform shape]
+  \node[state] (1) {$1$};
+  \node[state] (2) [right of=1] {$2$};
+  \node[state] (4) [above right of=2] {$4$};
+  \node[state] (3) [below right of=4] {$3$};
+  \node[state] (5) [below right of=2] {$5$};
+
+  \path (1) edge              node {$+$} (4)
+        (1) edge              node {$+$} (5)
+        (2) edge              node {$+$} (4)
+        (2) edge              node {$+$} (5)
+        (4) edge              node {$+$} (5)
+        (3) edge              node {$+$} (4)
+        (3) edge              node {$-$} (5);
+
+\end{tikzpicture}
+\end{centering}
+
+First, note that we have a total of 3 triads with 2 balanced $\{(1,4,5), (2,4,5)\}$ and 1 unbalanced $(3,4,5)$.
+
+Now suppose we randomly choose the unbalanced triad in our dynamic process. Furthermore, suppose we select edge $(4,5)$ as the one to flip in order to balance $(3,4,5)$. Then note that the new graph will be:
+
+\begin{centering}
+\begin{tikzpicture}[-,shorten >=3pt,auto,node distance=5.5cm,
+        scale = 1,transform shape]
+  \node[state] (1) {$1$};
+  \node[state] (2) [right of=1] {$2$};
+  \node[state] (4) [above right of=2] {$4$};
+  \node[state] (3) [below right of=4] {$3$};
+  \node[state] (5) [below right of=2] {$5$};
+
+  \path (1) edge              node {$+$} (4)
+        (1) edge              node {$+$} (5)
+        (2) edge              node {$+$} (4)
+        (2) edge              node {$+$} (5)
+        (4) edge              node {$-$} (5)
+        (3) edge              node {$+$} (4)
+        (3) edge              node {$-$} (5);
+
+\end{tikzpicture}
+\end{centering}
+
+However, now we only have 1 balanced triad $(3,4,5)$ and the other two have become unbalanced. Therefore, this is a counterexample demonstrating that the process outlined does not always increase the number of balanced triads.
 
 % Question 2.4
 \newquestion{2.4}
+100\% of the trials ended up with balanced networks.
 
 % Question 2.5
 \newquestion{2.5}
+Let us define the following function:
+\[
+  \text{sign}(u,v) =
+  \begin{cases}
+                                   1 & \text{if $(u,v)=+$} \\
+                                   0 & \text{if $(u,v)=-$}
+  \end{cases}
+\]
 
+It is not possible. Note that adding a node $D$ will form three new edges, and subsequently, three new triangles - $(A,B,D), (A,C,D)$ and $(B,C,D)$.
+
+Suppose that all of these triangles are balanced. Particularly, note that this implies that $\text{sign}(B,D) = 1 - \text{sign}(C,D)$ since the only balanced triangle with a negative edge has another negative and positive edge (triangle $(B,C,D)$). Looking at triangles ($A,B,D$) and $(A,C,D)$, assuming they are balanced, we must have $\text{sign}(A,D) = \text{sign}(B,D)$ and $\text{sign}(A,D) = \text{sign}(C,D)$ since either the triangle is all positive or the new edges are both negative.
+
+However, note that the above leads to the following:
+$$
+\text{sign}(B,D) = 1 - \text{sign}(C,D) = 1 - \text{sign}(A,D) = 1 - \text{sign}(B,D) \implies 0 = 1
+$$
+a contradiction. Therefore all triangles cannot be balanced.
 % Question 2.6
 \newquestion{2.6}
+Take any complete \text{sign}ed network, on any number of nodes, that is unbalanced. We show that it is not possible for a new node X to join the network and form edges to all existing nodes in such a way that it does not become involved in any unbalanced triangles. 
+
+First, we consider a problem similar to 2.5 where we have a complete graph on $\{A,B,C\}$ where all \text{sign}s are negative (the only triangle is unbalanced). Let us consider adding a node $D$ to this graph. Assuming that the three newly crated triangles involving $D$ are balanced, we must have $\text{sign}(D,A) = 1 - \text{sign}(D,B), \text{sign}(D,B) = 1 -\text{sign}(D,C)$ and $\text{sign}(D,C) = 1 -\text{sign}(D,A)$. Note that putting these equations together we have:
+$$
+\text{sign}(D,A) = 1 - \text{sign}(D,B) = -\text{sign}(D,C) = \text{sign}(D,A) - 1 \implies 0 = 1
+$$
+a contradiction. Therefore all triangles involving $D$ cannot be balanced.
+
+With the above and 2.5, we have now shown that adding a new node $X$ to a currently unbalanced triangle will necessarily form at least one new unbalanced triangle in which $X$ participates. This readily generalizes to any complete signed network on any number of nodes.
+
+Take $G = (V,E)$ to be a complete signed network on $n$ nodes that is unbalanced. Since $G$ is unbalanced, there must exists $(u,v,w) \in V$ such that the triangle formed by $u,v,w$ is unbalanced. Now consider $X$ joining $G$ and forming an edge to every node in $G$. Then it must form edges to each of the nodes $\{u,v,w\}$. By our previous arguments, this implies $X$ must participate in an unbalanced triangle.
 
 % Question 3.1
 \newquestion{3.1}

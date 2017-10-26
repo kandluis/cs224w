@@ -114,7 +114,7 @@ def EdgeRewiringConfigurationModel(Graph, numIters=100):
   edgeMap = {i: (u, v) for i, (u, v) in enumerate(edges)}
   edgeCount = Counter(edges)
   iters = 0
-  while iters < numIters:
+  for _ in xrange(numIters):
     # Find a valid rewiring.
     isValid = False
     while not isValid:
@@ -162,9 +162,6 @@ def EdgeRewiringConfigurationModel(Graph, numIters=100):
       assert edgeCount[edgeMap[rand_i[0]]] == 1
       edgeCount[edgeMap[rand_i[1]]] += 1
       assert edgeCount[edgeMap[rand_i[1]]] == 1
-
-    # Increment
-    iters += 1
 
   # We should have finished rewiring so create new graph.
   newGraph = snap.TUNGraph.New(Graph.GetNodes(), Graph.GetEdges())
