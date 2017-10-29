@@ -213,12 +213,10 @@ def computeNumBalancedNetworks(numSimulations):
   return numBalancedNetworks
 
 
-def loadEpinions():
+def loadEpinions(filename):
   '''
   Removes self-edges from the graph!
   '''
-  filename = "data/epinions-signed.txt"
-
   # load Graph and Signs
   G = snap.LoadEdgeList(snap.PUNGraph, filename, 0, 1)
   for edge in G.Edges():
@@ -230,7 +228,8 @@ def loadEpinions():
 
 def main():
   # load Graph and Signs
-  epinionsNetwork = loadEpinions()
+  filename = "data/epinions-signed.txt"
+  epinionsNetwork = loadEpinions(filename)
   signs = loadSigns(filename)
 
   # Compute Triad Counts

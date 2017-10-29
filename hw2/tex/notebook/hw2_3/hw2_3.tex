@@ -1,0 +1,662 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{hw2\_3}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+        \PY{c+c1}{\PYZsh{} CS 224W (Fall 2017) \PYZhy{} HW2}
+        \PY{c+c1}{\PYZsh{} Code for Problem 3.1}
+        \PY{c+c1}{\PYZsh{} Author: luis0@stanford.edu}
+        \PY{c+c1}{\PYZsh{} Last Updated: Oct 26, 2017}
+        \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+        
+        \PY{k+kn}{import} \PY{n+nn}{os}
+        
+        \PY{k+kn}{import} \PY{n+nn}{snap}
+        \PY{k+kn}{import} \PY{n+nn}{random}
+        \PY{k+kn}{import} \PY{n+nn}{matplotlib.pyplot} \PY{k+kn}{as} \PY{n+nn}{plt}
+        
+        
+        \PY{k+kn}{from} \PY{n+nn}{enum} \PY{k+kn}{import} \PY{n}{Enum}
+        \PY{k+kn}{from} \PY{n+nn}{collections} \PY{k+kn}{import} \PY{n}{Counter}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{n}{VoterState} \PY{o}{=} \PY{n}{Enum}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{VoterState}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{UNDECIDED VOTEA VOTEB}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            
+        \PY{k}{def} \PY{n+nf}{removeSelfEdges}\PY{p}{(}\PY{n}{G}\PY{p}{)}\PY{p}{:}
+            \PY{k}{for} \PY{n}{edge} \PY{o+ow}{in} \PY{n}{G}\PY{o}{.}\PY{n}{Edges}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+                \PY{n}{u}\PY{p}{,} \PY{n}{v} \PY{o}{=} \PY{n}{edge}\PY{o}{.}\PY{n}{GetId}\PY{p}{(}\PY{p}{)}
+                \PY{k}{if} \PY{n}{u} \PY{o}{==} \PY{n}{v}\PY{p}{:}
+                    \PY{n}{G}\PY{o}{.}\PY{n}{DelEdge}\PY{p}{(}\PY{n}{u}\PY{p}{,}\PY{n}{v}\PY{p}{)}
+            \PY{k}{return} \PY{n}{G}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{k}{def} \PY{n+nf}{assignInitialVotes}\PY{p}{(}\PY{n}{G}\PY{p}{)}\PY{p}{:}
+            \PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}}
+        \PY{l+s+sd}{    Assigns the initial voting configuration to each node in G and returns}
+        \PY{l+s+sd}{    a map for every node to VoterState. Also returns a list of nodeIds that}
+        \PY{l+s+sd}{    are undecided.}
+        \PY{l+s+sd}{    \PYZsq{}\PYZsq{}\PYZsq{}}
+            \PY{n}{state} \PY{o}{=} \PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}
+            \PY{n}{undecided} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+            \PY{k}{for} \PY{n}{node} \PY{o+ow}{in} \PY{n}{G}\PY{o}{.}\PY{n}{Nodes}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+                \PY{n}{lastDigit} \PY{o}{=} \PY{n}{node}\PY{o}{.}\PY{n}{GetId}\PY{p}{(}\PY{p}{)} \PY{o}{\PYZpc{}} \PY{l+m+mi}{10}
+                \PY{k}{if} \PY{n}{lastDigit} \PY{o+ow}{in} \PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{]}\PY{p}{:}
+                    \PY{n}{state}\PY{p}{[}\PY{n}{node}\PY{o}{.}\PY{n}{GetId}\PY{p}{(}\PY{p}{)}\PY{p}{]} \PY{o}{=} \PY{n}{VoterState}\PY{o}{.}\PY{n}{VOTEA}
+                \PY{k}{elif} \PY{n}{lastDigit} \PY{o+ow}{in} \PY{p}{[}\PY{l+m+mi}{4}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{,}\PY{l+m+mi}{6}\PY{p}{,}\PY{l+m+mi}{7}\PY{p}{]}\PY{p}{:}
+                    \PY{n}{state}\PY{p}{[}\PY{n}{node}\PY{o}{.}\PY{n}{GetId}\PY{p}{(}\PY{p}{)}\PY{p}{]} \PY{o}{=} \PY{n}{VoterState}\PY{o}{.}\PY{n}{VOTEB}
+                \PY{k}{else}\PY{p}{:}
+                    \PY{n}{state}\PY{p}{[}\PY{n}{node}\PY{o}{.}\PY{n}{GetId}\PY{p}{(}\PY{p}{)}\PY{p}{]} \PY{o}{=} \PY{n}{VoterState}\PY{o}{.}\PY{n}{UNDECIDED}
+                    \PY{n}{undecided}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{node}\PY{o}{.}\PY{n}{GetId}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+            \PY{k}{return} \PY{p}{(}\PY{n}{state}\PY{p}{,} \PY{n}{undecided}\PY{p}{)}
+         
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{k}{def} \PY{n+nf}{loadGraphs}\PY{p}{(}\PY{n}{filenames}\PY{p}{)}\PY{p}{:}
+            \PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}}
+        \PY{l+s+sd}{    Loads the graphs and return a map specifying each voters}
+        \PY{l+s+sd}{    current state.}
+        \PY{l+s+sd}{    }
+        \PY{l+s+sd}{    returns: [(Graph, State, Undecided)] \PYZhy{} list of tuple of graph, }
+        \PY{l+s+sd}{    dictionary mapping nodeIds to their current VoterState, and list}
+        \PY{l+s+sd}{    of undecided nodeIds for each graph loaded.}
+        \PY{l+s+sd}{    \PYZsq{}\PYZsq{}\PYZsq{}}
+            \PY{n}{result} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+            \PY{k}{for} \PY{n}{filename} \PY{o+ow}{in} \PY{n}{filenames}\PY{p}{:}
+                \PY{n}{G} \PY{o}{=} \PY{n}{removeSelfEdges}\PY{p}{(}
+                    \PY{n}{snap}\PY{o}{.}\PY{n}{LoadEdgeList}\PY{p}{(}\PY{n}{snap}\PY{o}{.}\PY{n}{PUNGraph}\PY{p}{,} \PY{n}{filename}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
+                \PY{n}{votes}\PY{p}{,} \PY{n}{undecided} \PY{o}{=} \PY{n}{assignInitialVotes}\PY{p}{(}\PY{n}{G}\PY{p}{)}
+                \PY{n}{result}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{(}\PY{n}{G}\PY{p}{,} \PY{n}{votes}\PY{p}{,} \PY{n}{undecided}\PY{p}{)}\PY{p}{)}
+            \PY{k}{return} \PY{n}{result}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{k}{def} \PY{n+nf}{getVote}\PY{p}{(}\PY{n}{node}\PY{p}{,} \PY{n}{votes}\PY{p}{)}\PY{p}{:}
+            \PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}}
+        \PY{l+s+sd}{    Determine the voting state of snap.NodeI based on current votes of all}
+        \PY{l+s+sd}{    other nodes.}
+        \PY{l+s+sd}{    }
+        \PY{l+s+sd}{    return: VoterState for node.}
+        \PY{l+s+sd}{    \PYZsq{}\PYZsq{}\PYZsq{}}
+            \PY{k}{global} \PY{n}{defaultVote}
+            \PY{n}{voteA} \PY{o}{=} \PY{l+m+mi}{0} 
+            \PY{n}{voteB} \PY{o}{=} \PY{l+m+mi}{0}
+            \PY{n}{counts} \PY{o}{=} \PY{n}{Counter}\PY{p}{(}\PY{p}{[}\PY{n}{votes}\PY{p}{[}\PY{n}{node}\PY{o}{.}\PY{n}{GetNbrNId}\PY{p}{(}\PY{n}{i}\PY{p}{)}\PY{p}{]} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{xrange}\PY{p}{(}\PY{n}{node}\PY{o}{.}\PY{n}{GetDeg}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{]}\PY{p}{)}
+            
+            \PY{n}{myVote} \PY{o}{=} \PY{n}{VoterState}\PY{o}{.}\PY{n}{UNDECIDED}
+            \PY{k}{if} \PY{n}{counts}\PY{p}{[}\PY{n}{VoterState}\PY{o}{.}\PY{n}{VOTEA}\PY{p}{]} \PY{o}{\PYZgt{}} \PY{n}{counts}\PY{p}{[}\PY{n}{VoterState}\PY{o}{.}\PY{n}{VOTEB}\PY{p}{]}\PY{p}{:}
+                \PY{n}{myVote} \PY{o}{=} \PY{n}{VoterState}\PY{o}{.}\PY{n}{VOTEA}
+            \PY{k}{elif} \PY{n}{counts}\PY{p}{[}\PY{n}{VoterState}\PY{o}{.}\PY{n}{VOTEA}\PY{p}{]} \PY{o}{\PYZlt{}} \PY{n}{counts}\PY{p}{[}\PY{n}{VoterState}\PY{o}{.}\PY{n}{VOTEB}\PY{p}{]}\PY{p}{:}
+                \PY{n}{myVote} \PY{o}{=} \PY{n}{VoterState}\PY{o}{.}\PY{n}{VOTEB}
+            \PY{k}{else}\PY{p}{:}
+                \PY{n}{myVote} \PY{o}{=} \PY{n}{defaultVote}
+                \PY{n}{defaultVote} \PY{o}{=} \PY{p}{(}\PY{n}{VoterState}\PY{o}{.}\PY{n}{VOTEB}
+                               \PY{k}{if} \PY{n}{defaultVote} \PY{o}{==} \PY{n}{VoterState}\PY{o}{.}\PY{n}{VOTEA}
+                               \PY{k}{else} \PY{n}{VoterState}\PY{o}{.}\PY{n}{VOTEA}\PY{p}{)}
+            \PY{k}{assert} \PY{n}{myVote} \PY{o}{!=} \PY{n}{VoterState}\PY{o}{.}\PY{n}{UNDECIDED}
+            \PY{k}{return} \PY{n}{myVote}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{k}{def} \PY{n+nf}{runProcessOnGraph}\PY{p}{(}\PY{n}{G}\PY{p}{,} \PY{n}{votes}\PY{p}{,} \PY{n}{undecidedList}\PY{p}{)}\PY{p}{:}
+            \PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}}
+        \PY{l+s+sd}{    Performs the process descdribed in 3.1 for one iteration.}
+        \PY{l+s+sd}{    undecidedList must already be sorted.}
+        \PY{l+s+sd}{    }
+        \PY{l+s+sd}{    return: all values modified in place (except undecidedList).}
+        \PY{l+s+sd}{    \PYZsq{}\PYZsq{}\PYZsq{}}
+            \PY{k}{for} \PY{n}{nodeId} \PY{o+ow}{in} \PY{n}{undecidedList}\PY{p}{:}
+                \PY{n}{votes}\PY{p}{[}\PY{n}{nodeId}\PY{p}{]} \PY{o}{=} \PY{n}{getVote}\PY{p}{(}\PY{n}{G}\PY{o}{.}\PY{n}{GetNI}\PY{p}{(}\PY{n}{nodeId}\PY{p}{)}\PY{p}{,} \PY{n}{votes}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} \PY{k}{def} \PY{n+nf}{runProcess}\PY{p}{(}\PY{n}{graphData}\PY{p}{,} \PY{n}{numIters}\PY{o}{=}\PY{l+m+mi}{10}\PY{p}{)}\PY{p}{:}
+             \PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}}
+         \PY{l+s+sd}{    returns a list of results for each graph. Each result is a tuple}
+         \PY{l+s+sd}{    of the winner and the \PYZsh{} of votes the election was won by.}
+         \PY{l+s+sd}{    \PYZsq{}\PYZsq{}\PYZsq{}}
+             \PY{k}{global} \PY{n}{defaultVote}
+             \PY{n}{defaultVote} \PY{o}{=} \PY{n}{VoterState}\PY{o}{.}\PY{n}{VOTEA}
+             \PY{n}{results} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+             \PY{k}{for} \PY{n}{G}\PY{p}{,} \PY{n}{votes}\PY{p}{,} \PY{n}{undecided} \PY{o+ow}{in} \PY{n}{graphData}\PY{p}{:}
+                 \PY{k}{for} \PY{n}{\PYZus{}} \PY{o+ow}{in} \PY{n+nb}{xrange}\PY{p}{(}\PY{n}{numIters}\PY{p}{)}\PY{p}{:}
+                     \PY{n}{runProcessOnGraph}\PY{p}{(}\PY{n}{G}\PY{p}{,} \PY{n}{votes}\PY{p}{,} \PY{n}{undecided}\PY{p}{)}
+                     \PY{n}{voteCount} \PY{o}{=} \PY{n}{Counter}\PY{p}{(}\PY{n}{votes}\PY{o}{.}\PY{n}{values}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+                     \PY{k}{assert} \PY{n}{voteCount}\PY{p}{[}\PY{n}{VoterState}\PY{o}{.}\PY{n}{UNDECIDED}\PY{p}{]} \PY{o}{==} \PY{l+m+mi}{0}
+                 \PY{n}{results}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{A}\PY{l+s+s2}{\PYZdq{}}
+                     \PY{k}{if} \PY{n}{voteCount}\PY{p}{[}\PY{n}{VoterState}\PY{o}{.}\PY{n}{VOTEA}\PY{p}{]} \PY{o}{\PYZgt{}} \PY{n}{voteCount}\PY{p}{[}\PY{n}{VoterState}\PY{o}{.}\PY{n}{VOTEB}\PY{p}{]}
+                     \PY{k}{else} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{B}\PY{l+s+s2}{\PYZdq{}} \PY{k}{if} \PY{n}{voteCount}\PY{p}{[}\PY{n}{VoterState}\PY{o}{.}\PY{n}{VOTEA}\PY{p}{]} \PY{o}{\PYZlt{}}  \PY{n}{voteCount}\PY{p}{[}\PY{n}{VoterState}\PY{o}{.}\PY{n}{VOTEB}\PY{p}{]}
+                     \PY{k}{else} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{UNDECIDED}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}
+                     \PY{n+nb}{abs}\PY{p}{(}\PY{n}{voteCount}\PY{p}{[}\PY{n}{VoterState}\PY{o}{.}\PY{n}{VOTEA}\PY{p}{]} \PY{o}{\PYZhy{}} \PY{n}{voteCount}\PY{p}{[}\PY{n}{VoterState}\PY{o}{.}\PY{n}{VOTEB}\PY{p}{]}\PY{p}{)}
+                 \PY{p}{)}\PY{p}{)}
+             \PY{k}{return} \PY{n}{results}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} \PY{k}{def} \PY{n+nf}{Q3\PYZus{}1}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+             \PY{n}{NUM\PYZus{}DAYS} \PY{o}{=} \PY{l+m+mi}{10}
+             \PY{n}{filenames} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{data/graph}\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s1}{.txt}\PY{l+s+s1}{\PYZsq{}} \PY{o}{\PYZpc{}} \PY{p}{(}\PY{n}{i} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{)} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{xrange}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{]}
+             \PY{n}{graphData} \PY{o}{=} \PY{n}{loadGraphs}\PY{p}{(}\PY{n}{filenames}\PY{p}{)}
+             \PY{n}{results} \PY{o}{=} \PY{n}{runProcess}\PY{p}{(}\PY{n}{graphData}\PY{p}{,} \PY{n}{NUM\PYZus{}DAYS}\PY{p}{)}
+             \PY{k}{for} \PY{n}{i}\PY{p}{,} \PY{p}{(}\PY{n}{winner}\PY{p}{,} \PY{n}{voteDiff}\PY{p}{)} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{results}\PY{p}{)}\PY{p}{:}
+                 \PY{k}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Candidate }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{ wins by }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{ votes in Graph }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{.}\PY{l+s+s2}{\PYZdq{}} \PY{o}{\PYZpc{}} \PY{p}{(}
+                     \PY{n}{winner}\PY{p}{,} \PY{n}{voteDiff}\PY{p}{,} \PY{n}{i} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} \PY{n}{Q3\PYZus{}1}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Candidate B wins by 76 votes in Graph 1.
+Candidate B wins by 350 votes in Graph 2.
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}13}]:} \PY{k}{def} \PY{n+nf}{Q3\PYZus{}2}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+             \PY{n}{NUM\PYZus{}DAYS} \PY{o}{=} \PY{l+m+mi}{10}
+             \PY{n}{filenames} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{data/graph}\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s1}{.txt}\PY{l+s+s1}{\PYZsq{}} \PY{o}{\PYZpc{}} \PY{p}{(}\PY{n}{i} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{)} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{xrange}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{]}
+             \PY{n}{X} \PY{o}{=} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{9001}\PY{p}{,} \PY{l+m+mi}{1000}\PY{p}{)}
+             \PY{n}{Ys} \PY{o}{=} \PY{p}{[}\PY{p}{[}\PY{p}{]} \PY{k}{for} \PY{n}{\PYZus{}} \PY{o+ow}{in} \PY{n}{filenames}\PY{p}{]}
+             \PY{k}{for} \PY{n}{k} \PY{o+ow}{in} \PY{n}{X}\PY{p}{:}
+                 \PY{c+c1}{\PYZsh{} load the default graph configuration.}
+                 \PY{n}{graphData} \PY{o}{=} \PY{n}{loadGraphs}\PY{p}{(}\PY{n}{filenames}\PY{p}{)}
+                 \PY{n}{affectedVoters} \PY{o}{=} \PY{n+nb}{xrange}\PY{p}{(}\PY{l+m+mi}{3000}\PY{p}{,} \PY{l+m+mi}{3000} \PY{o}{+} \PY{n}{k} \PY{o}{/} \PY{l+m+mi}{100}\PY{p}{)}
+                 \PY{c+c1}{\PYZsh{} Spend your advertising money! Always spend *some* amount.}
+                 \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{xrange}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{graphData}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+                     \PY{n}{G}\PY{p}{,} \PY{n}{votes}\PY{p}{,} \PY{n}{undecided} \PY{o}{=} \PY{n}{graphData}\PY{p}{[}\PY{n}{i}\PY{p}{]}
+                     \PY{n}{removed} \PY{o}{=} \PY{l+m+mi}{0}
+                     \PY{k}{for} \PY{n}{affectedVoter} \PY{o+ow}{in} \PY{n}{affectedVoters}\PY{p}{:}
+                         \PY{k}{if} \PY{n}{votes}\PY{p}{[}\PY{n}{affectedVoter}\PY{p}{]} \PY{o}{==} \PY{n}{VoterState}\PY{o}{.}\PY{n}{UNDECIDED}\PY{p}{:}
+                             \PY{n}{removed} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+                         \PY{n}{votes}\PY{p}{[}\PY{n}{affectedVoter}\PY{p}{]} \PY{o}{=} \PY{n}{VoterState}\PY{o}{.}\PY{n}{VOTEA}
+                     \PY{n}{newUndecided} \PY{o}{=} \PY{p}{[}\PY{n}{nodeId} \PY{k}{for} \PY{n}{nodeId} \PY{o+ow}{in} \PY{n}{votes}
+                                      \PY{k}{if} \PY{n}{votes}\PY{p}{[}\PY{n}{nodeId}\PY{p}{]} \PY{o}{==} \PY{n}{VoterState}\PY{o}{.}\PY{n}{UNDECIDED}\PY{p}{]}
+                     \PY{k}{assert} \PY{n+nb}{len}\PY{p}{(}\PY{n}{newUndecided}\PY{p}{)} \PY{o}{==} \PY{n+nb}{len}\PY{p}{(}\PY{n}{undecided}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{n}{removed}
+                     \PY{n}{graphData}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{p}{(}\PY{n}{G}\PY{p}{,} \PY{n}{votes}\PY{p}{,} \PY{n}{newUndecided}\PY{p}{)}
+                 \PY{n}{results} \PY{o}{=} \PY{n}{runProcess}\PY{p}{(}\PY{n}{graphData}\PY{p}{,} \PY{n}{NUM\PYZus{}DAYS}\PY{p}{)}
+                 \PY{k}{assert} \PY{n+nb}{len}\PY{p}{(}\PY{n}{results}\PY{p}{)} \PY{o}{==} \PY{n+nb}{len}\PY{p}{(}\PY{n}{Ys}\PY{p}{)}
+                 \PY{k}{for} \PY{n}{i}\PY{p}{,} \PY{p}{(}\PY{n}{winner}\PY{p}{,} \PY{n}{margin}\PY{p}{)} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{results}\PY{p}{)}\PY{p}{:}
+                     \PY{k}{assert} \PY{n}{winner} \PY{o}{==} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{A}\PY{l+s+s2}{\PYZdq{}} \PY{o+ow}{or} \PY{n}{winner} \PY{o}{==} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{B}\PY{l+s+s2}{\PYZdq{}}
+                     \PY{n}{Ys}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{margin} \PY{k}{if} \PY{n}{winner} \PY{o}{==} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{A}\PY{l+s+s2}{\PYZdq{}} \PY{k}{else} \PY{o}{\PYZhy{}}\PY{n}{margin}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{close}\PY{p}{(}\PY{p}{)}
+             \PY{k}{for} \PY{n}{Y} \PY{o+ow}{in} \PY{n}{Ys}\PY{p}{:}
+                 \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{X}\PY{p}{,}\PY{n}{Y}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Graph}\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{\PYZdq{}} \PY{o}{\PYZpc{}} \PY{p}{(}\PY{n}{i} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{)}
+                         \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{xrange}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{Ys}\PY{p}{)}\PY{p}{)}\PY{p}{]}\PY{p}{,} \PY{n}{loc}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{upper left}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Amount Spent in Advertising (\PYZdl{})}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Margin of Victory for A}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Margin of Victory as AdSpend on A}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+             \PY{k}{if} \PY{o+ow}{not} \PY{n}{os}\PY{o}{.}\PY{n}{path}\PY{o}{.}\PY{n}{isdir}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{output}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{:}
+                 \PY{n}{os}\PY{o}{.}\PY{n}{makedirs}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{output}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{savefig}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{output/3\PYZus{}2\PYZus{}plot}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{dpi}\PY{o}{=}\PY{l+m+mi}{600}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+             
+             \PY{n}{minimums} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+             \PY{k}{for} \PY{n}{Y} \PY{o+ow}{in} \PY{n}{Ys}\PY{p}{:}
+                 \PY{k}{for} \PY{n}{i}\PY{p}{,} \PY{n}{y} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{Y}\PY{p}{)}\PY{p}{:}
+                     \PY{k}{if} \PY{n}{y} \PY{o}{\PYZgt{}} \PY{l+m+mi}{0}\PY{p}{:}
+                         \PY{k}{assert} \PY{n}{i} \PY{o}{+} \PY{l+m+mi}{1} \PY{o}{\PYZlt{}} \PY{n+nb}{len}\PY{p}{(}\PY{n}{Y}\PY{p}{)}
+                         \PY{n}{minimums}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{(}\PY{n}{X}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{,} \PY{n}{Y}\PY{p}{[}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+                         \PY{k}{break}
+             \PY{k}{for} \PY{n}{i}\PY{p}{,} \PY{p}{(}\PY{n}{spend}\PY{p}{,} \PY{n}{margin}\PY{p}{)} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{minimums}\PY{p}{)}\PY{p}{:}
+                 \PY{k}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{We can spend about \PYZdl{}}\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{ (based on our experiments) }\PY{l+s+s2}{\PYZdq{}}
+                       \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{and win the election on Graph }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{ in favor of A }\PY{l+s+s2}{\PYZdq{}}
+                       \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{by }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{ votes.}\PY{l+s+s2}{\PYZdq{}} \PY{o}{\PYZpc{}} \PY{p}{(}\PY{n}{spend}\PY{p}{,} \PY{n}{i} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{,} \PY{n}{margin}\PY{p}{)}\PY{p}{)}
+                         
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}14}]:} \PY{n}{Q3\PYZus{}2}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_10_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+We can spend about \$5000 (based on our experiments) and win the election on Graph 1 in favor of A by 36 votes.
+We can spend about \$7000 (based on our experiments) and win the election on Graph 2 in favor of A by 24 votes.
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}15}]:} \PY{k}{def} \PY{n+nf}{getSortedHighRollers}\PY{p}{(}\PY{n}{G}\PY{p}{)}\PY{p}{:}
+             \PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}}
+         \PY{l+s+sd}{    Returns sorted tuples of (nodeDegree, nodeID)}
+         \PY{l+s+sd}{    \PYZsq{}\PYZsq{}\PYZsq{}}
+             \PY{n}{nodeinfo} \PY{o}{=} \PY{p}{[}\PY{p}{(}\PY{n}{node}\PY{o}{.}\PY{n}{GetDeg}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{node}\PY{o}{.}\PY{n}{GetId}\PY{p}{(}\PY{p}{)}\PY{p}{)} \PY{k}{for} \PY{n}{node} \PY{o+ow}{in} \PY{n}{G}\PY{o}{.}\PY{n}{Nodes}\PY{p}{(}\PY{p}{)}\PY{p}{]}
+             \PY{k}{return} \PY{n+nb}{sorted}\PY{p}{(}\PY{n}{nodeinfo}\PY{p}{,} \PY{n}{key} \PY{o}{=} \PY{k}{lambda} \PY{n}{x}\PY{p}{:} \PY{p}{(}\PY{o}{\PYZhy{}}\PY{n}{x}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{x}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}16}]:} \PY{k}{def} \PY{n+nf}{Q3\PYZus{}3}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+             \PY{n}{NUM\PYZus{}DAYS} \PY{o}{=} \PY{l+m+mi}{10}
+             \PY{n}{filenames} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{data/graph}\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s1}{.txt}\PY{l+s+s1}{\PYZsq{}} \PY{o}{\PYZpc{}} \PY{p}{(}\PY{n}{i} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{)} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{xrange}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{]}
+             \PY{n}{X} \PY{o}{=} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{9001}\PY{p}{,} \PY{l+m+mi}{1000}\PY{p}{)}
+             \PY{n}{Ys} \PY{o}{=} \PY{p}{[}\PY{p}{[}\PY{p}{]} \PY{k}{for} \PY{n}{\PYZus{}} \PY{o+ow}{in} \PY{n}{filenames}\PY{p}{]}
+             \PY{c+c1}{\PYZsh{} Get all highrollers for each graph.}
+             \PY{n}{Graphs} \PY{o}{=} \PY{n}{loadGraphs}\PY{p}{(}\PY{n}{filenames}\PY{p}{)}
+             \PY{n}{highRollers} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+             \PY{k}{for} \PY{n}{Graph}\PY{p}{,} \PY{n}{\PYZus{}}\PY{p}{,} \PY{n}{\PYZus{}} \PY{o+ow}{in} \PY{n}{Graphs}\PY{p}{:}
+                 \PY{n}{highRollers}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{getSortedHighRollers}\PY{p}{(}\PY{n}{Graph}\PY{p}{)}\PY{p}{)}
+             
+             \PY{k}{for} \PY{n}{k} \PY{o+ow}{in} \PY{n}{X}\PY{p}{:}
+                 \PY{c+c1}{\PYZsh{} load the default graph configuration.}
+                 \PY{n}{graphData} \PY{o}{=} \PY{n}{loadGraphs}\PY{p}{(}\PY{n}{filenames}\PY{p}{)}
+                 \PY{c+c1}{\PYZsh{} Spend your advertising money! Always spend *some* amount.}
+                 \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{xrange}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{graphData}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+                     \PY{n}{G}\PY{p}{,} \PY{n}{votes}\PY{p}{,} \PY{n}{undecided} \PY{o}{=} \PY{n}{graphData}\PY{p}{[}\PY{n}{i}\PY{p}{]}
+                     \PY{n}{removed} \PY{o}{=} \PY{l+m+mi}{0}
+                     \PY{n}{affectedVoters} \PY{o}{=} \PY{p}{[}\PY{n}{nodeID}
+                                       \PY{k}{for} \PY{n}{\PYZus{}}\PY{p}{,} \PY{n}{nodeID} \PY{o+ow}{in} \PY{n}{highRollers}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{p}{:}\PY{n}{k} \PY{o}{/} \PY{l+m+mi}{1000}\PY{p}{]}\PY{p}{]}
+                     \PY{k}{for} \PY{n}{affectedVoter} \PY{o+ow}{in} \PY{n}{affectedVoters}\PY{p}{:}
+                         \PY{k}{if} \PY{n}{votes}\PY{p}{[}\PY{n}{affectedVoter}\PY{p}{]} \PY{o}{==} \PY{n}{VoterState}\PY{o}{.}\PY{n}{UNDECIDED}\PY{p}{:}
+                             \PY{n}{removed} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+                         \PY{n}{votes}\PY{p}{[}\PY{n}{affectedVoter}\PY{p}{]} \PY{o}{=} \PY{n}{VoterState}\PY{o}{.}\PY{n}{VOTEA}
+                     \PY{n}{newUndecided} \PY{o}{=} \PY{p}{[}\PY{n}{nodeId} \PY{k}{for} \PY{n}{nodeId} \PY{o+ow}{in} \PY{n}{votes}
+                                      \PY{k}{if} \PY{n}{votes}\PY{p}{[}\PY{n}{nodeId}\PY{p}{]} \PY{o}{==} \PY{n}{VoterState}\PY{o}{.}\PY{n}{UNDECIDED}\PY{p}{]}
+                     \PY{k}{assert} \PY{n+nb}{len}\PY{p}{(}\PY{n}{newUndecided}\PY{p}{)} \PY{o}{==} \PY{n+nb}{len}\PY{p}{(}\PY{n}{undecided}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{n}{removed}
+                     \PY{n}{graphData}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{p}{(}\PY{n}{G}\PY{p}{,} \PY{n}{votes}\PY{p}{,} \PY{n}{newUndecided}\PY{p}{)}
+                 \PY{n}{results} \PY{o}{=} \PY{n}{runProcess}\PY{p}{(}\PY{n}{graphData}\PY{p}{,} \PY{n}{NUM\PYZus{}DAYS}\PY{p}{)}
+                 \PY{k}{assert} \PY{n+nb}{len}\PY{p}{(}\PY{n}{results}\PY{p}{)} \PY{o}{==} \PY{n+nb}{len}\PY{p}{(}\PY{n}{Ys}\PY{p}{)}
+                 \PY{k}{for} \PY{n}{i}\PY{p}{,} \PY{p}{(}\PY{n}{winner}\PY{p}{,} \PY{n}{margin}\PY{p}{)} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{results}\PY{p}{)}\PY{p}{:}
+                     \PY{k}{assert} \PY{n}{winner} \PY{o}{==} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{A}\PY{l+s+s2}{\PYZdq{}} \PY{o+ow}{or} \PY{n}{winner} \PY{o}{==} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{B}\PY{l+s+s2}{\PYZdq{}}
+                     \PY{n}{Ys}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{margin} \PY{k}{if} \PY{n}{winner} \PY{o}{==} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{A}\PY{l+s+s2}{\PYZdq{}} \PY{k}{else} \PY{o}{\PYZhy{}}\PY{n}{margin}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{close}\PY{p}{(}\PY{p}{)}
+             \PY{k}{for} \PY{n}{Y} \PY{o+ow}{in} \PY{n}{Ys}\PY{p}{:}
+                 \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{X}\PY{p}{,}\PY{n}{Y}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Graph}\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{\PYZdq{}} \PY{o}{\PYZpc{}} \PY{p}{(}\PY{n}{i} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{)}
+                         \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{xrange}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{Ys}\PY{p}{)}\PY{p}{)}\PY{p}{]}\PY{p}{,} \PY{n}{loc}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{upper left}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Amount Spent Dining High Rollers (\PYZdl{})}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Margin of Victory for A}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Margin of Victory as \PYZdl{} Spent dining High Rollers}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+             \PY{k}{if} \PY{o+ow}{not} \PY{n}{os}\PY{o}{.}\PY{n}{path}\PY{o}{.}\PY{n}{isdir}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{output}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{:}
+                 \PY{n}{os}\PY{o}{.}\PY{n}{makedirs}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{output}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{savefig}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{output/3\PYZus{}3\PYZus{}plot}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{dpi}\PY{o}{=}\PY{l+m+mi}{600}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+             
+             \PY{n}{minimums} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+             \PY{k}{for} \PY{n}{Y} \PY{o+ow}{in} \PY{n}{Ys}\PY{p}{:}
+                 \PY{n}{appended} \PY{o}{=} \PY{n+nb+bp}{False}
+                 \PY{k}{for} \PY{n}{i}\PY{p}{,} \PY{n}{y} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{Y}\PY{p}{)}\PY{p}{:}
+                     \PY{k}{if} \PY{n}{y} \PY{o}{\PYZgt{}} \PY{l+m+mi}{0}\PY{p}{:}
+                         \PY{k}{assert} \PY{n}{i} \PY{o}{+} \PY{l+m+mi}{1} \PY{o}{\PYZlt{}} \PY{n+nb}{len}\PY{p}{(}\PY{n}{Y}\PY{p}{)}
+                         \PY{n}{minimums}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{(}\PY{n}{X}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{,} \PY{n}{Y}\PY{p}{[}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+                         \PY{n}{appended} \PY{o}{=} \PY{n+nb+bp}{True}
+                         \PY{k}{break}
+                 \PY{k}{if} \PY{o+ow}{not} \PY{n}{appended}\PY{p}{:}
+                     \PY{n}{minimums}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{(}\PY{n+nb+bp}{None}\PY{p}{,} \PY{n+nb+bp}{None}\PY{p}{)}\PY{p}{)}
+             \PY{k}{for} \PY{n}{i}\PY{p}{,} \PY{p}{(}\PY{n}{spend}\PY{p}{,} \PY{n}{margin}\PY{p}{)} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{minimums}\PY{p}{)}\PY{p}{:}
+                 \PY{k}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{We can spend \PYZdl{}}\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{ and win the election on Graph }\PY{l+s+s2}{\PYZdq{}}
+                       \PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{ in favor of A by }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{ votes.}\PY{l+s+s2}{\PYZdq{}} \PY{o}{\PYZpc{}} \PY{p}{(}\PY{n}{spend}\PY{p}{,} \PY{n}{i} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{,} \PY{n}{margin}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}17}]:} \PY{n}{Q3\PYZus{}3}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_13_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+We can spend \$None and win the election on Graph 1 in favor of A by None votes.
+We can spend \$6000 and win the election on Graph 2 in favor of A by 142 votes.
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}18}]:} \PY{k}{def} \PY{n+nf}{getDataPointsToPlot}\PY{p}{(}\PY{n}{Graph}\PY{p}{)}\PY{p}{:}
+             \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+         \PY{l+s+sd}{    :param \PYZhy{} Graph: snap.PUNGraph object representing an undirected graph}
+         \PY{l+s+sd}{    }
+         \PY{l+s+sd}{    return values:}
+         \PY{l+s+sd}{    X: list of degrees}
+         \PY{l+s+sd}{    Y: list of frequencies: Y[i] = fraction of nodes with degree X[i]}
+         \PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+             \PY{n}{degreeDistribution} \PY{o}{=} \PY{n}{snap}\PY{o}{.}\PY{n}{TIntPrV}\PY{p}{(}\PY{p}{)}
+             \PY{n}{snap}\PY{o}{.}\PY{n}{GetDegCnt}\PY{p}{(}\PY{n}{Graph}\PY{p}{,} \PY{n}{degreeDistribution}\PY{p}{)}
+             \PY{n}{N} \PY{o}{=} \PY{n+nb}{float}\PY{p}{(}\PY{n}{Graph}\PY{o}{.}\PY{n}{GetNodes}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+             \PY{n}{X}\PY{p}{,} \PY{n}{Y} \PY{o}{=} \PY{p}{[}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{p}{]}
+             \PY{k}{for} \PY{n}{item} \PY{o+ow}{in} \PY{n}{degreeDistribution}\PY{p}{:}
+                 \PY{n}{X}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{item}\PY{o}{.}\PY{n}{GetVal1}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+                 \PY{n}{Y}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n+nb}{float}\PY{p}{(}\PY{n}{item}\PY{o}{.}\PY{n}{GetVal2}\PY{p}{(}\PY{p}{)}\PY{p}{)} \PY{o}{/} \PY{n}{N}\PY{p}{)}
+             \PY{k}{return} \PY{n}{X}\PY{p}{,} \PY{n}{Y}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}21}]:} \PY{k}{def} \PY{n+nf}{Q3\PYZus{}4}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+             \PY{n}{filenames} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{data/graph}\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s1}{.txt}\PY{l+s+s1}{\PYZsq{}} \PY{o}{\PYZpc{}} \PY{p}{(}\PY{n}{i} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{)} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{xrange}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{]}
+             \PY{n}{graphData} \PY{o}{=} \PY{n}{loadGraphs}\PY{p}{(}\PY{n}{filenames}\PY{p}{)}
+             
+             \PY{n}{plt}\PY{o}{.}\PY{n}{close}\PY{p}{(}\PY{p}{)}
+             \PY{k}{for} \PY{n}{G}\PY{p}{,} \PY{n}{\PYZus{}}\PY{p}{,} \PY{n}{\PYZus{}} \PY{o+ow}{in} \PY{n}{graphData}\PY{p}{:}
+                 \PY{n}{X}\PY{p}{,}\PY{n}{Y} \PY{o}{=} \PY{n}{getDataPointsToPlot}\PY{p}{(}\PY{n}{G}\PY{p}{)}
+                 \PY{n}{plt}\PY{o}{.}\PY{n}{loglog}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{Y}\PY{p}{)}
+                 
+             \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Node Degree (log)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Proportion of Nodes with a Given Degree (log)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Degree Distribution of Graph 1 and Graph 2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Graph}\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{\PYZdq{}} \PY{o}{\PYZpc{}} \PY{p}{(}\PY{n}{i} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{)}
+                         \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{xrange}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{graphData}\PY{p}{)}\PY{p}{)}\PY{p}{]}\PY{p}{,} \PY{n}{loc}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{upper left}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{savefig}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{output/3\PYZus{}4\PYZus{}plot}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{dpi}\PY{o}{=}\PY{l+m+mi}{600}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}22}]:} \PY{n}{Q3\PYZus{}4}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_16_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}

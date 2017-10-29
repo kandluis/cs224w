@@ -196,7 +196,7 @@ P(T_B) &= \bigwedge_{t \in T} P(t_B) \tag{triangles are disjoint, therefore even
 From the above, we can immediately see that $n \to \infty$, $P(T_B) \to 0$. Note that this further holds in the general case, since for all $0 \leq p < 1$ we have that $p^3 + 3p(1-p)^2 < 1$ which is sufficient for $O(p^n) \to 0$. Note that for $p = 1$ our results do not hold. Intuitively, when $p = 1$, we always have a balanced network since all edges are positive.
 
 \subsubsection*{(d)}
-Part (c) further implies that $P(G_B) \to 0$ as $n \to \infty$ since $T$ forms a subgraph of $G$, and in order for $G_B$ to occur, every subgraph of $G_B$ must be balanced.
+Part (c) further implies that $P(G_B) \to 0$ as $n \to \infty$ since $T$ forms a subgraph of $G$, and in order for $G_B$ to occur, every subgraph of $G$ must be balanced.
 
 % Question 2.3
 \newquestion{2.3}
@@ -288,33 +288,68 @@ Take $G = (V,E)$ to be a complete signed network on $n$ nodes that is unbalanced
 
 % Question 3.1
 \newquestion{3.1}
-
+Candidate B wins by 76 votes in Graph 1.
+Candidate B wins by 350 votes in Graph 2.
 % Question 3.2
 \newquestion{3.2}
+We plot the winning margin as a function of ad-money spent:
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.7\textwidth]{3_2_plot}
+\caption{Plot of the margin of victory for A as a function of money spent on ads}
+\label{fig:admoney}
+\end{figure}
+
+We can spend about \$5000 (based on our experiments) and win the election on Graph 1 in favor of A by 36 votes.
+We can spend about \$7000 (based on our experiments) and win the election on Graph 2 in favor of A by 24 votes.
 
 % Question 3.3
 \newquestion{3.3}
+We plot the winning margin as a function of money spent dining high rollers:
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.7\textwidth]{3_3_plot}
+\caption{Plot of the margin of victory for A as a function of money spent on high rollers}
+\label{fig:high_rollers}
+\end{figure}
+
+We can spend \$6000 and win the election on Graph 2 in favor of A by 142 votes.
+By this method, we are unable to swing the election in favor of A with just a \$9000 budget in Graph 1.
 
 % Question 3.4
 \newquestion{3.4}
+We show the log-log plot of the degree distributions for Graph 1 and Graph 2.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.7\textwidth]{3_4_plot}
+\caption{Degree distribution for Graph 1 and Graph 2}
+\label{fig:distribution}
+\end{figure}
+
+From the above, it is obvious that the random graph is Graph 1 -- it has the distribution we have seen for the ER-model.
+
+The above explains the results in 3.3. The ER-model (Graph 1) has high-rollers with very low-degree, so changing their minds affects only a small set of nodes in the network, therefore it is not an effective way to convince nodes to vote for A. However, we can see that the high-rollers for Graph 2 have a very high degree, therefore capture just a few of them can influence many nodes in the network.
 
 % Information sheet
 % Fill out the information below (this should be the last page of your assignment)
 \addinformationsheet
 {\Large
-\textbf{Your name:} \hrulefill  % Put your name here
+\textbf{Your name:} Luis Perez  % Put your name here
 \\
-\textbf{Email:} \underline{\hspace*{7cm}}  % Put your e-mail here
-\textbf{SUID:} \hrulefill  % Put your student ID here
+\textbf{Email:} luis0@stanford.edu \hspace*{7cm}  % Put your e-mail here
+\textbf{SUID:} 05794739  % Put your student ID here
 \\*[2ex] 
 }
-Discussion Group: \hrulefill   % List your study group here
+Discussion Group: None  % List your study group here
 \\
 \vfill\vfill
 I acknowledge and accept the Honor Code.\\*[3ex]
 \bigskip
 \textit{(Signed)} 
-\hrulefill   % Replace this line with your initials
+LAP
 \vfill
 
 
