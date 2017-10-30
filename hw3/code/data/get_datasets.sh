@@ -1,0 +1,1 @@
+curl http://web.stanford.edu/class/cs224w/homeworks/hw3/data_sets/thresholds.txt -o thresholds.txt -s

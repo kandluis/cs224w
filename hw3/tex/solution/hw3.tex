@@ -1,0 +1,215 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{enumerate}
+\usepackage{titlesec}
+\usepackage[colorlinks=true,urlcolor=blue]{hyperref}
+
+\titlespacing{\subsubsection}{0pt}{0pt}{0pt}
+
+% No page numbers
+%\pagenumbering{gobble}
+
+% INFORMATION SHEET (DO NOT EDIT THIS PART) ---------------------------------------------
+\newcommand{\addinformationsheet}{
+\clearpage
+\thispagestyle{empty}
+\begin{center}
+\LARGE{\bf \textsf{Information sheet\\CS224W: Analysis of Networks}} \\*[4ex]
+\end{center}
+\vfill
+\textbf{Assignment Submission } Fill in and include this information sheet with each of your assignments.  This page should be the last page of your submission.  Assignments are due at 11:59pm and are always due on a Thursday.  All students (SCPD and non-SCPD) must submit their homeworks via GradeScope (\url{http://www.gradescope.com}). Students can typeset or scan their homeworks. Make sure that you answer each (sub-)question on a separate page. That is, one answer per page regardless of the answer length. Students also need to upload their code at \url{http://snap.stanford.edu/submit}. Put all the code for a single question into a single file and upload it. Please do not put any code in your GradeScope submissions. 
+\\
+\\
+\textbf{Late Homework Policy } Each student will have a total of {\em two} free late periods. {\em Homeworks are due on Thursdays at 11:59pm PDT and one late period expires on the following Monday at 11:59pm PDT}.  Only one late period may be used for an assignment.  Any homework received after 11:59pm PDT on the Monday following the homework due date will receive no credit.  Once these late periods are exhausted, any assignments turned in late will receive no credit.
+\\
+\\
+\textbf{Honor Code } We strongly encourage students to form study groups. Students may discuss and work on homework problems in groups. However, each student must write down their solutions independently i.e., each student must understand the solution well enough in order to reconstruct it by him/herself.  Students should clearly mention the names of all the other students who were part of their discussion group. Using code or solutions obtained from the web (github/google/previous year solutions etc.) is considered an honor code violation. We check all the submissions for plagiarism. We take the honor code very seriously and expect students to do the same. 
+\vfill
+\vfill
+}
+% ------------------------------------------------------------------------------
+
+% MARGINS (DO NOT EDIT) ---------------------------------------------
+\oddsidemargin  0.25in \evensidemargin 0.25in \topmargin -0.5in
+\headheight 0in \headsep 0.1in
+\textwidth  6.5in \textheight 9in
+\parskip 1.25ex  \parindent 0ex \footskip 20pt
+% ---------------------------------------------------------------------------------
+
+% HEADER (DO NOT EDIT) -----------------------------------------------
+\newcommand{\problemnumber}{0}
+\newcommand{\myname}{name}
+\newfont{\myfont}{cmssbx10 scaled 1000}
+\pagestyle{fancy}
+\fancyhead{}
+\fancyhead[L]{\myfont Question \problemnumber, Problem Set 3, CS224W}
+%\fancyhead[R]{\bssnine \myname}
+\newcommand{\newquestion}[1]{
+\clearpage % page break and flush floats
+\renewcommand{\problemnumber}{#1} % set problem number for header
+\phantom{}  % Put something on the page so it shows
+}
+% ---------------------------------------------------------------------------------
+
+
+% BEGIN HOMEWORK HERE
+\begin{document}
+\graphicspath{ {../../code/output/} }
+
+% Question 1
+\newquestion{1}
+
+\subsubsection*{(a)}
+
+For a given histogram $\textbf{N} =  (N_0, \cdots , N_{n-1})$ where $N_{\ell}$
+expresses the number of individuals that have threshold $\ell \in [n]$, we find the conditions such that individuals with threshold $\ell$ become active. 
+
+The individuals with threshold $\ell$ becoming active if and only if $\forall 0 \leq k \leq \ell$:
+$$
+\sum_{i=0}^{k - 1} N_{i} > k - 1
+$$
+Intuitively, this means that the individuals with threshold $\ell$ becoming active if and only if all individuals with a smaller threshold have become active and there are at least $\ell$ such individuals.
+
+We prove the above by strong induction. For the base case, consider $\ell = 0$. Then note that the above condition vacuosly holds:
+$$
+\sum_{i=0}^{-1} N_{i} = \sum \{ \} = 0 > -1
+$$
+and furthermore, the individuals with threshold $0$ are always active. Therefore our condition is both sufficient and necessary.
+
+Now we show the inductive case. Assume that our statement holds for all $\ell \leq m$. We now show that it is holds for all $\ell \leq m + 1$.
+
+Consider the case $\ell = m + 1$. We first show that in the condition holds, then the required individuals become active.
+
+In other words, we know that $\forall 0 \leq k \leq m + 1$:
+$$
+\sum_{i=0}^{k-1} N_{i} > k - 1
+$$
+Then immediately, we know that the above inequality holds $\forall 0 \leq k \leq \ell$ for all $\ell \leq m$. Therefore, by the inductive hypothesis, the above implies that all individuals with threshold $\ell \leq m$ are active. Furthermore, we know that:
+$$
+\sum_{i=0}^m N_m > m - 1
+$$
+, which means that the total number of active individuals must be at least $m + 1$ since by induction we know all $N_i$ for $0 \leq i \leq m$ are active. Therefore, all individuals with threshold $m + 1$ are also active.
+
+We now show that if the individuals with threahold $m+1$ are active, then the following inequality holds for all $0 \leq k \leq m + 1$:
+$$
+\sum_{i=0}^{k-1} N_{i} > k - 1
+$$
+Note that if the individuals with threshold $m + 1$ are active, then all individuals with a lower threshold are active (by defition of threshold). Therefore, by the strong inductive hypothesis, we must have that $\forall 0 \leq k \leq m$
+$$
+\sum_{i=0}^{k-1} N_i > k - 1
+$$
+holds.
+
+Furthermore, note if individuals with the threshold $m+1$ are active, then at least $m + 1$ individuals must be active. Putting this into mathematical terms, we must have:
+$$
+\sum_{i=0}^{m} N_i > m - 1
+$$
+which we can immediately combine with the above to arrive at the fact that $\forall 0 \leq k \leq m + 1$:
+$$
+\sum_{i=0}^{k-1} N_i > k - 1
+$$
+showing that our condition is sufficient (part 1) and necessary (part 2).
+
+\subsubsection*{(b)}
+
+For a given histogram of thresholds $\textbf{N}$, the final number of rioters is given by:
+$$
+\min \left(\{ \ell - 1 \big\vert \sum_{i=0}^{\ell - 1} N_{i} \leq \ell - 1 \}_{1 \leq \ell \leq n} \cup \{n\} \right)
+$$
+Note the above follows from the following logic. Let $\ell'$ be:
+$$
+\ell' = \min \left(  \{ \ell \big\vert \sum_{i=0}^{\ell - 1} N_{i} \leq \ell - 1 \}_{1 \leq \ell \leq n} \cup \{n + 1\} \right)
+$$
+, which intuitively is the first threshold that cannot be surmounted since there aren't enough activated values (where $n+1$ signifies the whole graph is activated). Then the total number of rioters for $\ell \neq n + 1$ is given by:
+\begin{align*}
+\sum_{i=0}^{\ell' - 1} N_{i} &\leq \ell' - 1 \tag{by definition of $\ell'$} \\
+\sum_{i=0}^{\ell' - 1} N_{i} &= N_{\ell' - 1} + \sum_{i=0}^{\ell' - 2} N_{i} \\
+&> N_{\ell' - 1} + \ell' - 2 \tag{if this were not true, we would contradict the fact that $\ell'$ is a minimum} \\
+&> \ell' - 2 \tag{$N_i \geq 0$} \\
+\implies \sum_{i=0}^{\ell' - 1} N_i = \ell' - 1
+\end{align*}
+Furthermore, note that for the case where $\ell' = n + 1$, we also have that the total number of activated nodes is given by $\ell' - 1 = n + 1 - 1 = n$ by design.
+
+Therefore, we can simplify to the first expression given.
+
+
+\subsubsection*{(c)}
+The final number of rioters is 45.
+
+We provide the plot below. Note that in addition to the cumulative function, we plot the identity function for reference.
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.7\textwidth]{1a}
+\caption{Plot cumulative threshold distribution and identity function}
+\label{fig:cum_threshold}
+\end{figure}
+
+The number of rioters can be inferred from the plot by finding the first instance, from left to right, where the plot crosses below or touches the $y = x$ line. This is the point where the cascade in this model will stop.
+
+
+% Question 2.1
+\newquestion{2.1}
+
+% Question 2.2
+\newquestion{2.2}
+
+% Question 2.3
+\newquestion{2.3}
+
+% Question 2.4
+\newquestion{2.4}
+
+% Question 2.5
+\newquestion{2.5}
+
+% Question 3.1
+\newquestion{3.1}
+
+% Question 3.2
+\newquestion{3.2}
+
+% Question 3.3
+\newquestion{3.3}
+
+% Question 3.4
+\newquestion{3.4}
+
+% Question 4.1
+\newquestion{4.1}
+
+% Question 4.2
+\newquestion{4.2}
+
+% Question 4.3
+\newquestion{4.3}
+
+% Question 4.4
+\newquestion{4.4}
+
+% Information sheet
+% Fill out the information below (this should be the last page of your assignment)
+\addinformationsheet
+{\Large
+\textbf{Your name:} Luis Perez  % Put your name here
+\\
+\textbf{Email:} luis0@stanford.edu \hspace*{7cm}  % Put your e-mail here
+\textbf{SUID:} 05794739  % Put your student ID here
+\\*[2ex] 
+}
+Discussion Group: None   % List your study group here
+\\
+\vfill\vfill
+I acknowledge and accept the Honor Code.\\*[3ex]
+\bigskip
+\textit{(Signed)} 
+LAP
+\vfill
+
+
+
+
+
+\end{document}
