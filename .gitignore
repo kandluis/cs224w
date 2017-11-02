@@ -361,6 +361,7 @@ TSWLatexianTemp*
 
 ## Ignore txt files in data directories
 **/data/**/*.txt
+**/data/**/*.tsv
 
 # Ignore zips.
 *.zip
