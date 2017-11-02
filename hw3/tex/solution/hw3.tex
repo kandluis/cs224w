@@ -153,17 +153,120 @@ The number of rioters can be inferred from the plot by finding the first instanc
 % Question 2.1
 \newquestion{2.1}
 
+We recall from class that the probability density function (PDF) of a power-law distribution is:
+$$
+P(x) = \frac{\alpha - 1}{x_{\text{min}}} \left(\frac{x}{x_{\text{min}}}\right)^{-\alpha}
+$$
+where $x_{\text{min}}$ is the minimum value that $X$ can be. We now derive an expression of $P(X \geq x)$, the Complementary Cumulative Distribution Function (CCDF), in terms of $\alpha$.
+
+\begin{align*}
+P(X \geq x) &= \int_{x}^{\infty} P(X) dx \\
+&= \int_{x}^{\infty} \frac{\alpha - 1}{x_{\text{min}}} \left(\frac{X}{x_{\text{min}}}\right)^{-\alpha} \\
+&= \frac{(\alpha - 1)}{x_{\text{min}}} \left(\frac{1}{x_{\text{min}}}\right)^{-\alpha}  \int_{x}^{\infty} X^{-\alpha} \\
+&= \frac{\alpha - 1}{x_{\text{min}}^{1- \alpha}}\left[\frac{X^{1 - \alpha}}{1 - \alpha} \big|_{x}^{\infty} \right] \\
+&= \frac{\alpha - 1}{x_{\text{min}}^{1- \alpha}}\left[0 + \frac{x^{1-\alpha}}{\alpha - 1}\big|_{x}^{\infty} \right] \tag{$\alpha > 1 \implies 1 - \alpha < 0 \text{, so } X \to \infty \implies X^{1-\alpha} \to 0$} \\
+&= \left(\frac{x}{x_{\text{min}}}\right)^{-\alpha + 1}
+\end{align*}
+
 % Question 2.2
 \newquestion{2.2}
+We show how to generate samples from the power-law distribution given from a uniform random sample $u \sim U(0,1)$. Following the hint, we note that $Y = F_X(X)$ where $F_X$ is the CDF of $X$ has is uniformly distributed on $U(0,1)$. Therefore, given a uniform sample, we can generate $X$ values by inverting the CDF as follows:
+$$
+x = CDF^{-1}(u) 
+$$
+In our case, we have:
+\begin{align*}
+CDF(x) &= 1 - CCDF(x)  \\
+&= 1 - \left(\frac{x}{x_{\text{min}}}\right)^{-\alpha + 1}
+\end{align*}
+Inverting the above function gives use:
+$$
+CDF^{-1}(u) = x_{\text{min}}(1 - u)^{\frac{1}{1 - \alpha}}
+$$
+
+With the above, we generate the empirical PDF and plots against the theoretical PDF in the log-log plot as shown in Figure 1. Note that we ignore $0$ values in both the generated and theoretical formulation.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.7\textwidth]{2_2}
+\caption{LogLog Plot of Empirical and Theoretical Power Law Distributions}
+\label{fig:empirical_and_theory}
+\end{figure}
 
 % Question 2.3
 \newquestion{2.3}
+We now attempt to estimate the $\alpha_{\text{ls}, \text{pdf}}$ for the empirical sample above. We do this by using `np.polyfit' package to minimize the squared error in logspace. We have:
+\begin{align*}
+y &= \frac{\alpha - 1}{x_{\text{min}}} \left(\frac{x}{x_{\text{min}}}\right)^{-\alpha} \\
+\implies \log(y) &= \log(\alpha - 1) - \log(x_{\text{min}}) -\alpha \log x + \alpha \log(x_{\text{min}}) \\
+&= -\alpha \log(x) + [\alpha - 1]\log(x_{\text{min}}) + \log(\alpha - 1) \\
+\implies y' &= ax' + b
+\end{align*}
+where we have:
+\begin{align*}
+a &= -\alpha \\
+b &= [\alpha - 1]\log(x_{\text{min}}) + \log(\alpha - 1)
+\end{align*}
+
+If we fit using `np.polyfit' on the log space, we have can solve the above equations to obtain:
+$$
+\alpha_{\text{ls}, \text{pdf}} = 1.0580243840833681
+$$
+
+We can improve the above estimate by ignoring outliers, in particular, by ignoring a lot of the noise introduced by very low-frequency counts (ie, counts of 1, or in logspace, of 0). Doing this and refitting the data using `np.polyfit', we have:
+$$
+\alpha_{\text{ls}, \text{pdf}}' = 1.71909300701
+$$
+
+For an overview, see the Figure \ref{fig:empirical_theory_and_ls}.
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.7\textwidth]{2_3}
+\caption{LogLog Plot of Empirical, Theoretical, and Fitted Power Law Distributions}
+\label{fig:empirical_theory_and_ls}
+\end{figure}
 
 % Question 2.4
 \newquestion{2.4}
+We calculate the log-likelihood in terms of $\alpha, \{x_i\}$, and $n$ (assuming $x_{\text{min}} = 1$)
+\begin{align*}
+\mathcal{L}(\alpha; \{x_i\}_{i=1}^n) &= \sum_{i=1}^{n} \ln P(X = x_i
+\mid \alpha) \\
+&= \sum_{i=1}^{n} \ln\left[(\alpha - 1)x_i^{-\alpha}\right] \\
+&= \sum_{i=1}^n \ln(\alpha - 1) - \alpha \sum_{i=1}^n\ln(x_i) \\
+&= n \ln(\alpha - 1) - \alpha \sum_{i=1}^{n }\ln x_i
+\end{align*}
+We can caculate the $\alpha_{mlle}$ by finding the $\alpha$ which maximizes the above. Taking derivatives we have and setting equal to zero:
+\begin{align*}
+\frac{\partial\mathcal{L}}{\partial\alpha} = \frac{n}{\alpha - 1} - \sum_{i=1}^{n} \ln(x_i) &= 0 \\
+\implies \alpha_{mlle} &= \frac{n}{\sum_{i=1}^{n} \ln(x_i)} + 1
+\end{align*}
+
+Furthermore, we know the above is a maximum because the second derivative is negative:
+\begin{align*}
+\frac{\partial^2\mathcal{L}}{\partial\alpha^2} = -\frac{n}{(\alpha - 1)^2} < 0 \tag{for $\alpha > 0$}
+\end{align*}
+
+Using our previous results, we obtain the following as the estimate:
+$$
+\alpha_{mlle} = 2.07131951671
+$$
+
+which we can see is quite good on the plot in Figure \ref{fig:empirical_theory_and_mlle}:
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.7\textwidth]{2_4}
+\caption{LogLog Plot of Empirical, Theoretical, and Fitted Power Law Distributions}
+\label{fig:empirical_theory_and_mlle}
+\end{figure}
 
 % Question 2.5
 \newquestion{2.5}
+LS estimate has sample mean: $\bar{\alpha}_{\text{ls}, \text{pfd}} = 0.93643299926$ and sample standard deviation $\sigma(\alpha_{\text{ls}, \text{pfd}}) = 0.0828853714802$.
+
+Improved LS estimate has sample mean: $\bar{\alpha}_{\text{ls}, \text{pfd}}' = 1.60560857939$ and sample standard deviation $\sigma(\alpha_{\text{ls}, \text{pfd}}') = 0.0711656806245$.
+
+MLLE estimate has sample mean: $\bar{\alpha}_{mlle} = 2.04568947964$ and sample standard deviation $\sigma(\alpha_{mlle}) = 0.0115627148751$.
 
 % Question 3.1
 \newquestion{3.1}
