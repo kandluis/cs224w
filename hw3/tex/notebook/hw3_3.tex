@@ -1,0 +1,665 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{hw3\_3}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{k+kn}{import} \PY{n+nn}{snap}
+        \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k+kn}{as} \PY{n+nn}{np}
+        \PY{k+kn}{import} \PY{n+nn}{random}
+        \PY{k+kn}{from} \PY{n+nn}{scipy.stats} \PY{k+kn}{import} \PY{n}{chi2\PYZus{}contingency}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{k}{def} \PY{n+nf}{removeSelfEdges}\PY{p}{(}\PY{n}{G}\PY{p}{)}\PY{p}{:}
+            \PY{k}{for} \PY{n}{edge} \PY{o+ow}{in} \PY{n}{G}\PY{o}{.}\PY{n}{Edges}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+                \PY{n}{u}\PY{p}{,} \PY{n}{v} \PY{o}{=} \PY{n}{edge}\PY{o}{.}\PY{n}{GetId}\PY{p}{(}\PY{p}{)}
+                \PY{k}{if} \PY{n}{u} \PY{o}{==} \PY{n}{v}\PY{p}{:}
+                    \PY{n}{G}\PY{o}{.}\PY{n}{DelEdge}\PY{p}{(}\PY{n}{u}\PY{p}{,}\PY{n}{v}\PY{p}{)}
+            \PY{k}{return} \PY{n}{G}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{k}{def} \PY{n+nf}{loadNetworks}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+            \PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}}
+        \PY{l+s+sd}{    loads actors, erdos, pref networks}
+        \PY{l+s+sd}{    }
+        \PY{l+s+sd}{    returns a dictionary of \PYZob{}name: network\PYZcb{}}
+        \PY{l+s+sd}{    \PYZsq{}\PYZsq{}\PYZsq{}}
+            \PY{n}{actors} \PY{o}{=} \PY{n}{removeSelfEdges}\PY{p}{(}\PY{n}{snap}\PY{o}{.}\PY{n}{LoadEdgeList}\PY{p}{(}
+                \PY{n}{snap}\PY{o}{.}\PY{n}{PUNGraph}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{data/imdb\PYZus{}actor\PYZus{}edges.tsv}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}t}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+            \PY{k}{assert} \PY{n}{actors}\PY{o}{.}\PY{n}{GetNodes}\PY{p}{(}\PY{p}{)} \PY{o}{==} \PY{l+m+mi}{17577}
+            \PY{k}{assert} \PY{n}{actors}\PY{o}{.}\PY{n}{GetEdges}\PY{p}{(}\PY{p}{)} \PY{o}{==} \PY{l+m+mi}{287074}
+            \PY{n}{erdos} \PY{o}{=} \PY{n}{removeSelfEdges}\PY{p}{(}\PY{n}{snap}\PY{o}{.}\PY{n}{LoadEdgeList}\PY{p}{(}
+                \PY{n}{snap}\PY{o}{.}\PY{n}{PUNGraph}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{data/SIR\PYZus{}erdos\PYZus{}renyi.txt}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}t}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+            \PY{k}{assert} \PY{n}{erdos}\PY{o}{.}\PY{n}{GetNodes}\PY{p}{(}\PY{p}{)} \PY{o}{==} \PY{l+m+mi}{17577}
+            \PY{k}{assert} \PY{n}{erdos}\PY{o}{.}\PY{n}{GetEdges}\PY{p}{(}\PY{p}{)} \PY{o}{==} \PY{l+m+mi}{287074}
+            \PY{n}{pref} \PY{o}{=} \PY{n}{removeSelfEdges}\PY{p}{(}\PY{n}{snap}\PY{o}{.}\PY{n}{LoadEdgeList}\PY{p}{(}
+                \PY{n}{snap}\PY{o}{.}\PY{n}{PUNGraph}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{data/SIR\PYZus{}preferential\PYZus{}attachment.txt}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}t}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+            \PY{k}{assert} \PY{n}{pref}\PY{o}{.}\PY{n}{GetNodes}\PY{p}{(}\PY{p}{)} \PY{o}{==} \PY{l+m+mi}{17577}
+            \PY{k}{assert} \PY{n}{pref}\PY{o}{.}\PY{n}{GetEdges}\PY{p}{(}\PY{p}{)} \PY{o}{==} \PY{l+m+mi}{281096}
+            \PY{k}{return} \PY{p}{\PYZob{}}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Actors}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n}{actors}\PY{p}{,}
+                    \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Erdos\PYZhy{}Renyi}\PY{l+s+s2}{\PYZdq{}} \PY{p}{:} \PY{n}{erdos}\PY{p}{,}
+                    \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Preferential Attachment}\PY{l+s+s2}{\PYZdq{}} \PY{p}{:} \PY{n}{pref}\PY{p}{\PYZcb{}}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{k}{def} \PY{n+nf}{simulation}\PY{p}{(}\PY{n}{G}\PY{p}{,} \PY{n}{infected}\PY{p}{,} \PY{n}{beta}\PY{o}{=}\PY{l+m+mf}{0.05}\PY{p}{,} \PY{n}{delta}\PY{o}{=}\PY{l+m+mf}{0.5}\PY{p}{)}\PY{p}{:}
+            \PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}}
+        \PY{l+s+sd}{    Simulates the SIR model of infections with the given beta and delta}
+        \PY{l+s+sd}{    parameters.}
+        \PY{l+s+sd}{    }
+        \PY{l+s+sd}{    returns: the percentage of nodes that become infected.}
+        \PY{l+s+sd}{    \PYZsq{}\PYZsq{}\PYZsq{}}
+            \PY{n}{nodes} \PY{o}{=} \PY{n+nb}{set}\PY{p}{(}\PY{p}{[}\PY{n}{node}\PY{o}{.}\PY{n}{GetId}\PY{p}{(}\PY{p}{)} \PY{k}{for} \PY{n}{node} \PY{o+ow}{in} \PY{n}{G}\PY{o}{.}\PY{n}{Nodes}\PY{p}{(}\PY{p}{)}\PY{p}{]}\PY{p}{)}
+            \PY{n}{susceptible} \PY{o}{=} \PY{n}{nodes} \PY{o}{\PYZhy{}} \PY{n}{infected}
+            \PY{n}{recovered} \PY{o}{=} \PY{n+nb}{set}\PY{p}{(}\PY{p}{)}
+            \PY{k}{while} \PY{n+nb}{len}\PY{p}{(}\PY{n}{infected}\PY{p}{)} \PY{o}{!=} \PY{l+m+mi}{0}\PY{p}{:}
+                \PY{n}{noLongerSusceptible} \PY{o}{=} \PY{n+nb}{set}\PY{p}{(}\PY{p}{)}
+                \PY{n}{newlyInfected} \PY{o}{=} \PY{n+nb}{set}\PY{p}{(}\PY{p}{)}
+                \PY{n}{noLongerInfected} \PY{o}{=} \PY{n+nb}{set}\PY{p}{(}\PY{p}{)}
+                \PY{n}{newlyRecovered} \PY{o}{=} \PY{n+nb}{set}\PY{p}{(}\PY{p}{)}
+                \PY{k}{for} \PY{n}{node} \PY{o+ow}{in} \PY{n}{G}\PY{o}{.}\PY{n}{Nodes}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+                    \PY{n}{u} \PY{o}{=} \PY{n}{node}\PY{o}{.}\PY{n}{GetId}\PY{p}{(}\PY{p}{)}
+                    \PY{k}{if} \PY{n}{u} \PY{o+ow}{in} \PY{n}{susceptible}\PY{p}{:}
+                        \PY{k}{for} \PY{n}{neighbor} \PY{o+ow}{in} \PY{p}{[}\PY{n}{node}\PY{o}{.}\PY{n}{GetNbrNId}\PY{p}{(}\PY{n}{i}\PY{p}{)}
+                                         \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{xrange}\PY{p}{(}\PY{n}{node}\PY{o}{.}\PY{n}{GetDeg}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{]}\PY{p}{:}
+                            \PY{k}{if} \PY{p}{(}\PY{n}{neighbor} \PY{o+ow}{in} \PY{n}{infected} \PY{o+ow}{and}
+                                \PY{n}{random}\PY{o}{.}\PY{n}{random}\PY{p}{(}\PY{p}{)} \PY{o}{\PYZlt{}} \PY{n}{beta}\PY{p}{)}\PY{p}{:}
+                                \PY{n}{noLongerSusceptible}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{u}\PY{p}{)}
+                                \PY{n}{newlyInfected}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{u}\PY{p}{)}
+                                \PY{k}{break}
+                    \PY{k}{elif} \PY{p}{(}\PY{n}{u} \PY{o+ow}{in} \PY{n}{infected} \PY{o+ow}{and} \PY{n}{random}\PY{o}{.}\PY{n}{random}\PY{p}{(}\PY{p}{)} \PY{o}{\PYZlt{}} \PY{n}{delta}\PY{p}{)}\PY{p}{:}
+                        \PY{n}{noLongerInfected}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{u}\PY{p}{)}
+                        \PY{n}{newlyRecovered}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{u}\PY{p}{)}
+                        
+                \PY{n}{susceptible} \PY{o}{\PYZhy{}}\PY{o}{=} \PY{n}{noLongerSusceptible}
+                \PY{n}{infected} \PY{o}{=} \PY{p}{(}\PY{n}{infected} \PY{o}{|} \PY{n}{newlyInfected}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{n}{noLongerInfected}
+                \PY{n}{recovered} \PY{o}{|}\PY{o}{=} \PY{n}{newlyRecovered}
+            
+            \PY{k}{return} \PY{n+nb}{len}\PY{p}{(}\PY{n}{recovered}\PY{p}{)} \PY{o}{/} \PY{n+nb}{float}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{nodes}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{k}{def} \PY{n+nf}{runSimulations}\PY{p}{(}\PY{n}{networks}\PY{p}{,} \PY{n}{getInitialInfected}\PY{p}{,} \PY{n}{nSimulations} \PY{o}{=} \PY{l+m+mi}{100}\PY{p}{)}\PY{p}{:}
+            \PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}}
+        \PY{l+s+sd}{    Runs the simulations and returns list for the proportion of epidemics}
+        \PY{l+s+sd}{    in each network as well as a list of the percent infected for }
+        \PY{l+s+sd}{    each trial.}
+        \PY{l+s+sd}{    }
+        \PY{l+s+sd}{    return: dictionary with \PYZob{}networkname: trial\PYZus{}results\PYZcb{}}
+        \PY{l+s+sd}{    \PYZsq{}\PYZsq{}\PYZsq{}}
+            \PY{k}{return} \PY{p}{\PYZob{}}\PY{n}{name}\PY{p}{:} \PY{p}{[}\PY{n}{simulation}\PY{p}{(}\PY{n}{G}\PY{p}{,} \PY{n}{getInitialInfected}\PY{p}{(}\PY{n}{G}\PY{p}{)}\PY{p}{)}
+                           \PY{k}{for} \PY{n}{\PYZus{}} \PY{o+ow}{in} \PY{n+nb}{xrange}\PY{p}{(}\PY{n}{nSimulations}\PY{p}{)}\PY{p}{]}
+                    \PY{k}{for} \PY{n}{name}\PY{p}{,} \PY{n}{G} \PY{o+ow}{in} \PY{n}{networks}\PY{o}{.}\PY{n}{iteritems}\PY{p}{(}\PY{p}{)}\PY{p}{\PYZcb{}}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{k}{def} \PY{n+nf}{getEpidemics}\PY{p}{(}\PY{n}{results}\PY{p}{)}\PY{p}{:}
+            \PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}}
+        \PY{l+s+sd}{    Given a list of percent infected in each trial, calculates the}
+        \PY{l+s+sd}{    proportion considered epidemics.}
+        \PY{l+s+sd}{    }
+        \PY{l+s+sd}{    returns proportion (float)}
+        \PY{l+s+sd}{    \PYZsq{}\PYZsq{}\PYZsq{}}
+            \PY{k}{return} \PY{p}{[}\PY{n}{v} \PY{k}{for} \PY{n}{v} \PY{o+ow}{in} \PY{n}{results} \PY{k}{if} \PY{n}{v} \PY{o}{\PYZgt{}}\PY{o}{=} \PY{l+m+mf}{0.5}\PY{p}{]}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{k}{def} \PY{n+nf}{printResultStatistics}\PY{p}{(}\PY{n}{results}\PY{p}{,} \PY{n}{runSignificanceTest}\PY{o}{=}\PY{n+nb+bp}{True}\PY{p}{)}\PY{p}{:}
+            \PY{k}{for} \PY{n}{name}\PY{p}{,} \PY{n}{result} \PY{o+ow}{in} \PY{n}{results}\PY{o}{.}\PY{n}{iteritems}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+                \PY{k}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{Results for }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{ Network:}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{\PYZdq{}} \PY{o}{\PYZpc{}} \PY{n}{name}\PY{p}{)}
+                \PY{n}{epidemics} \PY{o}{=} \PY{n}{getEpidemics}\PY{p}{(}\PY{n}{result}\PY{p}{)}
+                \PY{n}{e1} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{epidemics}\PY{p}{)}
+                \PY{k}{if} \PY{n+nb}{len}\PY{p}{(}\PY{n}{result}\PY{p}{)} \PY{o}{==} \PY{l+m+mi}{0}\PY{p}{:}
+                    \PY{k}{continue}
+                \PY{k}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{ out of }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{ (}\PY{l+s+si}{\PYZpc{}s}\PY{l+s+si}{\PYZpc{}\PYZpc{}}\PY{l+s+s2}{) simulations in }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{ Network resulted }\PY{l+s+s2}{\PYZdq{}}
+                      \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{in an epidemic.}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{\PYZdq{}} \PY{o}{\PYZpc{}} \PY{p}{(}\PY{n}{e1}\PY{p}{,} \PY{n+nb}{len}\PY{p}{(}\PY{n}{result}\PY{p}{)}\PY{p}{,}
+                                           \PY{l+m+mi}{100}\PY{o}{*}\PY{n+nb}{float}\PY{p}{(}\PY{n}{e1}\PY{p}{)} \PY{o}{/} \PY{n+nb}{len}\PY{p}{(}\PY{n}{result}\PY{p}{)}\PY{p}{,} \PY{n}{name}\PY{p}{)}\PY{p}{)}
+                \PY{k}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{On average across all trials, }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+si}{\PYZpc{}\PYZpc{}}\PY{l+s+s2}{ of the population }\PY{l+s+s2}{\PYZdq{}}
+                      \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{in }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{ Network was infected.}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{\PYZdq{}} \PY{o}{\PYZpc{}} \PY{p}{(}\PY{l+m+mi}{100}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{n}{result}\PY{p}{)}\PY{p}{,} \PY{n}{name}\PY{p}{)}\PY{p}{)}
+                \PY{k}{if} \PY{n+nb}{len}\PY{p}{(}\PY{n}{epidemics}\PY{p}{)} \PY{o}{\PYZgt{}} \PY{l+m+mi}{0}\PY{p}{:}
+                    \PY{k}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{On average across epidemic trials, }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+si}{\PYZpc{}\PYZpc{}}\PY{l+s+s2}{ of the population }\PY{l+s+s2}{\PYZdq{}}
+                          \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{in }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{ Network was infected.}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{\PYZdq{}} \PY{o}{\PYZpc{}} \PY{p}{(}
+                              \PY{l+m+mi}{100}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{n}{epidemics}\PY{p}{)}\PY{p}{,} \PY{n}{name}\PY{p}{)}\PY{p}{)}
+                \PY{k}{else}\PY{p}{:}
+                    \PY{k}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{No epidemics occurred in }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{ Network.}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+            \PY{k}{if} \PY{n}{runSignificanceTest}\PY{p}{:}
+                \PY{k}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Significance Tests:}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+                \PY{n}{pairs} \PY{o}{=} \PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}
+                \PY{k}{for} \PY{n}{name1}\PY{p}{,} \PY{n}{result1} \PY{o+ow}{in} \PY{n}{results}\PY{o}{.}\PY{n}{iteritems}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+                    \PY{k}{for} \PY{n}{name2}\PY{p}{,} \PY{n}{result2} \PY{o+ow}{in} \PY{n}{results}\PY{o}{.}\PY{n}{iteritems}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+                        \PY{n}{key} \PY{o}{=} \PY{n+nb}{tuple}\PY{p}{(}\PY{n+nb}{sorted}\PY{p}{(}\PY{p}{[}\PY{n}{name1}\PY{p}{,} \PY{n}{name2}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+                        \PY{k}{if} \PY{n}{key} \PY{o+ow}{not} \PY{o+ow}{in} \PY{n}{pairs} \PY{o+ow}{and} \PY{n}{name1} \PY{o}{!=} \PY{n}{name2}\PY{p}{:}
+                            \PY{n}{pairs}\PY{p}{[}\PY{n}{key}\PY{p}{]} \PY{o}{=} \PY{n+nb+bp}{True}
+                            \PY{n}{e1} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{getEpidemics}\PY{p}{(}\PY{n}{result1}\PY{p}{)}\PY{p}{)}
+                            \PY{n}{e2} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{getEpidemics}\PY{p}{(}\PY{n}{result2}\PY{p}{)}\PY{p}{)}
+                            \PY{n}{chi2}\PY{p}{,} \PY{n}{p}\PY{p}{,} \PY{n}{\PYZus{}}\PY{p}{,} \PY{n}{\PYZus{}} \PY{o}{=} \PY{n}{chi2\PYZus{}contingency}\PY{p}{(}
+                                \PY{p}{[}\PY{p}{[}\PY{n}{e1}\PY{p}{,} \PY{n+nb}{len}\PY{p}{(}\PY{n}{result1}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{n}{e1}\PY{p}{]}\PY{p}{,}
+                                 \PY{p}{[}\PY{n}{e2}\PY{p}{,} \PY{n+nb}{len}\PY{p}{(}\PY{n}{result2}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{n}{e2}\PY{p}{]}\PY{p}{]}\PY{p}{)}
+                            \PY{k}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{ vs }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{: chi2 = }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{, p = }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{.}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{\PYZdq{}} \PY{o}{\PYZpc{}} \PY{p}{(}
+                                \PY{n}{name1}\PY{p}{,} \PY{n}{name2}\PY{p}{,} \PY{n}{chi2}\PY{p}{,} \PY{n}{p}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{n}{SEED} \PY{o}{=} \PY{l+m+mi}{42}
+        \PY{n}{Rnd} \PY{o}{=} \PY{n}{snap}\PY{o}{.}\PY{n}{TRnd}\PY{p}{(}\PY{n}{SEED}\PY{p}{)}
+        \PY{n}{Rnd}\PY{o}{.}\PY{n}{Randomize}\PY{p}{(}\PY{p}{)}
+        \PY{n}{random}\PY{o}{.}\PY{n}{seed}\PY{p}{(}\PY{n}{SEED}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{k}{def} \PY{n+nf}{Q3\PYZus{}1}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+            \PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}}
+        \PY{l+s+sd}{    Sets the global props31 and res31 variables.}
+        \PY{l+s+sd}{    \PYZsq{}\PYZsq{}\PYZsq{}}
+            \PY{n}{networks} \PY{o}{=} \PY{n}{loadNetworks}\PY{p}{(}\PY{p}{)}
+            \PY{k}{global} \PY{n}{results31}
+            \PY{n}{results31} \PY{o}{=} \PY{n}{runSimulations}\PY{p}{(}\PY{n}{networks}\PY{p}{,}
+                                       \PY{k}{lambda} \PY{n}{G}\PY{p}{:} \PY{n+nb}{set}\PY{p}{(}\PY{p}{[}\PY{n}{G}\PY{o}{.}\PY{n}{GetRndNId}\PY{p}{(}\PY{n}{Rnd}\PY{p}{)}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+            \PY{n}{printResultStatistics}\PY{p}{(}\PY{n}{results31}\PY{p}{)}    
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} \PY{n}{Q3\PYZus{}1}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+Results for Actors Network:
+
+52 out of 100 (52.0\%) simulations in Actors Network resulted in an epidemic.
+
+On average across all trials, 31.6914149172\% of the population in Actors Network was infected.
+
+On average across epidemic trials, 60.8466702553\% of the population in Actors Network was infected.
+
+
+Results for Preferential Attachment Network:
+
+81 out of 100 (81.0\%) simulations in Preferential Attachment Network resulted in an epidemic.
+
+On average across all trials, 71.1530977983\% of the population in Preferential Attachment Network was infected.
+
+On average across epidemic trials, 87.8418556236\% of the population in Preferential Attachment Network was infected.
+
+
+Results for Erdos-Renyi Network:
+
+86 out of 100 (86.0\%) simulations in Erdos-Renyi Network resulted in an epidemic.
+
+On average across all trials, 81.4895602207\% of the population in Erdos-Renyi Network was infected.
+
+On average across epidemic trials, 94.7541779625\% of the population in Erdos-Renyi Network was infected.
+
+Significance Tests:
+
+Actors vs Preferential Attachment: chi2 = 17.5962293794, p = 2.73129360125e-05.
+
+Actors vs Erdos-Renyi: chi2 = 25.4558204769, p = 4.52630014463e-07.
+
+Preferential Attachment vs Erdos-Renyi: chi2 = 0.580656868082, p = 0.446054964748.
+
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} \PY{k}{def} \PY{n+nf}{Q3\PYZus{}2}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+             \PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}}
+         \PY{l+s+sd}{    Sets the global props32 and res32 variables.}
+         \PY{l+s+sd}{    \PYZsq{}\PYZsq{}\PYZsq{}}
+             \PY{n}{networks} \PY{o}{=} \PY{n}{loadNetworks}\PY{p}{(}\PY{p}{)}
+             \PY{k}{global} \PY{n}{results32}
+             \PY{n}{results32} \PY{o}{=} \PY{n}{runSimulations}\PY{p}{(}\PY{n}{networks}\PY{p}{,}
+                                        \PY{k}{lambda} \PY{n}{G}\PY{p}{:} \PY{n+nb}{set}\PY{p}{(}\PY{p}{[}\PY{n}{snap}\PY{o}{.}\PY{n}{GetMxDegNId}\PY{p}{(}\PY{n}{G}\PY{p}{)}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+             \PY{n}{printResultStatistics}\PY{p}{(}\PY{n}{results32}\PY{p}{,} \PY{n}{runSignificanceTest}\PY{o}{=}\PY{n+nb+bp}{False}\PY{p}{)}
+             \PY{k}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{Relative Increases:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+             \PY{k}{for} \PY{n}{name} \PY{o+ow}{in} \PY{n}{results32}\PY{p}{:}
+                 \PY{n}{prevAvgInfected} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{n}{results31}\PY{p}{[}\PY{n}{name}\PY{p}{]}\PY{p}{)}
+                 \PY{n}{avgInfected} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{n}{results32}\PY{p}{[}\PY{n}{name}\PY{p}{]}\PY{p}{)}
+                 \PY{n}{relIncreases} \PY{o}{=} \PY{p}{(}\PY{n}{avgInfected} \PY{o}{\PYZhy{}} \PY{n}{prevAvgInfected}\PY{p}{)}\PY{o}{/}\PY{n}{prevAvgInfected}
+                 \PY{k}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{The average proportion infected has increased by }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+si}{\PYZpc{}\PYZpc{}}\PY{l+s+s2}{ }\PY{l+s+s2}{\PYZdq{}}
+                       \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{from }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+si}{\PYZpc{}\PYZpc{}}\PY{l+s+s2}{ to }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+si}{\PYZpc{}\PYZpc{}}\PY{l+s+s2}{ for the }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{ Network.}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{\PYZdq{}} \PY{o}{\PYZpc{}}\PY{p}{(}
+                           \PY{l+m+mi}{100}\PY{o}{*}\PY{n}{relIncreases}\PY{p}{,} \PY{l+m+mi}{100}\PY{o}{*}\PY{n}{prevAvgInfected}\PY{p}{,} \PY{l+m+mi}{100}\PY{o}{*}\PY{n}{avgInfected}\PY{p}{,}
+                           \PY{n}{name}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} \PY{n}{Q3\PYZus{}2}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+Results for Actors Network:
+
+100 out of 100 (100.0\%) simulations in Actors Network resulted in an epidemic.
+
+On average across all trials, 60.8550947261\% of the population in Actors Network was infected.
+
+On average across epidemic trials, 60.8550947261\% of the population in Actors Network was infected.
+
+
+Results for Preferential Attachment Network:
+
+100 out of 100 (100.0\%) simulations in Preferential Attachment Network resulted in an epidemic.
+
+On average across all trials, 87.8422939068\% of the population in Preferential Attachment Network was infected.
+
+On average across epidemic trials, 87.8422939068\% of the population in Preferential Attachment Network was infected.
+
+
+Results for Erdos-Renyi Network:
+
+96 out of 100 (96.0\%) simulations in Erdos-Renyi Network resulted in an epidemic.
+
+On average across all trials, 90.9503897138\% of the population in Erdos-Renyi Network was infected.
+
+On average across epidemic trials, 94.739752233\% of the population in Erdos-Renyi Network was infected.
+
+
+Relative Increases:
+The average proportion infected has increased by 92.0239121069\% from 31.6914149172\% to 60.8550947261\% for the Actors Network.
+
+The average proportion infected has increased by 23.4553331126\% from 71.1530977983\% to 87.8422939068\% for the Preferential Attachment Network.
+
+The average proportion infected has increased by 11.6098669173\% from 81.4895602207\% to 90.9503897138\% for the Erdos-Renyi Network.
+
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}13}]:} \PY{k}{def} \PY{n+nf}{getMaxNDegNodes}\PY{p}{(}\PY{n}{G}\PY{p}{,} \PY{n}{topN}\PY{o}{=}\PY{l+m+mi}{10}\PY{p}{)}\PY{p}{:}
+             \PY{n}{nodeDegrees} \PY{o}{=} \PY{p}{[}\PY{p}{(}\PY{n}{node}\PY{o}{.}\PY{n}{GetId}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{node}\PY{o}{.}\PY{n}{GetDeg}\PY{p}{(}\PY{p}{)}\PY{p}{)} \PY{k}{for} \PY{n}{node} \PY{o+ow}{in} \PY{n}{G}\PY{o}{.}\PY{n}{Nodes}\PY{p}{(}\PY{p}{)}\PY{p}{]}
+             \PY{n}{topNodeDegrees} \PY{o}{=} \PY{n+nb}{sorted}\PY{p}{(}\PY{n}{nodeDegrees}\PY{p}{,} \PY{n}{key}\PY{o}{=}\PY{k}{lambda} \PY{n}{x}\PY{p}{:} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{o}{*}\PY{n}{x}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{[}\PY{p}{:}\PY{n}{topN}\PY{p}{]}
+             \PY{n}{res} \PY{o}{=} \PY{n+nb}{set}\PY{p}{(}\PY{p}{[}\PY{n}{ID} \PY{k}{for} \PY{n}{ID}\PY{p}{,} \PY{n}{\PYZus{}} \PY{o+ow}{in} \PY{n}{topNodeDegrees}\PY{p}{]}\PY{p}{)}
+             \PY{k}{assert} \PY{n+nb}{len}\PY{p}{(}\PY{n}{res}\PY{p}{)} \PY{o}{==} \PY{n}{topN}
+             \PY{k}{return} \PY{n}{res}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}14}]:} \PY{k}{def} \PY{n+nf}{getRandomNodes}\PY{p}{(}\PY{n}{G}\PY{p}{,} \PY{n}{Rnd}\PY{p}{,} \PY{n}{topN}\PY{o}{=}\PY{l+m+mi}{10}\PY{p}{)}\PY{p}{:}
+             \PY{n}{res} \PY{o}{=} \PY{n+nb}{set}\PY{p}{(}\PY{p}{[}\PY{p}{]}\PY{p}{)}
+             \PY{k}{while} \PY{n+nb}{len}\PY{p}{(}\PY{n}{res}\PY{p}{)} \PY{o}{\PYZlt{}} \PY{n}{topN}\PY{p}{:}
+                 \PY{n}{res}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{G}\PY{o}{.}\PY{n}{GetRndNId}\PY{p}{(}\PY{n}{Rnd}\PY{p}{)}\PY{p}{)}
+             \PY{k}{assert} \PY{n+nb}{len}\PY{p}{(}\PY{n}{res}\PY{p}{)} \PY{o}{==} \PY{n}{topN}
+             \PY{k}{return} \PY{n}{res}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}15}]:} \PY{k}{def} \PY{n+nf}{Q3\PYZus{}4}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+             \PY{n}{networks} \PY{o}{=} \PY{n}{loadNetworks}\PY{p}{(}\PY{p}{)}
+             \PY{k}{global} \PY{n}{results34\PYZus{}1}\PY{p}{,} \PY{n}{results34\PYZus{}2}
+             \PY{n}{results34\PYZus{}1} \PY{o}{=} \PY{n}{runSimulations}\PY{p}{(}\PY{n}{networks}\PY{p}{,}
+                                          \PY{k}{lambda} \PY{n}{G}\PY{p}{:} \PY{n}{getRandomNodes}\PY{p}{(}\PY{n}{G}\PY{p}{,} \PY{n}{Rnd}\PY{p}{)}\PY{p}{)}
+             \PY{k}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Results for 10 Random Nodes:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+             \PY{n}{printResultStatistics}\PY{p}{(}\PY{n}{results34\PYZus{}1}\PY{p}{,} \PY{n}{runSignificanceTest}\PY{o}{=}\PY{n+nb+bp}{False}\PY{p}{)}
+             
+             \PY{k}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Results for 10 Highest Degree Nodes:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+             \PY{n}{results34\PYZus{}2} \PY{o}{=} \PY{n}{runSimulations}\PY{p}{(}\PY{n}{networks}\PY{p}{,}
+                                          \PY{k}{lambda} \PY{n}{G}\PY{p}{:} \PY{n}{getMaxNDegNodes}\PY{p}{(}\PY{n}{G}\PY{p}{)}\PY{p}{)}
+             \PY{n}{printResultStatistics}\PY{p}{(}\PY{n}{results34\PYZus{}2}\PY{p}{,} \PY{n}{runSignificanceTest}\PY{o}{=}\PY{n+nb+bp}{False}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}16}]:} \PY{n}{Q3\PYZus{}4}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Results for 10 Random Nodes:
+
+Results for Actors Network:
+
+100 out of 100 (100.0\%) simulations in Actors Network resulted in an epidemic.
+
+On average across all trials, 61.409512431\% of the population in Actors Network was infected.
+
+On average across epidemic trials, 61.409512431\% of the population in Actors Network was infected.
+
+
+Results for Preferential Attachment Network:
+
+100 out of 100 (100.0\%) simulations in Preferential Attachment Network resulted in an epidemic.
+
+On average across all trials, 87.7810775445\% of the population in Preferential Attachment Network was infected.
+
+On average across epidemic trials, 87.7810775445\% of the population in Preferential Attachment Network was infected.
+
+
+Results for Erdos-Renyi Network:
+
+100 out of 100 (100.0\%) simulations in Erdos-Renyi Network resulted in an epidemic.
+
+On average across all trials, 94.7439267224\% of the population in Erdos-Renyi Network was infected.
+
+On average across epidemic trials, 94.7439267224\% of the population in Erdos-Renyi Network was infected.
+
+Results for 10 Highest Degree Nodes:
+
+Results for Actors Network:
+
+100 out of 100 (100.0\%) simulations in Actors Network resulted in an epidemic.
+
+On average across all trials, 60.9259828185\% of the population in Actors Network was infected.
+
+On average across epidemic trials, 60.9259828185\% of the population in Actors Network was infected.
+
+
+Results for Preferential Attachment Network:
+
+100 out of 100 (100.0\%) simulations in Preferential Attachment Network resulted in an epidemic.
+
+On average across all trials, 87.8678955453\% of the population in Preferential Attachment Network was infected.
+
+On average across epidemic trials, 87.8678955453\% of the population in Preferential Attachment Network was infected.
+
+
+Results for Erdos-Renyi Network:
+
+100 out of 100 (100.0\%) simulations in Erdos-Renyi Network resulted in an epidemic.
+
+On average across all trials, 94.7789725209\% of the population in Erdos-Renyi Network was infected.
+
+On average across epidemic trials, 94.7789725209\% of the population in Erdos-Renyi Network was infected.
+
+
+    \end{Verbatim}
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
