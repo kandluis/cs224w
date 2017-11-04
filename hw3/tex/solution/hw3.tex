@@ -5,6 +5,8 @@
 \usepackage{fancyhdr}
 \usepackage{enumerate}
 \usepackage{titlesec}
+\usepackage{array}
+\usepackage{tikz}
 \usepackage[colorlinks=true,urlcolor=blue]{hyperref}
 
 \titlespacing{\subsubsection}{0pt}{0pt}{0pt}
@@ -270,21 +272,183 @@ MLLE estimate has sample mean: $\bar{\alpha}_{mlle} = 2.04568947964$ and sample 
 
 % Question 3.1
 \newquestion{3.1}
+We present the result of simulating the SIR model of infection on 3 different networks.
+\begin{itemize}
+\item The ``Actors'' Network, a reduced version of the IMDB dataset, which derived all actor-actor collaboration edges where the actors co-starred in at least 2 movies together between 1995 and 2004. 
+\item The Erdos-Renyi null model with the same number of nodes and expected degree.
+\item the Preferential Attachment null model, with the same number of nodes and expected degree.
+\end{itemize}
+
+In these simulations, we select an initial infected node at random. The result after 100 simulations for each network are in Table \ref{table:random_single_node_statistics}.
+
+\begin{figure}[h!]
+\centering
+ \begin{tabular}{||c | m{5em} | m{5em} | m{5em}||} 
+ \hline
+ Network & Percent Epidemics & Average Percent Infected (All) & Average Percent Infected (Epidemics) \\ [0.5ex] 
+ \hline\hline
+ Actors & 66\% & $\sim$40.23\% & $\sim$60.94\% \\ 
+ \hline
+ Preferential Attachment & 84\% & $\sim$73.83\% & $\sim$87.89\% \\
+ \hline
+ Erdos-Renyi& 88\% & $\sim$83.39\% & $\sim$94.76\% \\
+ \hline
+\end{tabular}
+\caption{Results of Random Single Node Infection for Different Networks}
+\label{table:random_single_node_statistics}
+\end{figure}
+
+We also run statistical tests to determine the validity of our results. In particular, we use pairwise $\chi^2$ tests. Note that we ignore duplicate pairs ($(u,v)$ and $(v,u)$) as well as self-pairs ($u,u$) since those tests do not add any further value. We present the results in Table \ref{table:statistical_tests}.
+
+\begin{figure}[h!]
+\centering
+ \begin{tabular}{||c | c | m{5em} | m{5em}||} 
+ \hline
+ Network 1 & Network 2& $\chi^2$ & $p$-value \\ [0.5ex] 
+ \hline\hline
+ Actors & Preferential Attachment & $\sim$7.71 & $\sim$0.006 \\ 
+ \hline
+ Actors & Erdos-Renyi & $\sim$12.45 & $\sim$0.0004 \\
+ \hline
+ Preferential Attachment & Erdos-Renyi & $\sim$0.37 & $\sim$0.540 \\
+ \hline
+\end{tabular}
+\caption{Results of Pairwise $\chi^2$ tests}
+\label{table:statistical_tests}
+\end{figure}
+The results from the statistical tests demonstrate that the difference between the Actors and our two null modes is significant (not due to random chance). This implies that the network structure of Actors is correlated with less epidemics. Furthermore, we note that the difference in the number of epidemics is not significant between our two null models.
+
+We now respond to some short answer questions.
+\begin{itemize}
+\item The Erdos-Renyi graph does not appear to be more susceptible to epidemics than the Preferential Attachment graph (at least not in a statistically significant way), though we do note a slightly higher percentage in our simulations.
+\item However, in the cases where an epidemic does successfully take off, Erdo-Renyi appears to have a higher percentage of infected individuals.
+\item Overall, it seems like the Erdo-Renyi models is more susceptible to the spread of disease.
+\item TODO
+\end{itemize}
 
 % Question 3.2
 \newquestion{3.2}
+We repeat the process above, but rather than select the initial infected node at random, we select a random node with the highest degree from each network. The result after 100 simulations for each network are in Table \ref{table:highest_degree_single_node_statistics}.
+
+\begin{figure}[h!]
+\centering
+ \begin{tabular}{||c | m{5em} | m{5em} | m{5em} |  m{5em} ||} 
+ \hline
+ Network & Percent Epidemics & Average Percent Infected (All) & Average Percent Infected (Epidemics) & Relative Increase (Compared to 3.1, All) \\ [0.5ex] 
+ \hline\hline
+ Actors & 100\% & $\sim$61.01\% & $\sim$61.01\% & $\sim$51.65\% \\ 
+ \hline
+ Preferential Attachment & 100\% & $\sim$87.85\% & $\sim$87.85\%  & $\sim$18.99\% \\
+ \hline
+ Erdos-Renyi& 93\% & $\sim$88.12\% & $\sim$94.75\% & $\sim$5.67\% \\
+ \hline
+\end{tabular}
+\caption{Results of Highest Degree Single Node Infection for Different Networks}
+\label{table:highest_degree_single_node_statistics}
+\end{figure}
+
+Between the Preferential Attachment and Erdos-Renyi graph, the most impacted by targetting the node with the highest degree is the Preferential Attachment graph. TODO.
+
 
 % Question 3.3
 \newquestion{3.3}
+From the simulations above, it appears that community structure dampens the spread of epidemics if the epidemic starts at random. This is likely due to the fact that only a small community is infected if targetting at random. However, when targetting the highest degree node, epidemics spread quite well, even in the community structure.
+
+TODO
 
 % Question 3.4
 \newquestion{3.4}
+We now repeat the above for 10 random nodes and for the 10 highest degree nodes.
+
+We present the results for 10 Random Nodes in Table \ref{table:random_10_node_statistics}.
+
+\begin{figure}[h!]
+\centering
+ \begin{tabular}{||c | m{5em} | m{5em} | m{5em}  ||} 
+ \hline
+ Network & Percent Epidemics & Average Percent Infected (All) & Average Percent Infected (Epidemics) \\ [0.5ex] 
+ \hline\hline
+ Actors & 100\% & $\sim$61.07\% & $\sim$61.07\%  \\ 
+ \hline
+ Preferential Attachment & 100\% & $\sim$87.89\% & $\sim$87.89\%  \\
+ \hline
+ Erdos-Renyi& 100\% & $\sim$94.75\% & $\sim$94.75\%  \\
+ \hline
+\end{tabular}
+\caption{Results of Random 10 Node Infection for Different Networks}
+\label{table:random_10_node_statistics}
+\end{figure}
+
+And the results for the 10 Top Degree Nodes in Table \ref{table:highest_degree_10_node_statistics}.
+
+\begin{figure}[h!]
+\centering
+ \begin{tabular}{||c | m{5em} | m{5em} | m{5em}  ||} 
+ \hline
+ Network & Percent Epidemics & Average Percent Infected (All) & Average Percent Infected (Epidemics) \\ [0.5ex] 
+ \hline\hline
+ Actors & 100\% & $\sim$61.09\% & $\sim$61.09\%  \\ 
+ \hline
+ Preferential Attachment & 100\% & $\sim$87.81\% & $\sim$87.81\%  \\
+ \hline
+ Erdos-Renyi& 100\% & $\sim$94.79\% & $\sim$94.79\%  \\
+ \hline
+\end{tabular}
+\caption{Results of Random 10 Node Infection for Different Networks}
+\label{table:highest_degree_10_node_statistics}
+\end{figure}
+
+TODO: Explain impact.
 
 % Question 4.1
 \newquestion{4.1}
+For $i = 2$, we construct an example where $f(S_i) < f(T)$ (i.e., hill-climbing will only find a nonoptimal solution).
+
+Consider the following nodes $V$ with the influence sets as depicted in the Diagram \ref{diagram:non_optimal_hill_climbing}.
+
+\begin{figure}[h!]
+	\centering
+	\begin{tikzpicture}[scale=0.2]
+		\tikzstyle{every node}+=[inner sep=0pt]
+		\draw [black] (13,-24.1) circle (3);
+		\draw (13,-24.1) node {$1$};
+		\draw [black] (51.3,-24.1) circle (3);
+		\draw (51.3,-24.1) node {$2$};
+		\draw [black] (39.1,-16.1) circle (3);
+		\draw (39.1,-16.1) node {$3$};
+		\draw [black] (25.1,-16.1) circle (3);
+		\draw (25.1,-16.1) node {$4$};
+		\draw [black] (25.7,-32.3) circle (3);
+		\draw (25.7,-32.3) node {$5$};
+		\draw [black] (39.1,-32.3) circle (3);
+		\draw (39.1,-32.3) node {$6$};
+		\draw [black] (15.5,-22.45) -- (22.6,-17.75);
+		\fill [black] (22.6,-17.75) -- (21.65,-17.78) -- (22.21,-18.61);
+		\draw [black] (15.52,-25.73) -- (23.18,-30.67);
+		\fill [black] (23.18,-30.67) -- (22.78,-29.82) -- (22.24,-30.66);
+		\draw [black] (48.79,-22.45) -- (41.61,-17.75);
+		\fill [black] (41.61,-17.75) -- (42,-18.6) -- (42.55,-17.77);
+		\draw [black] (48.81,-25.77) -- (41.59,-30.63);
+		\fill [black] (41.59,-30.63) -- (42.53,-30.6) -- (41.97,-29.77);
+		\draw [black] (36.1,-16.1) -- (28.1,-16.1);
+		\fill [black] (28.1,-16.1) -- (28.9,-16.6) -- (28.9,-15.6);
+		\draw [black] (37.19,-18.41) -- (27.61,-29.99);
+		\fill [black] (27.61,-29.99) -- (28.51,-29.69) -- (27.74,-29.05);
+		\draw [black] (39.1,-19.1) -- (39.1,-29.3);
+		\fill [black] (39.1,-29.3) -- (39.6,-28.5) -- (38.6,-28.5);
+	\end{tikzpicture}
+\caption{Non-optimal Hill-Climbing Influence Diagram}
+\label{diagram:non_optimal_hill_climbing}
+\end{figure}
+
+Then note that greedy hill climbing will start with $S_0 = \emptyset$ and then proceed to choose node $3$ (as it has the highest influence), so that $S_1 = \{3\}$ and $f(S_1) = 4$. For the next step, note that nodes $4,5,6$ only influece themselves, so the marginal influence is $0$, and that both nodes $1$ and $2$ influece nodes already influenced by $3$, so their marginal influece is both $1$. Therefore the algorithm will chose at random either $1$ or $2$. Let us suppose $2$, then we have $S_2 = \{2,3\}$ with $f(S_2) = 4$.
+
+However, note that the optimal set is $T = \{1,2\}$ for which we have $f(T) = 6$.
 
 % Question 4.2
 \newquestion{4.2}
+For $i = 3$, construct an example where f(Si) ≤ 0.8f(T). That is, hill-climbing will only find a
+solution that is at most 80% of the optimal solution.
 
 % Question 4.3
 \newquestion{4.3}
