@@ -69,11 +69,11 @@
 For a given histogram $\textbf{N} =  (N_0, \cdots , N_{n-1})$ where $N_{\ell}$
 expresses the number of individuals that have threshold $\ell \in [n]$, we find the conditions such that individuals with threshold $\ell$ become active. 
 
-The individuals with threshold $\ell$ becoming active if and only if $\forall 0 \leq k \leq \ell$:
+The individuals with threshold $\ell$ become active if and only if $\forall 0 \leq k \leq \ell$:
 $$
 \sum_{i=0}^{k - 1} N_{i} > k - 1
 $$
-Intuitively, this means that the individuals with threshold $\ell$ becoming active if and only if all individuals with a smaller threshold have become active and there are at least $\ell$ such individuals.
+Intuitively, this means that the individuals with threshold $\ell$ become active if and only if all individuals with a smaller threshold have become active and there are at least $\ell$ such individuals.
 
 We prove the above by strong induction. For the base case, consider $\ell = 0$. Then note that the above condition vacuosly holds:
 $$
@@ -83,12 +83,14 @@ and furthermore, the individuals with threshold $0$ are always active. Therefore
 
 Now we show the inductive case. Assume that our statement holds for all $\ell \leq m$. We now show that it is holds for all $\ell \leq m + 1$.
 
-Consider the case $\ell = m + 1$. We first show that in the condition holds, then the required individuals become active.
+Consider the case $\ell = m + 1$. We first show that if the condition holds, then the required individuals become active.
 
-In other words, we know that $\forall 0 \leq k \leq m + 1$:
+In other words, we know that if $\forall 0 \leq k \leq m + 1$:
 $$
 \sum_{i=0}^{k-1} N_{i} > k - 1
 $$
+then the individuals with threshold $m + 1$ become active.
+
 Then immediately, we know that the above inequality holds $\forall 0 \leq k \leq \ell$ for all $\ell \leq m$. Therefore, by the inductive hypothesis, the above implies that all individuals with threshold $\ell \leq m$ are active. Furthermore, we know that:
 $$
 \sum_{i=0}^m N_m > m - 1
@@ -210,7 +212,7 @@ a &= -\alpha \\
 b &= [\alpha - 1]\log(x_{\text{min}}) + \log(\alpha - 1)
 \end{align*}
 
-If we fit using `np.polyfit' on the log space, we have can solve the above equations to obtain:
+If we fit using `np.polyfit' on the log space, we can solve the above equations to obtain:
 $$
 \alpha_{\text{ls}, \text{pdf}} = 1.0580243840833681
 $$
@@ -279,7 +281,7 @@ We present the result of simulating the SIR model of infection on 3 different ne
 \item the Preferential Attachment null model, with the same number of nodes and expected degree.
 \end{itemize}
 
-In these simulations, we select an initial infected node at random. The result after 100 simulations for each network are in Table \ref{table:random_single_node_statistics}.
+In these simulations, we select an initial infected node at random. The results after 100 simulations for each network are in Table \ref{table:random_single_node_statistics}.
 
 \begin{figure}[h!]
 \centering
@@ -287,11 +289,11 @@ In these simulations, we select an initial infected node at random. The result a
  \hline
  Network & Percent Epidemics & Average Percent Infected (All) & Average Percent Infected (Epidemics) \\ [0.5ex] 
  \hline\hline
- Actors & 66\% & $\sim$40.23\% & $\sim$60.94\% \\ 
+ Actors & 52\% & $\sim$31.81\% & $\sim$61.07\% \\ 
  \hline
- Preferential Attachment & 84\% & $\sim$73.83\% & $\sim$87.89\% \\
+ Preferential Attachment & 80\% & $\sim$70.29\% & $\sim$87.86\% \\
  \hline
- Erdos-Renyi& 88\% & $\sim$83.39\% & $\sim$94.76\% \\
+ Erdos-Renyi& 84\% & $\sim$79.58\% & $\sim$94.73\% \\
  \hline
 \end{tabular}
 \caption{Results of Random Single Node Infection for Different Networks}
@@ -306,11 +308,11 @@ We also run statistical tests to determine the validity of our results. In parti
  \hline
  Network 1 & Network 2& $\chi^2$ & $p$-value \\ [0.5ex] 
  \hline\hline
- Actors & Preferential Attachment & $\sim$7.71 & $\sim$0.006 \\ 
+ Actors & Preferential Attachment & $\sim$16.24 & $\sim$0.0000557 \\ 
  \hline
- Actors & Erdos-Renyi & $\sim$12.45 & $\sim$0.0004 \\
+ Actors & Erdos-Renyi & $\sim$22.08 & $\sim$0.00000261 \\
  \hline
- Preferential Attachment & Erdos-Renyi & $\sim$0.37 & $\sim$0.540 \\
+ Preferential Attachment & Erdos-Renyi & $\sim$0.305 & $\sim$0.580 \\
  \hline
 \end{tabular}
 \caption{Results of Pairwise $\chi^2$ tests}
@@ -321,9 +323,9 @@ The results from the statistical tests demonstrate that the difference between t
 We now respond to some short answer questions.
 \begin{itemize}
 \item The Erdos-Renyi graph does not appear to be more susceptible to epidemics than the Preferential Attachment graph (at least not in a statistically significant way), though we do note a slightly higher percentage in our simulations.
-\item However, in the cases where an epidemic does successfully take off, Erdo-Renyi appears to have a higher percentage of infected individuals.
+\item However, in the cases where an epidemic does successfully take off, Erdo-Renyi appears to have a higher percentage of infected individuals. We did not evaluate the statistical significance, though the difference of $\sim8\%$ seems significant. 
 \item Overall, it seems like the Erdo-Renyi models is more susceptible to the spread of disease.
-\item TODO
+\item We would expect to see significant differences because of the difference in their degree distributions. The preferential attachment model exhibits a power-law distribution, which in some sense, makes it less susceptible to a ``random start node'' disease. If the initial node is one with an extremely low degree (of which there are many), it is much harder for the disease to survive, as opposed to the Erdo-Renyi model where most nodes have similar ``medium'' degrees. Furthermore, this also explain the discrepency in the epidemic cases -- for the powerlaw distribution, there are always a relatively large percentage of nodes that are not well-connected, and therefore unlikely to be infected, while almost all nodes in Erdos-Renyi have a ``medium'' degree, so likely to be infected.
 \end{itemize}
 
 % Question 3.2
@@ -336,25 +338,23 @@ We repeat the process above, but rather than select the initial infected node at
  \hline
  Network & Percent Epidemics & Average Percent Infected (All) & Average Percent Infected (Epidemics) & Relative Increase (Compared to 3.1, All) \\ [0.5ex] 
  \hline\hline
- Actors & 100\% & $\sim$61.01\% & $\sim$61.01\% & $\sim$51.65\% \\ 
+ Actors & 100\% & $\sim$60.98\% & $\sim$60.98\% & $\sim$91.73\% \\ 
  \hline
- Preferential Attachment & 100\% & $\sim$87.85\% & $\sim$87.85\%  & $\sim$18.99\% \\
+ Preferential Attachment & 100\% & $\sim$87.84\% & $\sim$87.84\%  & $\sim$24.97\% \\
  \hline
- Erdos-Renyi& 93\% & $\sim$88.12\% & $\sim$94.75\% & $\sim$5.67\% \\
+ Erdos-Renyi& 95\% & $\sim$89.99\% & $\sim$94.73\% & $\sim$13.09\% \\
  \hline
 \end{tabular}
 \caption{Results of Highest Degree Single Node Infection for Different Networks}
 \label{table:highest_degree_single_node_statistics}
 \end{figure}
 
-Between the Preferential Attachment and Erdos-Renyi graph, the most impacted by targetting the node with the highest degree is the Preferential Attachment graph. TODO.
+Between the Preferential Attachment and Erdos-Renyi graph, the most impacted by targeting the node with the highest degree is the Preferential Attachment graph. This is reasonable, since the difference in degree between the highest degree node in the Erdos-Renyi model and the Preferential Attachment model is much larger (given that the Preferential Attachment graph has a power law distribution). Furthermore, we would not expect the targeting of the highest degree node in the Erdos-Renyi model to have huge impact since on average, a random node will have approximately the mean degree. However, in the Preferential Attachment model, a random node is far more likely to have a much lower degree (since a lot more nodes exist with low degree) than a high degree, so targeting the high degree nodes will increase the impact of the disease by larger factor.
 
 
 % Question 3.3
 \newquestion{3.3}
-From the simulations above, it appears that community structure dampens the spread of epidemics if the epidemic starts at random. This is likely due to the fact that only a small community is infected if targetting at random. However, when targetting the highest degree node, epidemics spread quite well, even in the community structure.
-
-TODO
+From the simulations above, it appears that community structure dampens the spread of epidemics if the epidemic starts at random. This is likely due to the fact that only a small community is infected if targeting at random. However, when targeting the highest degree node, epidemics spread quite well to multiple communities, even in the community structure. However, we note that the percentage of the graph that is infected is still relatively low ($\sim 60\%$), likely due to the fact that only the communities closest to the originally infected community are infected, while others (with much weaker ties) remain relatively isolated from the main area of infection (also, we would expect each community to have some low-degree nodes which are hard to infect)
 
 % Question 3.4
 \newquestion{3.4}
@@ -368,11 +368,11 @@ We present the results for 10 Random Nodes in Table \ref{table:random_10_node_st
  \hline
  Network & Percent Epidemics & Average Percent Infected (All) & Average Percent Infected (Epidemics) \\ [0.5ex] 
  \hline\hline
- Actors & 100\% & $\sim$61.07\% & $\sim$61.07\%  \\ 
+ Actors & 100\% & $\sim$61.38\% & $\sim$61.38\%  \\ 
  \hline
- Preferential Attachment & 100\% & $\sim$87.89\% & $\sim$87.89\%  \\
+ Preferential Attachment & 100\% & $\sim$87.78\% & $\sim$87.78\%  \\
  \hline
- Erdos-Renyi& 100\% & $\sim$94.75\% & $\sim$94.75\%  \\
+ Erdos-Renyi& 100\% & $\sim$94.74\% & $\sim$94.74\%  \\
  \hline
 \end{tabular}
 \caption{Results of Random 10 Node Infection for Different Networks}
@@ -387,74 +387,291 @@ And the results for the 10 Top Degree Nodes in Table \ref{table:highest_degree_1
  \hline
  Network & Percent Epidemics & Average Percent Infected (All) & Average Percent Infected (Epidemics) \\ [0.5ex] 
  \hline\hline
- Actors & 100\% & $\sim$61.09\% & $\sim$61.09\%  \\ 
+ Actors & 100\% & $\sim$60.86\% & $\sim$60.86\%  \\ 
  \hline
- Preferential Attachment & 100\% & $\sim$87.81\% & $\sim$87.81\%  \\
+ Preferential Attachment & 100\% & $\sim$87.87\% & $\sim$87.87\%  \\
  \hline
- Erdos-Renyi& 100\% & $\sim$94.79\% & $\sim$94.79\%  \\
+ Erdos-Renyi& 100\% & $\sim$94.77\% & $\sim$94.77\%  \\
  \hline
 \end{tabular}
 \caption{Results of Random 10 Node Infection for Different Networks}
 \label{table:highest_degree_10_node_statistics}
 \end{figure}
 
-TODO: Explain impact.
+In both cases, we achive 100\% epidemic rate, which means the relative impact of targeting high degree nodes decreased significantly. The reason for this is relatively straight forward -- by targeting more random nodes, we're infecting more parts of our networks, thereby minimizing the importance of the high degree nodes. The high degree nodes are likely to be connected to many of the infections started by the random nodes, and therefore are likely to become infected, resulting in a similar level of infection as if they had been targeted originally. This explains why the value of targeting high degree nodes decreases as we target a larger percentage of the original nodes. 
 
 % Question 4.1
 \newquestion{4.1}
 For $i = 2$, we construct an example where $f(S_i) < f(T)$ (i.e., hill-climbing will only find a nonoptimal solution).
 
-Consider the following nodes $V$ with the influence sets as depicted in the Diagram \ref{diagram:non_optimal_hill_climbing}.
+Consider the following nodes $V$ with the influence sets as depicted in the Diagram \ref{diagram:non_optimal_hill_climbing}. We can also mathematically define the influece sets as $X_i = \{i\}$ for $1 \leq i \leq 6$ and $X_A = \{1,2,3\}, X_B=\{4,5,6\}$ and $X_C = \{2,3,4,5\}$
 
 \begin{figure}[h!]
 	\centering
 	\begin{tikzpicture}[scale=0.2]
 		\tikzstyle{every node}+=[inner sep=0pt]
-		\draw [black] (13,-24.1) circle (3);
-		\draw (13,-24.1) node {$1$};
-		\draw [black] (51.3,-24.1) circle (3);
-		\draw (51.3,-24.1) node {$2$};
-		\draw [black] (39.1,-16.1) circle (3);
-		\draw (39.1,-16.1) node {$3$};
-		\draw [black] (25.1,-16.1) circle (3);
-		\draw (25.1,-16.1) node {$4$};
-		\draw [black] (25.7,-32.3) circle (3);
-		\draw (25.7,-32.3) node {$5$};
-		\draw [black] (39.1,-32.3) circle (3);
-		\draw (39.1,-32.3) node {$6$};
-		\draw [black] (15.5,-22.45) -- (22.6,-17.75);
-		\fill [black] (22.6,-17.75) -- (21.65,-17.78) -- (22.21,-18.61);
-		\draw [black] (15.52,-25.73) -- (23.18,-30.67);
-		\fill [black] (23.18,-30.67) -- (22.78,-29.82) -- (22.24,-30.66);
-		\draw [black] (48.79,-22.45) -- (41.61,-17.75);
-		\fill [black] (41.61,-17.75) -- (42,-18.6) -- (42.55,-17.77);
-		\draw [black] (48.81,-25.77) -- (41.59,-30.63);
-		\fill [black] (41.59,-30.63) -- (42.53,-30.6) -- (41.97,-29.77);
-		\draw [black] (36.1,-16.1) -- (28.1,-16.1);
-		\fill [black] (28.1,-16.1) -- (28.9,-16.6) -- (28.9,-15.6);
-		\draw [black] (37.19,-18.41) -- (27.61,-29.99);
-		\fill [black] (27.61,-29.99) -- (28.51,-29.69) -- (27.74,-29.05);
-		\draw [black] (39.1,-19.1) -- (39.1,-29.3);
-		\fill [black] (39.1,-29.3) -- (39.6,-28.5) -- (38.6,-28.5);
+		\draw [black] (36.3,-6.2) circle (3);
+		\draw (36.3,-6.2) node {$1$};
+		\draw [black] (36.3,-14.3) circle (3);
+		\draw (36.3,-14.3) node {$2$};
+		\draw [black] (36.3,-22.5) circle (3);
+		\draw (36.3,-22.5) node {$3$};
+		\draw [black] (36.3,-30.7) circle (3);
+		\draw (36.3,-30.7) node {$4$};
+		\draw [black] (36.3,-38.7) circle (3);
+		\draw (36.3,-38.7) node {$5$};
+		\draw [black] (36.3,-46.7) circle (3);
+		\draw (36.3,-46.7) node {$6$};
+		\draw [black] (20.7,-14.3) circle (3);
+		\draw (20.7,-14.3) node {$A$};
+		\draw [black] (20.7,-38.7) circle (3);
+		\draw (20.7,-38.7) node {$B$};
+		\draw [black] (54.9,-25.8) circle (3);
+		\draw (54.9,-25.8) node {$C$};
+		\draw [black] (23.36,-12.92) -- (33.64,-7.58);
+		\fill [black] (33.64,-7.58) -- (32.7,-7.51) -- (33.16,-8.39);
+		\draw [black] (23.7,-14.3) -- (33.3,-14.3);
+		\fill [black] (33.3,-14.3) -- (32.5,-13.8) -- (32.5,-14.8);
+		\draw [black] (23.36,-15.7) -- (33.64,-21.1);
+		\fill [black] (33.64,-21.1) -- (33.17,-20.29) -- (32.7,-21.17);
+		\draw [black] (23.37,-37.33) -- (33.63,-32.07);
+		\fill [black] (33.63,-32.07) -- (32.69,-31.99) -- (33.15,-32.88);
+		\draw [black] (23.7,-38.7) -- (33.3,-38.7);
+		\fill [black] (33.3,-38.7) -- (32.5,-38.2) -- (32.5,-39.2);
+		\draw [black] (23.37,-40.07) -- (33.63,-45.33);
+		\fill [black] (33.63,-45.33) -- (33.15,-44.52) -- (32.69,-45.41);
+		\draw [black] (51.95,-25.28) -- (39.25,-23.02);
+		\fill [black] (39.25,-23.02) -- (39.95,-23.66) -- (40.13,-22.67);
+		\draw [black] (52.35,-24.22) -- (38.85,-15.88);
+		\fill [black] (38.85,-15.88) -- (39.27,-16.72) -- (39.8,-15.87);
+		\draw [black] (52,-26.56) -- (39.2,-29.94);
+		\fill [black] (39.2,-29.94) -- (40.1,-30.22) -- (39.85,-29.25);
+		\draw [black] (52.43,-27.51) -- (38.77,-36.99);
+		\fill [black] (38.77,-36.99) -- (39.71,-36.95) -- (39.14,-36.12);
 	\end{tikzpicture}
 \caption{Non-optimal Hill-Climbing Influence Diagram}
 \label{diagram:non_optimal_hill_climbing}
 \end{figure}
 
-Then note that greedy hill climbing will start with $S_0 = \emptyset$ and then proceed to choose node $3$ (as it has the highest influence), so that $S_1 = \{3\}$ and $f(S_1) = 4$. For the next step, note that nodes $4,5,6$ only influece themselves, so the marginal influence is $0$, and that both nodes $1$ and $2$ influece nodes already influenced by $3$, so their marginal influece is both $1$. Therefore the algorithm will chose at random either $1$ or $2$. Let us suppose $2$, then we have $S_2 = \{2,3\}$ with $f(S_2) = 4$.
+Then note that greedy hill climbing will start with $S_0 = \emptyset$ and then proceed to choose node $C$ (as it has the highest influence), so that $S_1 = \{C\}$ and $f(S_1) = 5$. For the next step, note that nodes $i$ where $i \notin X_C$ only influece themselves, so the marginal influence is $1$. Then note the marginal influence for $A$ and $B$ is $2$. Therefore the algorithm will chose at random either $A$ or $B$. Let us suppose $B$, then we have $S_2 = \{B,C\}$ with $f(S_2) = 7$.
 
-However, note that the optimal set is $T = \{1,2\}$ for which we have $f(T) = 6$.
+However, note that the optimal set is $T = \{A,B\}$ for which we have $f(T) = 8$.
 
 % Question 4.2
 \newquestion{4.2}
-For $i = 3$, construct an example where f(Si) ≤ 0.8f(T). That is, hill-climbing will only find a
-solution that is at most 80% of the optimal solution.
+For $i = 3$, we construct an example where $f(S_i)  \leq 0.8f(T)$. That is, hill-climbing will only find a solution that is at most 80\% of the optimal solution.
+
+Consider the following nodes $V$ with the influence sets as depicted in the Diagram \ref{diagram:bounded_non_optimal_hill_climbing}. We can also mathematically define the influece sets as $X_i = \{i\}$ for $1 \leq i \leq 30$ and $X_A = \{i \mid 1 \leq i \leq 10\}, X_B = \{ i \mid 11 \leq i \leq 20 \}, X_C = \{ i \mid 21 \leq i \leq 30 \}, X_D = \{ i \mid 1 \leq i \mod 10 \leq 4, 1 \leq i \leq 30 \}$ and $X_E = \{ i \mid 9 \leq i \mod 10 \leq 10 \lor i == 8 , 1 \leq i \leq 30 \}$.
+
+\begin{figure}[h!]
+	\centering
+	\begin{tikzpicture}[scale=0.15]
+		\tikzstyle{every node}+=[inner sep=0pt]
+		\draw [black] (7,-11) circle (3);
+		\draw (7,-11) node {$1$};
+		\draw [black] (13.3,-11) circle (3);
+		\draw (13.3,-11) node {$2$};
+		\draw [black] (20.1,-11) circle (3);
+		\draw (20.1,-11) node {$3$};
+		\draw [black] (26.9,-11) circle (3);
+		\draw (26.9,-11) node {$4$};
+		\draw [black] (33.6,-11) circle (3);
+		\draw (33.6,-11) node {$5$};
+		\draw [black] (40.2,-11) circle (3);
+		\draw (40.2,-11) node {$6$};
+		\draw [black] (46.6,-11) circle (3);
+		\draw (46.6,-11) node {$7$};
+		\draw [black] (53.1,-11) circle (3);
+		\draw (53.1,-11) node {$8$};
+		\draw [black] (59.7,-11) circle (3);
+		\draw (59.7,-11) node {$9$};
+		\draw [black] (66.1,-11) circle (3);
+		\draw (66.1,-11) node {$10$};
+		\draw [black] (9.4,-30.1) circle (3);
+		\draw (9.4,-30.1) node {$11$};
+		\draw [black] (16.7,-29.6) circle (3);
+		\draw (16.7,-29.6) node {$12$};
+		\draw [black] (23.1,-30.1) circle (3);
+		\draw (23.1,-30.1) node {$13$};
+		\draw [black] (29.6,-30.1) circle (3);
+		\draw (29.6,-30.1) node {$14$};
+		\draw [black] (36.1,-30.1) circle (3);
+		\draw (36.1,-30.1) node {$15$};
+		\draw [black] (42.4,-30.1) circle (3);
+		\draw (42.4,-30.1) node {$16$};
+		\draw [black] (49,-30.1) circle (3);
+		\draw (49,-30.1) node {$17$};
+		\draw [black] (55.6,-30.1) circle (3);
+		\draw (55.6,-30.1) node {$18$};
+		\draw [black] (62,-30.1) circle (3);
+		\draw (62,-30.1) node {$19$};
+		\draw [black] (68.2,-30.1) circle (3);
+		\draw (68.2,-30.1) node {$20$};
+		\draw [black] (9.4,-50.4) circle (3);
+		\draw (9.4,-50.4) node {$21$};
+		\draw [black] (15.7,-50.4) circle (3);
+		\draw (15.7,-50.4) node {$22$};
+		\draw [black] (22.5,-50.4) circle (3);
+		\draw (22.5,-50.4) node {$23$};
+		\draw [black] (28.9,-50.4) circle (3);
+		\draw (28.9,-50.4) node {$24$};
+		\draw [black] (35.4,-50.4) circle (3);
+		\draw (35.4,-50.4) node {$25$};
+		\draw [black] (42.4,-50.4) circle (3);
+		\draw (42.4,-50.4) node {$26$};
+		\draw [black] (49,-50.4) circle (3);
+		\draw (49,-50.4) node {$27$};
+		\draw [black] (55.6,-50.4) circle (3);
+		\draw (55.6,-50.4) node {$28$};
+		\draw [black] (62,-50.4) circle (3);
+		\draw (62,-50.4) node {$29$};
+		\draw [black] (68.2,-50.4) circle (3);
+		\draw (68.2,-50.4) node {$30$};
+		\draw [black] (36.9,0.6) circle (3);
+		\draw (36.9,0.6) node {$A$};
+		\draw [black] (36.9,-16.3) circle (3);
+		\draw (36.9,-16.3) node {$B$};
+		\draw [black] (36.9,-36.7) circle (3);
+		\draw (36.9,-36.7) node {$C$};
+		\draw [black] (-1.6,-34.4) circle (3);
+		\draw (-1.6,-34.4) node {$D$};
+		\draw [black] (81.5,-34.4) circle (3);
+		\draw (81.5,-34.4) node {$E$};
+		\draw [black] (8.717,-8.542) arc (141.82603:80.58248:26.593);
+		\fill [black] (8.72,-8.54) -- (9.6,-8.22) -- (8.82,-7.6);
+		\draw [black] (15.059,-8.572) arc (140.68682:91.66376:25.306);
+		\fill [black] (15.06,-8.57) -- (15.95,-8.27) -- (15.18,-7.64);
+		\draw [black] (21.937,-8.63) arc (139.27462:109.97369:29.059);
+		\fill [black] (21.94,-8.63) -- (22.84,-8.35) -- (22.08,-7.7);
+		\draw [black] (34.94,-1.67) -- (28.86,-8.73);
+		\fill [black] (28.86,-8.73) -- (29.76,-8.45) -- (29,-7.8);
+		\draw [black] (36.08,-2.29) -- (34.42,-8.11);
+		\fill [black] (34.42,-8.11) -- (35.12,-7.48) -- (34.16,-7.21);
+		\draw [black] (37.72,-2.29) -- (39.38,-8.11);
+		\fill [black] (39.38,-8.11) -- (39.64,-7.21) -- (38.68,-7.48);
+		\draw [black] (38.82,-1.7) -- (44.68,-8.7);
+		\fill [black] (44.68,-8.7) -- (44.55,-7.76) -- (43.78,-8.41);
+		\draw [black] (39.763,-0.29) arc (69.57828:39.21265:27.172);
+		\fill [black] (51.34,-8.58) -- (51.22,-7.64) -- (50.44,-8.27);
+		\draw [black] (39.894,0.426) arc (83.654:42.41457:28.519);
+		\fill [black] (57.8,-8.68) -- (57.63,-7.76) -- (56.89,-8.43);
+		\draw [black] (39.835,1.213) arc (98.52792:38.14016:26.263);
+		\fill [black] (64.39,-8.54) -- (64.29,-7.6) -- (63.5,-8.22);
+		\draw [black] (10.873,-27.488) arc (147.19452:86.10214:25.375);
+		\fill [black] (10.87,-27.49) -- (11.73,-27.09) -- (10.89,-26.55);
+		\draw [black] (18.511,-27.21) arc (140.16378:106.5593:32.053);
+		\fill [black] (18.51,-27.21) -- (19.41,-26.92) -- (18.64,-26.28);
+		\draw [black] (34.78,-18.42) -- (25.22,-27.98);
+		\fill [black] (25.22,-27.98) -- (26.14,-27.77) -- (25.43,-27.06);
+		\draw [black] (35.5,-18.95) -- (31,-27.45);
+		\fill [black] (31,-27.45) -- (31.82,-26.97) -- (30.93,-26.51);
+		\draw [black] (36.73,-19.29) -- (36.27,-27.11);
+		\fill [black] (36.27,-27.11) -- (36.82,-26.34) -- (35.82,-26.28);
+		\draw [black] (38.01,-19.09) -- (41.29,-27.31);
+		\fill [black] (41.29,-27.31) -- (41.46,-26.38) -- (40.53,-26.76);
+		\draw [black] (38.88,-18.56) -- (47.02,-27.84);
+		\fill [black] (47.02,-27.84) -- (46.87,-26.91) -- (46.12,-27.57);
+		\draw [black] (39.713,-17.341) arc (67.33992:39.80781:36.725);
+		\fill [black] (53.78,-27.72) -- (53.65,-26.78) -- (52.88,-27.43);
+		\draw [black] (39.859,-16.789) arc (78.40907:43.98687:38.842);
+		\fill [black] (60,-27.86) -- (59.81,-26.94) -- (59.09,-27.63);
+		\draw [black] (39.89,-16.072) arc (91.79905:40.6161:33.475);
+		\fill [black] (66.35,-27.74) -- (66.21,-26.81) -- (65.45,-27.46);
+		\draw [black] (11.075,-47.913) arc (143.02918:89.93412:28.535);
+		\fill [black] (11.08,-47.91) -- (11.96,-47.57) -- (11.16,-46.97);
+		\draw [black] (17.114,-47.756) arc (148.18447:97.55875:23.385);
+		\fill [black] (17.11,-47.76) -- (17.96,-47.34) -- (17.11,-46.81);
+		\draw [black] (23.838,-47.717) arc (150.06623:117.07977:25.076);
+		\fill [black] (23.84,-47.72) -- (24.67,-47.27) -- (23.8,-46.77);
+		\draw [black] (35.39,-39.29) -- (30.41,-47.81);
+		\fill [black] (30.41,-47.81) -- (31.25,-47.37) -- (30.38,-46.87);
+		\draw [black] (36.57,-39.68) -- (35.73,-47.42);
+		\fill [black] (35.73,-47.42) -- (36.31,-46.68) -- (35.32,-46.57);
+		\draw [black] (38.02,-39.48) -- (41.28,-47.62);
+		\fill [black] (41.28,-47.62) -- (41.45,-46.69) -- (40.52,-47.06);
+		\draw [black] (38.89,-38.95) -- (47.01,-48.15);
+		\fill [black] (47.01,-48.15) -- (46.86,-47.22) -- (46.11,-47.88);
+		\draw [black] (39.765,-37.587) arc (70.04824:37.49724:31.242);
+		\fill [black] (53.89,-47.94) -- (53.8,-47) -- (53.01,-47.61);
+		\draw [black] (39.895,-36.842) arc (84.38494:38.36216:29.675);
+		\fill [black] (60.26,-47.96) -- (60.16,-47.02) -- (59.37,-47.64);
+		\draw [black] (39.877,-36.338) arc (94.1648:38.55724:31.089);
+		\fill [black] (66.45,-47.97) -- (66.34,-47.03) -- (65.56,-47.65);
+		\draw [black] (-1.496,-31.403) arc (-184.40942:-215.9495:35.382);
+		\fill [black] (5.14,-13.35) -- (4.26,-13.71) -- (5.07,-14.29);
+		\draw [black] (-0.924,-31.478) arc (164.68143:130.3445:37.41);
+		\fill [black] (10.94,-12.85) -- (10,-12.99) -- (10.65,-13.75);
+		\draw [black] (-0.108,-31.797) arc (148.8468:125.47057:64.339);
+		\fill [black] (17.62,-12.68) -- (16.68,-12.74) -- (17.26,-13.55);
+		\draw [black] (0.416,-32.179) arc (137.03416:121.74143:116.264);
+		\fill [black] (24.33,-12.55) -- (23.39,-12.54) -- (23.91,-13.39);
+		\draw [black] (9.602,-33.061) arc (-10.63198:-126.66606:5.913);
+		\fill [black] (9.6,-33.06) -- (8.96,-33.76) -- (9.95,-33.94);
+		\draw [black] (15.964,-32.497) arc (-22.7729:-127.83246:10.095);
+		\fill [black] (15.96,-32.5) -- (15.19,-33.04) -- (16.12,-33.43);
+		\draw [black] (21.312,-32.504) arc (-41.79439:-118.45442:16.707);
+		\fill [black] (21.31,-32.5) -- (20.41,-32.77) -- (21.15,-33.43);
+		\draw [black] (27.841,-32.527) arc (-40.14015:-124.16565:20.43);
+		\fill [black] (27.84,-32.53) -- (26.94,-32.82) -- (27.71,-33.46);
+		\draw [black] (6.41,-50.41) arc (-97.73654:-193.24642:10.837);
+		\fill [black] (6.41,-50.41) -- (5.68,-49.81) -- (5.55,-50.8);
+		\draw [black] (13.174,-48.782) arc (-124.10809:-141.42064:58.664);
+		\fill [black] (13.17,-48.78) -- (12.79,-47.92) -- (12.23,-48.75);
+		\draw [black] (0.9,-36.06) -- (20,-48.74);
+		\fill [black] (20,-48.74) -- (19.61,-47.88) -- (19.06,-48.71);
+		\draw [black] (1.06,-35.79) -- (26.24,-49.01);
+		\fill [black] (26.24,-49.01) -- (25.77,-48.19) -- (25.3,-49.08);
+		\draw [black] (68.905,-12.057) arc (65.40904:1.29036:21.819);
+		\fill [black] (68.91,-12.06) -- (69.42,-12.84) -- (69.84,-11.94);
+		\draw [black] (79.46,-32.2) -- (61.74,-13.2);
+		\fill [black] (61.74,-13.2) -- (61.92,-14.12) -- (62.66,-13.44);
+		\draw [black] (79.18,-32.49) -- (55.42,-12.91);
+		\fill [black] (55.42,-12.91) -- (55.71,-13.8) -- (56.35,-13.03);
+		\draw [black] (81.931,-37.362) arc (1.53586:-81.00596:12.736);
+		\fill [black] (71.19,-50.28) -- (72.06,-50.65) -- (71.9,-49.66);
+		\draw [black] (79.408,-36.551) arc (-45.06776:-56.19361:99.351);
+		\fill [black] (64.52,-48.77) -- (65.46,-48.74) -- (64.9,-47.91);
+		\draw [black] (79.796,-36.841) arc (-47.17315:-168.65974:7.013);
+		\fill [black] (68.15,-33.08) -- (67.82,-33.96) -- (68.8,-33.76);
+		\draw [black] (79.476,-36.601) arc (-50.56926:-154.30162:10.783);
+		\fill [black] (62.91,-32.95) -- (62.81,-33.89) -- (63.71,-33.45);
+	\end{tikzpicture}
+\caption{Non-optimal Hill-Climbing Influence Diagram}
+\label{diagram:bounded_non_optimal_hill_climbing}
+\end{figure}
+
+Then note that greedy hill climbing will start with $S_0 = \emptyset$ and then proceed to choose node $D$ (as it has the highest influence), so that $S_1 = \{D\}$ and $f(S_1) = 13$.
+
+For the next step, note that nodes $i$ where $i \notin X_D$ only influece themselves, so the marginal influence is $1$. Then note the marginal influence for $A,B$ and $C$ is $7$ since they each influence another $10$ nodes, $4$ of which are already in $X_D$. Finally, we note that the marginal influece of $E$ is $8$, since it influeces $7$ other nodes none of which are already influenced by $D$. The algorithm will therefore select $E$ for $S_2 = \{D, E\}$ and $f(S_2) = 21$.
+
+In $i = 3$ step, selecting $B$ and $C$ gives the best marginal utility and both give the same, so the algorithm selects one at arandom. Suppose it selects $C$. Then we have $S_3 = \{C, D, E \}$ with $f(S_3) = 26$.
+
+However, note that the optimal set is $T = \{A,B, C\}$ for which we have $f(T) = 33$. Therefore, we have:
+$$
+f(S_3) = 26 < 26.4 = 0.8 \times 33 = 0.8 f(T) \implies f(S_3) \leq 0.8f(T)
+$$
+
 
 % Question 4.3
 \newquestion{4.3}
+If for all $u,v \in V, u \neq v$ we have at the following:
+$$
+(X_u \subset X_v) \lor (X_v \subset X_u) \lor (X_u \cap X_v = \emptyset)
+$$
+then the greedy hill-climbing always outputs an optimal solutions (ie, we have $f(S_i) = f(T)$ for all $i$).
+
+The property is sufficient because if it holds, we essentially have a disconnected graph of maximal influence sets. Consider $S_1$, and note that we have $S_1 = \{ u \}$ where $u = argmax_{u \in V} |X_u|$, which combined with our property, implies that $\forall v \notin X_u$, $X_u \cap X_v = \emptyset$. Therefore, the algorithm simply selected the largest disconnected component of the graph. Then this process repeates for the remaining sections of the graph, since it is disconnected and therefore this choice does not influence the rest.
 
 % Question 4.4
 \newquestion{4.4}
+Our family of examples is parametrized by $b$ and is derived from the set cover problem. Consider the family of graphs on $n + 2k$ nodes (for simplicity, we consider only $n$ such that $n \mod k = 0$). Label the $n$ nodes $n_i$ for $0 \leq i \leq n-1$ and the first $k$ nodes $k_i$ for $0 \leq i \leq k - 1$ and the last $k$ nodes $s_i$ for $0 \leq i \leq k -1$. The graph is bipartite, with the influence sets defined as follows:
+\begin{align*}
+X_{n_i} &= \{ n_i \} \tag{$n$ nodes only influece themselves} \\
+X_{k_i} &= \left\{ n_j \mid i\left(\frac{n}{k}\right) \leq j < (i+1)\left(\frac{n}{k}\right) \right\} \tag{$k$ ``optimal'' nodes each influence disjoint $\frac{n}{k}$ chunks of the main $n$ nodes} \\ 
+X_{s_i} &= \{\}
+\end{align*}
+
+TODO
 
 % Information sheet
 % Fill out the information below (this should be the last page of your assignment)
