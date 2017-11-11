@@ -664,14 +664,13 @@ The property is sufficient because if it holds, we essentially have a disconnect
 
 % Question 4.4
 \newquestion{4.4}
-Our family of examples is parametrized by $b$ and is derived from the set cover problem. Consider the family of graphs on $n + 2k$ nodes (for simplicity, we consider only $n$ such that $n \mod k = 0$). Label the $n$ nodes $n_i$ for $0 \leq i \leq n-1$ and the first $k$ nodes $k_i$ for $0 \leq i \leq k - 1$ and the last $k$ nodes $s_i$ for $0 \leq i \leq k -1$. The graph is bipartite, with the influence sets defined as follows:
-\begin{align*}
-X_{n_i} &= \{ n_i \} \tag{$n$ nodes only influece themselves} \\
-X_{k_i} &= \left\{ n_j \mid i\left(\frac{n}{k}\right) \leq j < (i+1)\left(\frac{n}{k}\right) \right\} \tag{$k$ ``optimal'' nodes each influence disjoint $\frac{n}{k}$ chunks of the main $n$ nodes} \\ 
-X_{s_i} &= \{\}
-\end{align*}
+Our family of examples is parametrized by $b$ given a fixed value of $k$. Consider the graph $E(b)$ on $(k+1)b + \frac{(k+1)(k+2)}{2} = (k+1)[b + \frac{k}{2} + 1]$ nodes. We take $k + 1$ nodes to be the influencers, and the remaining nodes to be the influecees. Let $I$ be the set of influencer nodes. Then we have define a graph consisting of $|I|$ disjoint components with each components $C_i$ with the $i-th$ component consisting of $|C_i| = b+ i + 1$ nodes for $0 \leq i \leq k$. Each $C_i$ is simply a chain of influence, with $i$ (the influencers) at the root, and $X_i = C_i$ (so all $v \in C_i$ are such that $\exists i \sim v$ (a path from $i to v$)).
 
-TODO
+The note that by our results in 4.3, we have that $f(S_k) = f(T)$. Furthermore, we note that $\delta_{k'} = \max{0, b + 2 - k'}$ for $1 \leq k' \leq k$ since $C_0$ is the only disjoint set not yet selected (since $S_k = T = \{ i \mid 1 \leq i \leq k \}$). So we have that $\delta_1 = b + 1$. Therefore, we have:
+$$
+f(S_k) + \sum_{i=1}^k \delta_i - f(T) = \sum_{i=1}^k \delta_i \geq \delta_0 = b + 1 > b
+$$
+Which holds for any $b$ given a fixed $k$.
 
 % Information sheet
 % Fill out the information below (this should be the last page of your assignment)
