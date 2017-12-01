@@ -1,0 +1,595 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{hw4\_2}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}87}]:} \PY{k+kn}{import} \PY{n+nn}{os}
+         
+         \PY{k+kn}{import} \PY{n+nn}{snap}
+         \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k+kn}{as} \PY{n+nn}{np}
+         \PY{k+kn}{import} \PY{n+nn}{matplotlib.pyplot} \PY{k+kn}{as} \PY{n+nn}{plt}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{k+kn}{import} \PY{n+nn}{matplotlib.pyplot} \PY{k+kn}{as} \PY{n+nn}{plt}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}20}]:} \PY{k+kn}{from} \PY{n+nn}{collections} \PY{k+kn}{import} \PY{n}{defaultdict}\PY{p}{,} \PY{n}{deque}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{n}{NUM\PYZus{}NODES} \PY{o}{=} \PY{l+m+mi}{1000}
+        \PY{n}{OUT\PYZus{}DEGREE} \PY{o}{=} \PY{l+m+mi}{4}
+        \PY{n}{Rnd} \PY{o}{=} \PY{n}{snap}\PY{o}{.}\PY{n}{TRnd}\PY{p}{(}\PY{l+m+mi}{42}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}41}]:} \PY{k}{def} \PY{n+nf}{getSingleDeltaValue}\PY{p}{(}\PY{n}{G}\PY{p}{,} \PY{n}{s}\PY{p}{)}\PY{p}{:}
+             \PY{c+c1}{\PYZsh{} Traverse the bfs graph from start node.}
+             \PY{n}{tree} \PY{o}{=} \PY{n}{snap}\PY{o}{.}\PY{n}{GetBfsTree}\PY{p}{(}\PY{n}{G}\PY{p}{,} \PY{n}{s}\PY{p}{,} \PY{n+nb+bp}{True}\PY{p}{,} \PY{n+nb+bp}{False}\PY{p}{)}
+             \PY{n}{queue} \PY{o}{=} \PY{n}{deque}\PY{p}{(}\PY{p}{[}\PY{n}{s}\PY{p}{]}\PY{p}{)}
+         
+             \PY{c+c1}{\PYZsh{} dictionary from v: bool specifiying if the node has already}
+             \PY{c+c1}{\PYZsh{} been popped from the queue before}
+             \PY{n}{visited} \PY{o}{=} \PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}
+             \PY{c+c1}{\PYZsh{} maps from node id to distance from s}
+             \PY{n}{distance} \PY{o}{=} \PY{p}{\PYZob{}}\PY{n}{s}\PY{p}{:} \PY{l+m+mi}{0}\PY{p}{\PYZcb{}}
+         
+             \PY{c+c1}{\PYZsh{} dictionary from v: P\PYZus{}s(v) which is a list of node ids that}
+             \PY{c+c1}{\PYZsh{} precede v in the bfs starting at s.}
+             \PY{n}{parents} \PY{o}{=} \PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}
+             \PY{c+c1}{\PYZsh{} same as above but list of node ids that follow v  in the bfs starting at s}
+             \PY{n}{descendents} \PY{o}{=} \PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}
+         
+             \PY{c+c1}{\PYZsh{} maps v: \PYZbs{}sigma\PYZus{}\PYZob{}sv\PYZcb{} \PYZhy{}\PYZhy{} the \PYZsh{} of shortest paths from s to v.}
+             \PY{n}{sigmas} \PY{o}{=} \PY{p}{\PYZob{}}\PY{n}{s}\PY{p}{:} \PY{l+m+mi}{1}\PY{p}{\PYZcb{}}
+         
+             \PY{c+c1}{\PYZsh{} All leaf nodeIDs in the bfs tree (ie, have now out edges)}
+             \PY{n}{leafs} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+             \PY{k}{while} \PY{n+nb}{len}\PY{p}{(}\PY{n}{queue}\PY{p}{)} \PY{o}{!=} \PY{l+m+mi}{0}\PY{p}{:}
+                 \PY{n}{nodeID} \PY{o}{=} \PY{n}{queue}\PY{o}{.}\PY{n}{popleft}\PY{p}{(}\PY{p}{)}
+                 \PY{k}{if} \PY{n}{nodeID} \PY{o+ow}{in} \PY{n}{visited}\PY{p}{:}
+                     \PY{k}{continue}
+                 \PY{n}{node} \PY{o}{=} \PY{n}{tree}\PY{o}{.}\PY{n}{GetNI}\PY{p}{(}\PY{n}{nodeID}\PY{p}{)}
+         
+                 \PY{c+c1}{\PYZsh{} Add outgoing edge to queue.}
+                 \PY{n}{neighbors} \PY{o}{=} \PY{p}{[}\PY{n}{node}\PY{o}{.}\PY{n}{GetOutNId}\PY{p}{(}\PY{n}{i}\PY{p}{)} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{xrange}\PY{p}{(}\PY{n}{node}\PY{o}{.}\PY{n}{GetOutDeg}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{]}
+                 \PY{k}{for} \PY{n}{neighbor} \PY{o+ow}{in} \PY{n}{neighbors}\PY{p}{:}
+                     \PY{n}{queue}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{neighbor}\PY{p}{)}
+                     \PY{k}{if} \PY{n}{neighbor} \PY{o+ow}{not} \PY{o+ow}{in} \PY{n}{distance}\PY{p}{:}
+                         \PY{n}{distance}\PY{p}{[}\PY{n}{neighbor}\PY{p}{]} \PY{o}{=} \PY{l+m+mi}{1} \PY{o}{+} \PY{n}{distance}\PY{p}{[}\PY{n}{nodeID}\PY{p}{]}
+                     \PY{k}{else}\PY{p}{:}
+                         \PY{k}{assert} \PY{n}{distance}\PY{p}{[}\PY{n}{neighbor}\PY{p}{]} \PY{o}{==} \PY{l+m+mi}{1} \PY{o}{+} \PY{n}{distance}\PY{p}{[}\PY{n}{nodeID}\PY{p}{]}
+         
+                 \PY{c+c1}{\PYZsh{} We\PYZsq{}re a leaf if no out edges}
+                 \PY{k}{if} \PY{n+nb}{len}\PY{p}{(}\PY{n}{neighbors}\PY{p}{)} \PY{o}{==} \PY{l+m+mi}{0}\PY{p}{:}
+                     \PY{n}{leafs}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{nodeID}\PY{p}{)}
+         
+                 \PY{c+c1}{\PYZsh{} Store parents and descendents for efficiency.}
+                 \PY{n}{descendents}\PY{p}{[}\PY{n}{nodeID}\PY{p}{]} \PY{o}{=} \PY{n}{neighbors}
+                 \PY{n}{parents}\PY{p}{[}\PY{n}{nodeID}\PY{p}{]} \PY{o}{=} \PY{p}{[}\PY{n}{node}\PY{o}{.}\PY{n}{GetInNId}\PY{p}{(}\PY{n}{i}\PY{p}{)}
+                                          \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{xrange}\PY{p}{(}\PY{n}{node}\PY{o}{.}\PY{n}{GetInDeg}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{]}
+                 \PY{k}{if} \PY{n}{nodeID} \PY{o}{!=} \PY{n}{s}\PY{p}{:}
+                     \PY{k}{assert} \PY{n}{nodeID} \PY{o+ow}{not} \PY{o+ow}{in} \PY{n}{sigmas}
+                     \PY{n}{sigmas}\PY{p}{[}\PY{n}{nodeID}\PY{p}{]} \PY{o}{=} \PY{l+m+mi}{0}
+                     \PY{k}{for} \PY{n}{parent} \PY{o+ow}{in} \PY{n}{parents}\PY{p}{[}\PY{n}{node}\PY{o}{.}\PY{n}{GetId}\PY{p}{(}\PY{p}{)}\PY{p}{]}\PY{p}{:}
+                         \PY{n}{sigmas}\PY{p}{[}\PY{n}{node}\PY{o}{.}\PY{n}{GetId}\PY{p}{(}\PY{p}{)}\PY{p}{]} \PY{o}{+}\PY{o}{=} \PY{n}{sigmas}\PY{p}{[}\PY{n}{parent}\PY{p}{]}
+         
+                 \PY{c+c1}{\PYZsh{} Mark node as explored.}
+                 \PY{n}{visited}\PY{p}{[}\PY{n}{nodeID}\PY{p}{]} \PY{o}{=} \PY{n+nb+bp}{True}
+         
+             \PY{c+c1}{\PYZsh{} Traverse in order of furthest node (which is always a leave)}
+             \PY{k}{assert} \PY{n+nb}{len}\PY{p}{(}\PY{n}{leafs}\PY{p}{)} \PY{o}{\PYZgt{}} \PY{l+m+mi}{0}
+             \PY{n}{visited} \PY{o}{=} \PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}
+             \PY{c+c1}{\PYZsh{} maps \PYZob{}(v,w): delta\PYZus{}s(\PYZob{}v,w\PYZcb{})\PYZcb{} as defined in Algorithm 1.}
+             \PY{n}{deltas} \PY{o}{=} \PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}
+             \PY{n}{leafDict} \PY{o}{=} \PY{p}{\PYZob{}}\PY{n}{leaf}\PY{p}{:} \PY{n+nb+bp}{True} \PY{k}{for} \PY{n}{leaf} \PY{o+ow}{in} \PY{n}{leafs}\PY{p}{\PYZcb{}}
+             \PY{n}{sortedDistance} \PY{o}{=} \PY{n+nb}{sorted}\PY{p}{(}\PY{n}{distance}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{key}\PY{o}{=}\PY{k}{lambda} \PY{n}{x}\PY{p}{:} \PY{o}{\PYZhy{}}\PY{n}{x}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+             \PY{k}{for} \PY{n}{w}\PY{p}{,} \PY{n}{\PYZus{}} \PY{o+ow}{in} \PY{n}{sortedDistance}\PY{p}{:}
+                 \PY{n}{node} \PY{o}{=} \PY{n}{tree}\PY{o}{.}\PY{n}{GetNI}\PY{p}{(}\PY{n}{w}\PY{p}{)}
+                 \PY{k}{for} \PY{n}{v} \PY{o+ow}{in} \PY{n}{parents}\PY{p}{[}\PY{n}{w}\PY{p}{]}\PY{p}{:}
+                     \PY{c+c1}{\PYZsh{} A leave, so calculate base case for incoming edges from above bfs.}
+                     \PY{k}{if} \PY{n}{w} \PY{o+ow}{in} \PY{n}{leafDict}\PY{p}{:}
+                         \PY{n}{deltas}\PY{p}{[}\PY{p}{(}\PY{n}{v}\PY{p}{,} \PY{n}{w}\PY{p}{)}\PY{p}{]} \PY{o}{=} \PY{n+nb}{float}\PY{p}{(}\PY{n}{sigmas}\PY{p}{[}\PY{n}{v}\PY{p}{]}\PY{p}{)} \PY{o}{/} \PY{n+nb}{float}\PY{p}{(}\PY{n}{sigmas}\PY{p}{[}\PY{n}{w}\PY{p}{]}\PY{p}{)}
+                         \PY{n}{deltas}\PY{p}{[}\PY{p}{(}\PY{n}{w}\PY{p}{,} \PY{n}{v}\PY{p}{)}\PY{p}{]} \PY{o}{=} \PY{n}{deltas}\PY{p}{[}\PY{p}{(}\PY{n}{v}\PY{p}{,} \PY{n}{w}\PY{p}{)}\PY{p}{]}
+                     \PY{c+c1}{\PYZsh{} non\PYZhy{}leave w.}
+                     \PY{k}{else}\PY{p}{:}
+                         \PY{n}{total} \PY{o}{=} \PY{l+m+mi}{1}
+                         \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n}{descendents}\PY{p}{[}\PY{n}{w}\PY{p}{]}\PY{p}{:}
+                             \PY{n}{total} \PY{o}{+}\PY{o}{=} \PY{n}{deltas}\PY{p}{[}\PY{p}{(}\PY{n}{w}\PY{p}{,}\PY{n}{x}\PY{p}{)}\PY{p}{]}
+                         \PY{n}{deltas}\PY{p}{[}\PY{p}{(}\PY{n}{v}\PY{p}{,}\PY{n}{w}\PY{p}{)}\PY{p}{]} \PY{o}{=} \PY{n+nb}{float}\PY{p}{(}\PY{n}{sigmas}\PY{p}{[}\PY{n}{v}\PY{p}{]}\PY{p}{)} \PY{o}{/} \PY{n+nb}{float}\PY{p}{(}\PY{n}{sigmas}\PY{p}{[}\PY{n}{w}\PY{p}{]}\PY{p}{)} \PY{o}{*} \PY{n}{total}
+                         \PY{n}{deltas}\PY{p}{[}\PY{p}{(}\PY{n}{w}\PY{p}{,}\PY{n}{v}\PY{p}{)}\PY{p}{]} \PY{o}{=} \PY{n}{deltas}\PY{p}{[}\PY{p}{(}\PY{n}{v}\PY{p}{,}\PY{n}{w}\PY{p}{)}\PY{p}{]}
+             \PY{k}{return} \PY{n}{deltas}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}42}]:} \PY{k}{def} \PY{n+nf}{getDeltaValues}\PY{p}{(}\PY{n}{G}\PY{p}{)}\PY{p}{:}
+             \PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}}
+         \PY{l+s+sd}{    Calculates the \PYZbs{}delta values for all nodes in G as defined in Algorithm 1.}
+         \PY{l+s+sd}{    }
+         \PY{l+s+sd}{    returns: dictionary of dictionaries mappings \PYZob{}s: \PYZob{}(v, w): \PYZbs{}delta\PYZus{}s(\PYZob{}v,w\PYZcb{})\PYZcb{}\PYZcb{}}
+         \PY{l+s+sd}{    \PYZsq{}\PYZsq{}\PYZsq{}}
+             \PY{n}{delta} \PY{o}{=} \PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}
+             \PY{k}{for} \PY{n}{snode} \PY{o+ow}{in} \PY{n}{G}\PY{o}{.}\PY{n}{Nodes}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+                 \PY{n}{s} \PY{o}{=} \PY{n}{snode}\PY{o}{.}\PY{n}{GetId}\PY{p}{(}\PY{p}{)}
+                 \PY{n}{delta}\PY{p}{[}\PY{n}{s}\PY{p}{]} \PY{o}{=} \PY{n}{getSingleDeltaValue}\PY{p}{(}\PY{n}{G}\PY{p}{,} \PY{n}{s}\PY{p}{)}        
+             \PY{k}{return} \PY{n}{delta}  
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}46}]:} \PY{k}{def} \PY{n+nf}{ExactEdgeCentrality}\PY{p}{(}\PY{n}{G}\PY{p}{,} \PY{n}{includeDuplicates}\PY{o}{=}\PY{n+nb+bp}{False}\PY{p}{)}\PY{p}{:}
+             \PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}}
+         \PY{l+s+sd}{    Calculates the exact node centrality of G accoring to Algorithm 1. Returns}
+         \PY{l+s+sd}{    a hash table of all edges in G and their respective centralities.}
+         \PY{l+s+sd}{    }
+         \PY{l+s+sd}{    param: snap.PUNGraph, the graph}
+         \PY{l+s+sd}{    returns: \PYZob{}(v,w\PYZcb{}: float\PYZcb{}, exact betweenness centrality of G for all edges in G.}
+         \PY{l+s+sd}{    \PYZsq{}\PYZsq{}\PYZsq{}}
+             \PY{n}{delta} \PY{o}{=} \PY{n}{getDeltaValues}\PY{p}{(}\PY{n}{G}\PY{p}{)}
+             \PY{n}{centrality} \PY{o}{=} \PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}
+             \PY{k}{for} \PY{n}{edge} \PY{o+ow}{in} \PY{n}{G}\PY{o}{.}\PY{n}{Edges}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+                 \PY{n}{v}\PY{p}{,}\PY{n}{w} \PY{o}{=} \PY{n}{edge}\PY{o}{.}\PY{n}{GetId}\PY{p}{(}\PY{p}{)}
+                 \PY{n}{centrality}\PY{p}{[}\PY{p}{(}\PY{n}{v}\PY{p}{,}\PY{n}{w}\PY{p}{)}\PY{p}{]} \PY{o}{=} \PY{l+m+mi}{0}
+                 \PY{k}{for} \PY{n}{node} \PY{o+ow}{in} \PY{n}{G}\PY{o}{.}\PY{n}{Nodes}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+                     \PY{n}{s} \PY{o}{=} \PY{n}{node}\PY{o}{.}\PY{n}{GetId}\PY{p}{(}\PY{p}{)}
+                     \PY{k}{assert} \PY{n}{s} \PY{o+ow}{in} \PY{n}{delta}
+                     \PY{n}{centrality}\PY{p}{[}\PY{p}{(}\PY{n}{v}\PY{p}{,}\PY{n}{w}\PY{p}{)}\PY{p}{]} \PY{o}{+}\PY{o}{=} \PY{p}{(}\PY{n}{delta}\PY{p}{[}\PY{n}{s}\PY{p}{]}\PY{p}{[}\PY{p}{(}\PY{n}{v}\PY{p}{,}\PY{n}{w}\PY{p}{)}\PY{p}{]} \PY{k}{if} \PY{p}{(}\PY{n}{v}\PY{p}{,}\PY{n}{w}\PY{p}{)} \PY{o+ow}{in} \PY{n}{delta}\PY{p}{[}\PY{n}{s}\PY{p}{]} \PY{k}{else} \PY{l+m+mi}{0}\PY{p}{)}
+                 \PY{k}{if} \PY{n}{includeDuplicates}\PY{p}{:}
+                     \PY{n}{centrality}\PY{p}{[}\PY{p}{(}\PY{n}{w}\PY{p}{,}\PY{n}{v}\PY{p}{)}\PY{p}{]} \PY{o}{=} \PY{n}{centrality}\PY{p}{[}\PY{p}{(}\PY{n}{v}\PY{p}{,}\PY{n}{w}\PY{p}{)}\PY{p}{]}
+             \PY{k}{return} \PY{n}{centrality}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}47}]:} \PY{k}{def} \PY{n+nf}{testExactEdgeCentrality}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+             \PY{n}{testG} \PY{o}{=} \PY{n}{snap}\PY{o}{.}\PY{n}{GenPrefAttach}\PY{p}{(}\PY{n}{NUM\PYZus{}NODES}\PY{p}{,} \PY{n}{OUT\PYZus{}DEGREE}\PY{p}{,} \PY{n}{Rnd}\PY{p}{)}
+             \PY{n}{centrality} \PY{o}{=} \PY{n}{ExactEdgeCentrality}\PY{p}{(}\PY{n}{testG}\PY{p}{)}
+             \PY{n}{unusedNodes} \PY{o}{=} \PY{n}{snap}\PY{o}{.}\PY{n}{TIntFltH}\PY{p}{(}\PY{p}{)}
+             \PY{n}{expectedCentrality} \PY{o}{=} \PY{n}{snap}\PY{o}{.}\PY{n}{TIntPrFltH}\PY{p}{(}\PY{p}{)}
+             \PY{n}{snap}\PY{o}{.}\PY{n}{GetBetweennessCentr}\PY{p}{(}\PY{n}{testG}\PY{p}{,} \PY{n}{unusedNodes}\PY{p}{,} \PY{n}{expectedCentrality}\PY{p}{,} \PY{l+m+mf}{1.0}\PY{p}{)}
+         
+             \PY{k}{for} \PY{n}{key} \PY{o+ow}{in} \PY{n}{expectedCentrality}\PY{p}{:}
+                 \PY{p}{(}\PY{n}{v}\PY{p}{,}\PY{n}{w}\PY{p}{)} \PY{o}{=} \PY{n}{key}\PY{o}{.}\PY{n}{GetVal1}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{key}\PY{o}{.}\PY{n}{GetVal2}\PY{p}{(}\PY{p}{)}
+                 \PY{n}{expected} \PY{o}{=} \PY{n}{expectedCentrality}\PY{p}{[}\PY{n}{key}\PY{p}{]}
+                 \PY{k}{if} \PY{n+nb}{abs}\PY{p}{(}\PY{n}{centrality}\PY{p}{[}\PY{p}{(}\PY{n}{v}\PY{p}{,}\PY{n}{w}\PY{p}{)}\PY{p}{]} \PY{o}{\PYZhy{}} \PY{n}{expected}\PY{p}{)} \PY{o}{\PYZgt{}}\PY{o}{=} \PY{l+m+mf}{1e\PYZhy{}8}\PY{p}{:}
+                     \PY{k}{print} \PY{n}{centrality}\PY{p}{[}\PY{p}{(}\PY{n}{v}\PY{p}{,}\PY{n}{w}\PY{p}{)}\PY{p}{]}\PY{p}{,} \PY{n}{expected}
+                 \PY{k}{assert} \PY{n+nb}{abs}\PY{p}{(}\PY{n}{centrality}\PY{p}{[}\PY{p}{(}\PY{n}{v}\PY{p}{,}\PY{n}{w}\PY{p}{)}\PY{p}{]} \PY{o}{\PYZhy{}} \PY{n}{expected}\PY{p}{)} \PY{o}{\PYZlt{}} \PY{l+m+mf}{1e\PYZhy{}8}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}75}]:} \PY{o}{\PYZpc{}\PYZpc{}}\PY{k}{timeit}
+         testExactEdgeCentrality()
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+1 loop, best of 3: 22.3 s per loop
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}76}]:} \PY{k}{def} \PY{n+nf}{ApproxEdgeCentrality}\PY{p}{(}\PY{n}{G}\PY{p}{,} \PY{n}{maxSamples}\PY{p}{,} \PY{n}{maxEdgeDelta}\PY{p}{,} \PY{n}{includeDuplicates}\PY{o}{=}\PY{n+nb+bp}{False}\PY{p}{)}\PY{p}{:}
+             \PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}}
+         \PY{l+s+sd}{    Calculates the approximate edge centrality for all edges in the graph G.}
+         \PY{l+s+sd}{    }
+         \PY{l+s+sd}{    Samples at most maxSample nodes and updates edges only as long as edgeDelta \PYZlt{}= maxEdgeDelta.}
+         \PY{l+s+sd}{    }
+         \PY{l+s+sd}{    See homework for details.}
+         \PY{l+s+sd}{    }
+         \PY{l+s+sd}{    Returns the same type as ExactEdgeCentrality.}
+         \PY{l+s+sd}{    \PYZsq{}\PYZsq{}\PYZsq{}}
+             \PY{k}{for} \PY{n}{\PYZus{}} \PY{o+ow}{in} \PY{n+nb}{xrange}\PY{p}{(}\PY{n}{maxSamples}\PY{p}{)}\PY{p}{:}
+                 \PY{n}{v} \PY{o}{=} \PY{n}{G}\PY{o}{.}\PY{n}{GetRndNId}\PY{p}{(}\PY{n}{Rnd}\PY{p}{)}
+                 \PY{n}{edgeDelta} \PY{o}{=} \PY{n}{defaultdict}\PY{p}{(}\PY{n+nb}{int}\PY{p}{)}
+                 \PY{n}{edgeSampleCount} \PY{o}{=} \PY{n}{defaultdict}\PY{p}{(}\PY{n+nb}{int}\PY{p}{)}
+                 \PY{k}{for} \PY{n}{edge}\PY{p}{,} \PY{n}{deltav} \PY{o+ow}{in} \PY{n}{getSingleDeltaValue}\PY{p}{(}\PY{n}{G}\PY{p}{,} \PY{n}{v}\PY{p}{)}\PY{o}{.}\PY{n}{iteritems}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+                     \PY{k}{if} \PY{n}{edgeDelta}\PY{p}{[}\PY{n}{edge}\PY{p}{]} \PY{o}{\PYZlt{}}\PY{o}{=} \PY{n}{maxEdgeDelta}\PY{p}{:}
+                         \PY{n}{edgeDelta}\PY{p}{[}\PY{n}{edge}\PY{p}{]} \PY{o}{+}\PY{o}{=} \PY{n}{deltav}
+                         \PY{n}{edgeSampleCount}\PY{p}{[}\PY{n}{edge}\PY{p}{]} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+             \PY{n}{centrality} \PY{o}{=} \PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}
+             \PY{k}{for} \PY{n}{edge} \PY{o+ow}{in} \PY{n}{G}\PY{o}{.}\PY{n}{Edges}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+                 \PY{n}{v}\PY{p}{,}\PY{n}{w} \PY{o}{=} \PY{n}{edge}\PY{o}{.}\PY{n}{GetId}\PY{p}{(}\PY{p}{)}
+                 \PY{k}{if} \PY{p}{(}\PY{n}{v}\PY{p}{,}\PY{n}{w}\PY{p}{)} \PY{o+ow}{in} \PY{n}{edgeSampleCount}\PY{p}{:}
+                     \PY{n}{centrality}\PY{p}{[}\PY{p}{(}\PY{n}{v}\PY{p}{,}\PY{n}{w}\PY{p}{)}\PY{p}{]} \PY{o}{=} \PY{n}{G}\PY{o}{.}\PY{n}{GetNodes}\PY{p}{(}\PY{p}{)} \PY{o}{/} \PY{n+nb}{float}\PY{p}{(}\PY{n}{edgeSampleCount}\PY{p}{[}\PY{p}{(}\PY{n}{v}\PY{p}{,}\PY{n}{w}\PY{p}{)}\PY{p}{]}\PY{p}{)} \PY{o}{*} \PY{n}{edgeDelta}\PY{p}{[}\PY{p}{(}\PY{n}{v}\PY{p}{,}\PY{n}{w}\PY{p}{)}\PY{p}{]}
+                 \PY{k}{else}\PY{p}{:}
+                     \PY{n}{centrality}\PY{p}{[}\PY{p}{(}\PY{n}{v}\PY{p}{,}\PY{n}{w}\PY{p}{)}\PY{p}{]} \PY{o}{=} \PY{l+m+mi}{0}
+                 \PY{k}{if} \PY{n}{includeDuplicates}\PY{p}{:}
+                     \PY{n}{centrality}\PY{p}{[}\PY{p}{(}\PY{n}{w}\PY{p}{,}\PY{n}{v}\PY{p}{)}\PY{p}{]} \PY{o}{=} \PY{n}{centrality}\PY{p}{[}\PY{p}{(}\PY{n}{v}\PY{p}{,}\PY{n}{w}\PY{p}{)}\PY{p}{]}
+             \PY{k}{return} \PY{n}{centrality}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}77}]:} \PY{k}{def} \PY{n+nf}{testApproxEdgeCentrality}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+             \PY{n}{testG} \PY{o}{=} \PY{n}{snap}\PY{o}{.}\PY{n}{GenPrefAttach}\PY{p}{(}\PY{n}{NUM\PYZus{}NODES}\PY{p}{,} \PY{n}{OUT\PYZus{}DEGREE}\PY{p}{,} \PY{n}{Rnd}\PY{p}{)}
+             \PY{n}{centrality} \PY{o}{=} \PY{n}{ApproxEdgeCentrality}\PY{p}{(}\PY{n}{testG}\PY{p}{,} \PY{n}{testG}\PY{o}{.}\PY{n}{GetNodes}\PY{p}{(}\PY{p}{)} \PY{o}{/} \PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mi}{5} \PY{o}{*} \PY{n}{testG}\PY{o}{.}\PY{n}{GetNodes}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+             \PY{n}{unusedNodes} \PY{o}{=} \PY{n}{snap}\PY{o}{.}\PY{n}{TIntFltH}\PY{p}{(}\PY{p}{)}
+             \PY{n}{expectedCentrality} \PY{o}{=} \PY{n}{snap}\PY{o}{.}\PY{n}{TIntPrFltH}\PY{p}{(}\PY{p}{)}
+             \PY{n}{snap}\PY{o}{.}\PY{n}{GetBetweennessCentr}\PY{p}{(}\PY{n}{testG}\PY{p}{,} \PY{n}{unusedNodes}\PY{p}{,} \PY{n}{expectedCentrality}\PY{p}{,} \PY{l+m+mf}{1.0}\PY{p}{)}
+         
+             \PY{n}{errorSum} \PY{o}{=} \PY{l+m+mf}{0.0}
+             \PY{k}{for} \PY{n}{key} \PY{o+ow}{in} \PY{n}{expectedCentrality}\PY{p}{:}
+                 \PY{p}{(}\PY{n}{v}\PY{p}{,}\PY{n}{w}\PY{p}{)} \PY{o}{=} \PY{n}{key}\PY{o}{.}\PY{n}{GetVal1}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{key}\PY{o}{.}\PY{n}{GetVal2}\PY{p}{(}\PY{p}{)}
+                 \PY{n}{expected} \PY{o}{=} \PY{n}{expectedCentrality}\PY{p}{[}\PY{n}{key}\PY{p}{]}
+                 \PY{n}{errorSum} \PY{o}{+}\PY{o}{=} \PY{p}{(}\PY{n}{centrality}\PY{p}{[}\PY{p}{(}\PY{n}{v}\PY{p}{,}\PY{n}{w}\PY{p}{)}\PY{p}{]} \PY{o}{\PYZhy{}} \PY{n}{expected}\PY{p}{)}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}
+                 
+             \PY{k}{print} \PY{n}{errorSum}
+             \PY{k}{print} \PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n}{errorSum} \PY{o}{/} \PY{n+nb}{len}\PY{p}{(}\PY{n}{expectedCentrality}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}78}]:} \PY{o}{\PYZpc{}\PYZpc{}}\PY{k}{timeit}
+         testApproxEdgeCentrality()
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+1.9474889235e+11
+6986.36144233
+2.7792187214e+11
+8345.93341372
+4.60884310018e+11
+10747.5509831
+1.84403400604e+11
+6798.26383195
+1 loop, best of 3: 2.36 s per loop
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}92}]:} \PY{k}{def} \PY{n+nf}{Q2}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+             \PY{n}{prefAttachmentGraph} \PY{o}{=} \PY{n}{snap}\PY{o}{.}\PY{n}{GenPrefAttach}\PY{p}{(}\PY{n}{NUM\PYZus{}NODES}\PY{p}{,} \PY{n}{OUT\PYZus{}DEGREE}\PY{p}{,} \PY{n}{Rnd}\PY{p}{)}
+             \PY{n}{N} \PY{o}{=} \PY{n}{prefAttachmentGraph}\PY{o}{.}\PY{n}{GetNodes}\PY{p}{(}\PY{p}{)}
+             \PY{k}{global} \PY{n}{exactEdgeCentrality}\PY{p}{,} \PY{n}{approxEdgeCentrality}
+             \PY{n}{exactEdgeCentrality} \PY{o}{=} \PY{n}{ExactEdgeCentrality}\PY{p}{(}\PY{n}{prefAttachmentGraph}\PY{p}{)}
+             \PY{n}{approxEdgeCentrality} \PY{o}{=} \PY{n}{ApproxEdgeCentrality}\PY{p}{(}\PY{n}{testG}\PY{p}{,} \PY{n}{N} \PY{o}{/} \PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mi}{5} \PY{o}{*} \PY{n}{N}\PY{p}{)}
+             \PY{k}{assert} \PY{n+nb}{len}\PY{p}{(}\PY{n}{exactEdgeCentrality}\PY{p}{)} \PY{o}{==} \PY{n+nb}{len}\PY{p}{(}\PY{n}{exactEdgeCentrality}\PY{p}{)}
+             
+             \PY{n}{Y1} \PY{o}{=} \PY{n+nb}{sorted}\PY{p}{(}\PY{n}{exactEdgeCentrality}\PY{o}{.}\PY{n}{values}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{reverse}\PY{o}{=}\PY{n+nb+bp}{True}\PY{p}{)}
+             \PY{n}{Y2} \PY{o}{=} \PY{n+nb}{sorted}\PY{p}{(}\PY{n}{approxEdgeCentrality}\PY{o}{.}\PY{n}{values}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{reverse}\PY{o}{=}\PY{n+nb+bp}{True}\PY{p}{)}
+             \PY{n}{X} \PY{o}{=} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{Y1}\PY{p}{)}\PY{p}{)}
+             
+             \PY{n}{plt}\PY{o}{.}\PY{n}{close}\PY{p}{(}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Exact and Approximate Betweeness Centrality Ordering}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{x\PYZhy{}th largest edge}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Calculated betweeness centrality}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{semilogy}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{Y1}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{semilogy}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{Y2}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Exact Algorithm}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Approximate Algorithm}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{)}
+             \PY{k}{if} \PY{o+ow}{not} \PY{n}{os}\PY{o}{.}\PY{n}{path}\PY{o}{.}\PY{n}{exists}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{output}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{:}
+                 \PY{n}{os}\PY{o}{.}\PY{n}{mkdir}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{output}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{savefig}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{output/2}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{dpi}\PY{o}{=}\PY{l+m+mi}{500}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}93}]:} \PY{n}{Q2}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_13_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}94}]:} \PY{n}{testG} \PY{o}{=} \PY{n}{snap}\PY{o}{.}\PY{n}{GenPrefAttach}\PY{p}{(}\PY{n}{NUM\PYZus{}NODES}\PY{p}{,} \PY{n}{OUT\PYZus{}DEGREE}\PY{p}{,} \PY{n}{Rnd}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}95}]:} \PY{o}{\PYZpc{}\PYZpc{}}\PY{k}{timeit}
+         centrality = ApproxEdgeCentrality(testG, testG.GetNodes() / 10, 5 * testG.GetNodes())
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+1 loop, best of 3: 1.8 s per loop
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}96}]:} \PY{o}{\PYZpc{}\PYZpc{}}\PY{k}{timeit}
+         ExactEdgeCentrality(testG)
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+1 loop, best of 3: 21.8 s per loop
+
+    \end{Verbatim}
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}

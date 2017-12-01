@@ -57,85 +57,424 @@
 
 % BEGIN HOMEWORK HERE
 \begin{document}
+\graphicspath{ {../../code/output/} }
 
 % Question 1.1
 \newquestion{1.1}
+Let $M$ be the matrix such that if $i \to j$ then $M_{ij} = \frac{1}{d_i}$. Let $v_i$ be the personalized page rank vector of the person who's name starts with $i$. Let $e_i$ be the unit vector with the $i$-th entry $1$. Then the information in the problem tells us the following:
+
+\begin{align*}
+v_A &= \beta Mv_A + \frac{(1 - \beta)}{3}(e_1 + e_2 + e_3) \\
+v_B &= \beta Mv_B + \frac{(1 - \beta)}{3}(e_3 + e_4 + e_5) \\
+v_C &= \beta Mv_C + \frac{(1 - \beta)}{3}(e_1 + e_4 + e_5) \\
+v_D &= \beta Mv_D + (1 - \beta)e_1
+\end{align*}
+
+We note that we can label each teleport set by a vector as follows:
+\begin{align*}
+t_A &= \frac{1}{3}(e_1 + e_2 + e_3) \\
+t_B &= \frac{1}{3}(e_3 + e_4 + e_5) \\
+t_C &= \frac{1}{3}(e_1 + e_4 + e_5) \\
+t_D &= e_1
+\end{align*}
 
 \subsubsection*{(i)}
+We wish to find $v_D$ satisfying:
+$$
+v_D = \beta Mv_D + (1 - \beta)e_2
+$$
+
+Note that in that case we can have:
+$$
+v_D = 3v_A - 3v_B + 3v_C - v_D
+$$
+(we derive the above by considering linear combinations of our teleport sets, scaled by the right constants)
+
+From the above, this gives us:
+\begin{align*}
+\beta Mv_D + (1 - \beta)e_2 &= \beta M(3v_A - 3v_B + 3v_C - v_D) + (1 - \beta)e_2 \\
+&= 3\beta Mv_A - 3\beta Mv_B + 3\beta Mv_C - \beta Mv_D + (1 - \beta)e_2 \\
+&= 3\beta Mv_A + (1-\beta)(e_1 + e_2 + e_3) \\
+&- 3\beta Mv_B + (1-\beta)(e_3 + e_4 + e_5) \\
+&+ 3\beta Mv_C - (1-\beta)(e_1 + e_4 + e_5)\\
+&- \beta Mv_D + (1-\beta)e_1 \\
+&+ (1 - \beta)[e_2 + (e_1 + e_2 + e_3) - (e_3 +e_4 + e_5) + (e_1 + e_4 + e_5) - e_1] \tag{add $0$ four times} \\
+&= 3v_A - 3v_B + 3v_c - v_D \tag{using results given} \\
+&= v_D
+\end{align*}
 
 \subsubsection*{(ii)}
+This is not possible. This is because there is no linear combination of our teleport sets that allows use to have $\{5\}$ by itself. We cannot use any amount of $t_A$ because there is no way to get rid of $e_2$, and this implies we cannot use any amount of $t_B$ since without $t_A$ we cannot get rid of $e_3$. Without $t_B$ we cannot get rid of $e_4$ which is means we also cannot use $t_C$, implying there is no way to linearly combine the results to give use $t_C.$
 
 \subsubsection*{(iii)}
+This can be done. We simply set:
+$$
+v_G = \frac{3}{5}v_A + \frac{3}{5}v_C - \frac{2}{3} v_D
+$$
+Note that we simply selected this such that:
+$$
+t_G = \frac{3}{5}t_A + \frac{3}{5}t_C - \frac{2}{3}t_D
+$$
+which gives us:
+
+\begin{align*}
+\beta Mv_G + t_G &= \beta M(\frac{3}{5}t_A + \frac{3}{5}t_C - \frac{2}{3}t_D) + (1-\beta)(\frac{3}{5}t_A + \frac{3}{5}t_C - \frac{2}{3}t_D) \\
+&= \frac{3}{5}v_A + \frac{3}{5}v_C - \frac{2}{3} v_D \\
+&= v_G
+\end{align*}
 
 % Question 1.2
 \newquestion{1.2}
+The set of PageRank vectors that you can compute from $V$ without accessing the web graph is given by all possible linear combinations. That is, if we have $x$ such that:
+$$
+x = \sum_{v_i \in V} c_iv_i
+$$
+This is because we can combine the teleport sets as we did above and the solution vector to the page rank equations will be a linear combination of the solutions we already have.
 
 % Question 1.3
 \newquestion{1.3}
+We follow the hints and assume we are calculating non-personalized PageRank. Note that:
+\begin{align*}
+p_0 &=\beta \left(\sum_{i \in S} \frac{r_i}{d_i} + \sum_{i=1}^{k} p_k \right) + (1-\beta)\frac{1}{N} \\
+&= \beta \left(\lambda + \sum_{i=1}^k p_i \right) + \frac{1}{N}(1 - \beta)
+\end{align*}
+and that
+
+\begin{align*}
+p_i &= \beta \frac{p_0}{k} + \frac{1}{N}(1-\beta) \tag{$1 \leq i \leq k$}
+\end{align*}
+
+Then we can simplify $p_0$ as
+\begin{align*}
+p_0 &= \beta \left(\lambda + \sum_{i=1}^k p_i \right) + \frac{1}{N}(1 - \beta) \\
+&= \beta \lambda + \beta \sum_{i=1}^k [\beta \frac{p_0}{k} + \frac{1}{N}(1 - \beta)] + \frac{1}{N}(1 - \beta) \\
+&= \beta \lambda + \beta^2p_0 + \frac{k}{N}\beta(1-\beta) + \frac{1}{N}(1-\beta) \\
+\implies  p_0 &= \frac{\beta \lambda + \frac{k}{N}\beta(1-\beta) + \frac{1}{N}(1-\beta)}{1 - \beta^2} \\ 
+&= \frac{N \beta \lambda + k\beta(1-\beta) + (1-\beta)}{N(1 - \beta^2)} \\
+&= \frac{1}{1-\beta^2} \left[\beta \lambda + \frac{1}{N}(1-\beta)(1 + k\beta) \right]
+\end{align*}
+
 
 % Question 1.4
 \newquestion{1.4}
+For this problem, we set $\lambda = 0$ (ignore it) and we have $N = k + m + 2$. Then we have:
+\begin{align*}
+p_0' &= \frac{(1 - \beta)(1 + k\beta)}{(1 - \beta^2)N} \\
+q_0' &= \frac{(1 - \beta)(1 + m\beta)}{(1 - \beta^2)N}
+\end{align*}
+which gives us:
+$$
+p_0' + q_0' = \frac{[1 - \beta][1 + (m+k)\beta]}{(1 - \beta^2)N}
+$$
+
+
+
+If instead they use the cooperative configuration, we have:
+\begin{align*}
+p_i &= \beta \left(\frac{\bar{p_0}}{k} + \frac{\bar{q_0}}{m}\right) + \frac{1}{N}(1-\beta) \tag{$1 \leq i \leq k$} \\
+q_i &= p_i \tag{$1 \leq i \leq k$} \\
+\bar{p_0} &= \frac{\beta}{2} \left(\sum_{i=1}^{k}p_i + \sum_{i=1}^m q_i \right) + \frac{1}{N}(1- \beta) \\
+\bar{q_0} &= \frac{\beta}{2} \left(\sum_{i=1}^{k}p_i + \sum_{i=1}^m q_i \right) + \frac{1}{N}(1- \beta) 
+\end{align*}
+
+We can see from the above that they are better off.
+
 
 % Question 1.5
 \newquestion{1.5}
+For this problem, we set $\lambda = 0$ (ignore it) and we have $N = k + m + 2$. Then we have:
+\begin{align*}
+p_0' &= \frac{(1 - \beta)(1 + k\beta)}{(1 - \beta^2)N} \\
+q_0' &= \frac{(1 - \beta)(1 + m\beta)}{(1 - \beta^2)N}
+\end{align*}
+which gives us:
+$$
+p_0' + q_0' = \frac{[1 - \beta][1 + (m+k)\beta]}{(1 - \beta^2)N}
+$$
+
+Same as before.
+
+If instead they use the cooperative configuration, we have:
+\begin{align*}
+p_i &= \frac{1}{N}(1-\beta) \tag{$1 \leq i \leq k$} \\
+q_i &= p_i \tag{$1 \leq i \leq k$} \\
+\bar{\bar{p_0}} &= \beta \left(\sum_{i=1}^{k}p_i + \bar{\bar{q_0}} \right) + \frac{1}{N}(1- \beta) \\
+\bar{\bar{q_0}} &= \beta \left(\sum_{i=1}^{n}q_i + \bar{\bar{p_0}} \right) + \frac{1}{N}(1- \beta) 
+\end{align*}
+
+We can see from the above that they are in fact not better off.
 
 % Question 2
 \newquestion{2}
 
+We include a plot comparing the induced ordering from the exact and approximate algorithms in Figure \ref{fig:betweeness}. We note that while quite terrible for extreme values (top ~100 edges) and bottom ~2k edges, then approximate algorithm is within an order of magnitude of the correct ordering for range 100 -> 2k. The shape of the graph is also okay (up tick in max values, downturn in lowest values, relatively flat for middle values).
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.7\textwidth]{2}
+\caption{Plot of Relative Ordering Between Approximate and Exact Betweenness Algorithms}
+\label{fig:betweeness}
+\end{figure}
+
+The two algorithms vary drastically in runtime (likely due to the early termination of the second). Using Python's timeit library, we find that the approximate algorithm runs 10x+ faster (1.8s vs 21.8) on the same input. However, this time differences does not seem worth the added error, since even the RMSE is ~9k. While this might be exaggerated due to the extreme deviations in the tail, and approximation algorithm seems to perform poorly with such few iterations.
+
+
 % Question 3.1
 \newquestion{3.1}
+The labeling is rather straight forward. Simple conceptually consider the full $2^k \times 2^k$ Kronecker Adjacency Matrix. Then note that each node in the graph is represented by one row. Number the rows starting from top to bottom from $0 \to 2^k - 1$.
+
+Now each rode has an associated values in $[0, 2^k)$ -- simply label the node with the binary representation of this value.
+
+We can see how this representation works if we consider the hierarchal structure induced by the Kronecker matrix product. More formally, we can show this works using induction on the length of the labels.
+
+For the base case, consider labels of length $1$. We therefore have two nodes labeled $0$ and $1$. Note that the probably of an edge between $0,0$ is given by $\Theta_1[0,0]$, $0,1$ by $\Theta_1[0,1]$, $1,0$ by $\Theta_1[1,0]$, and $1,1$ by $\Theta_1[1,1]$. This show the base case. 
+
+For induction, suppose our labeling has the desired property for labels of size $k$. We show it works for labels of size $k + 1$. Consider the full matrix on $2^{k+1} \times 2^{k+1}$ and break the problem into quadrants.
+\begin{itemize}
+\item The top-left quadrant consists of edges between nodes which have a leading $0$ in their label (since by construction, they lie in the range $[0, 2^{k})$). This implies that any edges in this quadrant will have a factor of $\Theta_1[0,0]$ in their product. By induction, this leads to the correct probability for all edges in this quadrant.
+\item Similarly, the bottom right quadrant consists of edges between nodes with a leading $1$ in ther label (since by construction, they lie in the range $[2^{k}, 2^{k+1})$). This implies that any edges in this quadrant will have a factor of $\Theta_1[1,1]$ in their probabilities. Again, by induction on the now shorter label and the self similarity of Kronecker graphs, this leads to the correct probability for all edges in this quadrant.
+\item The last two quadrants are similar in that they consist of edges between nodes where the leading digits are different. This implies that edges in this quadrant will have a factor of $\Theta_1[0,1] = \Theta_1[1,0]$ with them, which by induction, is correct.
+\end{itemize}
 
 % Question 3.2
 \newquestion{3.2}
+By the representation and results from part one, we have:
+\begin{align*}
+P[u,v] &= \prod_{b=1}^k \Theta_1[u_b, v_b] \\
+&= \Theta_1[1,1]^i\Theta_1[0,1]^j\Theta_1[1,0]^{l - i}\Theta_1[0,0]^{k - l - j} \\
+&= \alpha^i \beta^{l + j - i}\gamma^{k - l - j}
+\end{align*}
+The most challenging part is from Line 1 to Line 2 -- however, even this simply follows from the problem descriptions. We have $i$ bits where we know $u_b = v_b = 1$, giving us the first $\Theta_1[1,1]^i$ term. We also know that there are exactly $j$ bits where $u_b = 0$ and $v_b = 1$, giving use $\Theta[0,1]^j$. Furthermore, note that we know that $u$ has a total of $l$ $1$s, which implies that there are $l - i$ bits where $u_b = 1$ and $v_b = 0$, giving use $\Theta_1[1,0]^{l-1}$. The last term simply comes from noting that all other bits must both be $0$, giving use $\Theta_1[0,0]^{k-l-j}$.
 
 % Question 3.3
 \newquestion{3.3}
+We can use the results from part 3 to calculate the expected out-degree of $u$ where $u$ was weight $l$ (ie, it contains $l$ $1$s). Note that since the matrix is symmetric, we will have that the out-degree = in-degree = degree. We have:
+\begin{align*}
+E[\deg(u)] &= \sum_{v \in V} 1 \cdot P[u,v] \tag{We sum over all possible edge endpoints} \\
+&= \sum_{i=0}^{l}\sum_{j = 0}^{k- l} {l \choose i}{k - l \choose j} \alpha^{i}\beta^{l + j - i}\gamma^{k - l - j} \tag{using the results from above} \\
+&= \sum_{i=0}^{l} {l \choose i}a^i\beta^{l - i}\sum_{j=0}^{k - l}{k - l \choose j}\beta^j \gamma^{k - l - j} \tag{factoring parts that don't depend on $j$} \\
+&= (\alpha + \beta)^l(\beta + \gamma)^{k - l} \tag{usig the hint given}
+\end{align*}
+From step 1 to 2, we consider each $v$ such that exactly $i$ $1$s match and $j$ values are $1$ where $u_b$ is $0$. Note that this covers all $v$. For example, there are exactly ${l \choose i}{k - l \choose j}$ $v$ vectors where exactly $i$ of the $1$s match (ie, $i$ $1$s in $u$ implies $1$ in $v$ and the remaining $1$s imply $0$) and exactly $j$ of the $0s$ are opposite (ie, $j$ $0$s in $u$ correspond to $1$ in $v$ and the rest correspond to $0$).
 
 % Question 3.4
 \newquestion{3.4}
+Assuming an undirected graph, we can calculate the expected number of edges by simply summing over the expected degrees of each node and dividing by $2$.
+\begin{align*}
+E[\#\text{edges}] &= \frac{1}{2} \sum_{v \in V} E[\deg(u)]\\
+&= \frac{1}{2}\sum_{l= 0}^{k} {k \choose l} (\alpha + \beta)^l(\beta + \gamma)^{k - l} \tag{we sum based on the number of $1$s in v} \\
+&= \frac{1}{2}(\alpha + 2\beta + \gamma)^k \tag{previous hint}
+\end{align*}
 
 % Question 3.5
 \newquestion{3.5}
+We now calculate the expected number of self-loops. We again sum over each node, and again, process them by their weight.
+\begin{align*}
+E[\# \text{self-edges}] &= \sum_{v \in V} 1 \cdot P[v \to v] \\
+&= \sum_{l = 0}^{k} {k \choose l} \alpha^l \gamma^{l - k} \tag{there are ${k \choose l}$ nodes with weight $l$ and loop probability exactly $\alpha^l \gamma^{k-l}$} \\
+&=(\alpha + \gamma)^k \tag{previous hint}
+\end{align*}
 
 % Question 4.1
 \newquestion{4.1}
 
 \subsubsection*{(i)}
+Given the definitions in the problem statement, we prove that $x^TLx = c\cdot NCUTS(S)$ for some constant $c$.
+
+\begin{align*}
+x^TLx &= \sum_{(i,j) \in E} w_{ij}(x_i - x_j)^2 \tag{Fact 1 in Handhout} \\
+&= \sum_{(i,j) \in E}\left(\sqrt{\frac{\text{vol}(\bar{S})}{\text{vol}(S)}} + \sqrt{\frac{\text{vol}(S)}{\text{vol}(\bar{S})}}\right)^2(1 - I_{x_i = x_j}) \tag{$w_{ij} = 1$} \\
+&= \left(\frac{\text{vol}(\bar{S})}{\text{vol}(S)}  + 2 +\frac{\text{vol}(S)}{\text{vol}(\bar{S})} \right) \sum_{(i,j) \in E} (1 - I_{x_i = x_j}) \tag{expand square, move constants out of sum} \\
+&= 2\text{cut}(S)\left(\frac{\text{vol}(\bar{S})}{\text{vol}(S)}  + 2 +\frac{\text{vol}(S)}{\text{vol}(\bar{S})} \right) \tag{sum double counts edges across cut}\\
+&= 2\text{cut}(S)\left( \frac{\text{vol}(\bar{S})^2 + \text{vol}(S)^2 + 2 \text{vol}(S)\text{vol}(\bar{S})}{\text{vol}(S)\text{vol}(\bar{S})}\right) \tag{common denominator} \\ 
+&= \frac{2\text{cut}(S)}{\text{vol}(S)\text{vol}(\bar{S})}[\text{vol}(\bar{S}) + \text{vol}(S)]^2 \tag{perfect square} \\
+&= 4m\frac{\text{cut}(S)[\text{vol}(S) + \text{vol}(\bar{S})]}{\text{vol}(S)\text{vol}(\bar{S})} \tag{note that $\text{vol}(S) + \text{vol}(\bar{S}) = 2m$} \\
+&= 4m\left[\frac{\text{cut}(S)}{\text{vol}(S)} + \frac{\text{cut}(\bar{S})}{\text{vol}(\bar{S})} \right]\tag{simplifying and using $\text{cut}(S) = \text{cut}(\bar{S})$} \\
+&= 4m \cdot NCUT(S) \tag{definition of NCUT}
+\end{align*}
+so we have $c = 4m = 4|E|$. 
 
 \subsubsection*{(ii)}
+We show that $x^TDe = 0$ where $e$ is the vector of all ones and $D$ is the diagonal matrix of degrees such that $D_{ii} = \sum_{j} A_{ij}$.
+
+\begin{align*}
+x^TDe &= \sum_{1 \leq i,j \leq n} D_{ij}x_ie_j \\
+&= \sum_{1 \leq i \leq n} D_{ii}x_ie_i \tag{only diagonals are non-zero}\\
+&= \sqrt{\frac{\text{vol}(\bar{S})}{\text{vol}(S)}} \sum_{i \in S} D_{ii} - \sqrt{\frac{\text{vol}(S)}{\text{vol}(\bar{S})}}\sum_{i \in \bar{S}} D_{ii} \tag{sum over all nodes based on inclusion in $S$}\\
+&= \sqrt{\frac{\text{vol}(\bar{S})}{\text{vol}(S)}} \text{vol}(S) - \sqrt{\frac{\text{vol}(S)}{\text{vol}(\bar{S})}} \text{vol}(\bar{S}) \\
+&= \sqrt{\text{vol}(\bar{S})\text{vol}(S)} - \sqrt{\text{vol}(S)\text{vol}(\bar{S})} \\
+&= 0
+\end{align*}
+
 
 \subsubsection*{(iii)}
+We show that $x^TDX = 2m$.
+
+\begin{align*}
+x^TDx &= \sum_{1 \leq i,j \leq n} D_{ij}x_ix_j \\
+&= \sum_{1 \leq i \leq n} D_{ii}x_i^2 \tag{$D_{ij} = 0$ for $i \neq j$} \\
+&= \sum_{i \in S} D_{ii} x_i^2 + \sum_{i \in \bar{S}}D_{ii} x_i^2 \tag{summing nodes based on whether they belong to $S$ or not} \\
+&= \frac{\text{vol}(\bar{S})}{\text{vol}(S)}\sum_{i \in S} D_{ii} + \frac{\text{vol}(S)}{\text{vol}(\bar{S})} \sum_{i \in \bar{S}} D_{ii} \\
+&= \frac{\text{vol}(\bar{S})}{\text{vol}(S)} \text{vol}(S) + \frac{\text{vol}(S)}{\text{vol}(\bar{S})} \text{vol}(\bar{S}) \tag{definition of vol} \\
+&= \text{vol}(\bar{S}) + \text{vol}(S) \\
+&= 2m \tag{sum of all node degrees is $2|E|$}
+\end{align*}
 
 \subsubsection*{minimizer}
 
+We assume that $G$ is connected and show that the minimizer to:
+
+\begin{align*}
+&\text{minimize}_{S \subset V, x \in \mathbb{R}^n} \\
+&\frac{x^TLx}{x^TDx} \\
+&\text{subject to} \\
+&x^TDe = 0, x^TDx = 2m
+\end{align*}
+
+is $D^{-1/2}v$ where $v$ is the eigenvector corresponding to the second smallest eigenvalue of the \textit{normalized graph Laplacian} $\tilde{L} = D^{-1/2}LD^{-1/2}$
+
+We follow the hints. First, we make the suggested substitution of $x = D^{-1/2}z$, to obtain the problem:
+
+\begin{align*}
+&\text{minimize}_{z \in \mathbb{R}^n} \\
+&\frac{z^T\tilde{L}z}{z^Tz} \\
+&\text{subject to} \\
+&z^TD^{1/2}e = 0, z^Tz = 2m
+\end{align*}
+
+Next, we note that if we have $Lv_i = \lambda_i v_i$, ($v_i$ is an eigenvector of $L$ with eigenvalue $\lambda_i$), then $v_i' = D^{1/2}v_i$ is an eigenvector of $\tilde{L}$ with eigenvalue $\lambda_i$:
+
+$$
+\tilde{L}v_i' = D^{-1/2}LD^{-1/2}D^{1/2}e = D^{-1/2}Le = \lambda_i D^{-1/2}e = \lambda_i v_i'
+$$
+
+Next, we recall that $e$ is the eigenvector corresponding to the smallest eigenvalue of $L$, and that furthermore, since we assume $G$ is connected, this is the only eigenvector with eigenvalue of $0$. We note that this implies that $D^{1/2}e$ is the only eigenvector of $\tilde{L}$ with eigenvalue $0$.
+
+Finally, we note that that $\tilde{L}$ is symmetric, and so we can write $x$ as:
+$$
+z = \sum_{i=1}^n w_iv_i'
+$$
+where $\tilde{L}v_i' = \lambda_i v_i'$. Since we have that $0 = z^TD^{1/2}e = z^Tv_1'$, we must necessarily have that $w_1 = 0$ for any feasible solution. This means that:
+$$
+z = \sum_{i=2}^n w_iv_i'
+$$
+From the above, it is easy to show that:
+\begin{align*}
+z^Tz = \sum_{i=2}^n w_i^2 \tag{since $v_i'$ are such that $v_i'^Tv_i' = 1$ and $v_i'^Tv_j' = 0, i\neq j$}
+\end{align*}
+and
+$$
+z^T\tilde{L}z = \sum_{i=2}^n w_i^2 \lambda_i 
+$$
+which thus converts the optimization problem into:
+\begin{align*}
+&\text{minimize}_{w_2, \cdots, w_n} \\
+&\sum_{i=2}^n w_i^2 \lambda_i  \\
+&\text{subject to} \\
+&\sum_{i=2}^n w_i^2= 2m
+\end{align*}
+
+Clearly, we should put all of the masson $\lambda_2$, the smallest of the eigenvalues that are
+non-zero. Thus, the minimizer has the weights $w_2 = \sqrt{2m}, w_3 = w_4 = \cdots w_n = 0$. This gives the solution vector for this relaxed problem as $z = \sqrt{2m}v_2 \implies x = \sqrt{2m}D^{-1/2}v_2$, as we wanted.
+
 % Question 4.2
 \newquestion{4.2}
+We prove that $Q(y) = cy^TBy$ for some contant $c$ where $B = A - \frac{1}{2m}dd^T$. We follow the hint.
+
+We first show that $Be = 0$.
+\begin{align*}
+Be &=  Ae - \frac{1}{2m}dd^Te \\
+&= d - \frac{1}{2m} d (2m) \tag{$Ae = d$ and $d^Te = 2m$} \\
+&= d - d = 0
+\end{align*}
+
+We then have:
+\begin{align*}
+Q(y) &= \frac{1}{2m} \sum_{1 \leq i,j \leq n} \left[A_{ij} - \frac{1}{2m}d_id_j \right]I_{y_i = y_j} \\
+&= \frac{1}{2m} \sum_{1 \leq i,j \leq n} B_{ij} I_{y_i = y_j} \tag{definition of B} \\
+&= \frac{1}{4m} \sum_{1 \leq i,j \leq n} B_{ij}(y_iy_j - 1) \tag{$y_iy_j + 1 = 2I_{y_i = y_j}$} \\
+&= \frac{1}{4m} \left[ \sum_{ 1 \leq i,j \leq n} B_{ij}y_iy_j - \sum_{1 \leq i,j \leq n} B_ij \right] \tag{distributive property} \\
+&= \frac{1}{4m} \left[ y^TBy - \sum_{1 \leq i \leq n} (Be)_i \right] \\
+&= \frac{1}{4m} y^TBy \tag{$Be = 0$}
+\end{align*}
+As we expected.
+
+
+Next, we prove that the solution to the relaxed optimization problem:
+
+\begin{align*}
+&\text{maximize}_{S \subset V, y \in \mathbb{R}^n} \\
+&y^TBy \\
+&\text{subject to} \\
+&y^Ty = n \tag{note we relaxed the problem}
+\end{align*}
+is the eigenvector corresponding to the largest eigenvalue of $B$.
+
+Following the hint, since $B$ is symmetric, there is an orthonormal basis for $\mathbb{R}^n$ consisting of eigenvectors of $B$. Thus, we can write any vector $y \in \mathbb{R}^n$ as
+$$
+y = \sum_{i=1}^n w_iv_i
+$$
+where the $w_i$ are weights and $Bv_i = \lambda v_i$. With the above rewriting, we have:
+
+\begin{align*}
+&\text{maximize}_{w_1, \cdots, w_n} \\
+&\sum_{i=1}^n \lambda_i w_i^2 \tag{since $v_i^Tv_j = I_{i=j}$}\\
+&\text{subject to} \\
+&\sum_{i=1}^n w_i^2 = n \tag{note we relaxed the problem}
+\end{align*}
+Clearly, we should put all the weight on $\lambda_n$, the largest eigenvalue. Therefore, we have the weights as $w_1 = \cdots = w_{n-1} =0, w_n = \sqrt{n}$ and the solution is given by $y = \sqrt{n}v_n$, the eigenvector corresponding to the largest eigenvalue of $B$.
+
 
 % Question 4.3
 \newquestion{4.3}
+We show that $Q(y) = \frac{1}{2m}\left(-2 \text{cut}(S)  + \frac{1}{m} \text{vol}(S)\text{vol}{\bar{S}}\right)$.
+
+First, we let $A_{ij} - \frac{d_id_j}{2m} = T_{ij}$ for simplicity. We note that:
+\begin{align*}
+\sum_{i,j} T_{i,j} = \sum_{i,j} A_{ij} - \frac{1}{2m}\sum_{i}d_i\sum_{j}d_j = 2m - \frac{4m^2}{2m} = 0 \\
+\sum_{i,j}T_{i,j} = \sum_{i,j \in S} T_{i,j} + \sum_{i,j \in Y} T_{ij} + 2\sum_{i \in S, j \in \bar{S}}T_{ij}
+\end{align*}
+
+Combining the above, we note that:
+$$
+-2\sum_{i \in S, j \in \bar{S}}T_{ij} = \sum_{i,j \in S} T_{i,j} + \sum_{i,j \in \bar{S}} T_{ij}
+$$
+
+
+Then we have:
+\begin{align*}
+Q(y) &= \frac{1}{2m} \sum_{i,j} T_{ij} I_{y_i = y_j} \\
+&= \frac{1}{2m} \left[\sum_{i,j \in S} T_{ij} + \sum_{i,j \in \bar{S}} T_{ij} \right] \\
+&= -\frac{1}{m} \sum_{i \in S, j \in \bar{S}}T_{ij} \\
+&= -\frac{1}{m} \left[\sum_{i \in S, j \in \bar{S}} A_{ij} - \frac{1}{2m}\sum_{i \in S}d_i \sum_{j \in \bar{S}} d_j \right] \\
+&= \frac{1}{2m}\left(-2 \text{cut}(S) + \frac{1}{m}\text{vol}(S)\text{vol}(\bar{S})\right)
+\end{align*}
 
 % Question 4.4
 \newquestion{4.4}
+The minimizer found 650 nodes in $S$ and 568 in $\bar{S}$.
+The maximizer found 545 nodes in $S$ and 673 in $\bar{S}$.
+
+The purities of the minimizer solutions is 0.825123152709 and the purity of the maximizer is 0.807881773399.
 
 % Information sheet
 % Fill out the information below (this should be the last page of your assignment)
 \addinformationsheet
 {\Large
-\textbf{Your name:} \hrulefill  % Put your name here
+\textbf{Your name:} Luis Perez  % Put your name here
 \\
-\textbf{Email:} \underline{\hspace*{7cm}}  % Put your e-mail here
-\textbf{SUID:} \hrulefill  % Put your student ID here
+\textbf{Email:} luis0@stanford.edu \hspace*{7cm}  % Put your e-mail here
+\textbf{SUID:} 05794739  % Put your student ID here
 \\*[2ex] 
 }
-Discussion Group: \hrulefill   % List your study group here
+Discussion Group: None   % List your study group here
 \\
 \vfill\vfill
 I acknowledge and accept the Honor Code.\\*[3ex]
 \bigskip
 \textit{(Signed)} 
-\hrulefill   % Replace this line with your initials
+LAP
 \vfill
-
 
 
 

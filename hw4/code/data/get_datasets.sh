@@ -1,0 +1,2 @@
+curl http://web.stanford.edu/class/cs224w/homeworks/hw4/data_sets/polblogs.txt -o polblogs.txt -s
+curl http://web.stanford.edu/class/cs224w/homeworks/hw4/data_sets/polblogs-labels.txt -o polblogs-labels.txt -s
