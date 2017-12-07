@@ -153,10 +153,10 @@ def ApproxEdgeCentrality(G, maxSamples, maxEdgeDelta, includeDuplicates=False):
 
   Returns the same type as ExactEdgeCentrality.
   '''
+  edgeDelta = defaultdict(int)
+  edgeSampleCount = defaultdict(int)
   for _ in xrange(maxSamples):
     v = G.GetRndNId(Rnd)
-    edgeDelta = defaultdict(int)
-    edgeSampleCount = defaultdict(int)
     for edge, deltav in getSingleDeltaValue(G, v).iteritems():
       if edgeDelta[edge] <= maxEdgeDelta:
         edgeDelta[edge] += deltav
